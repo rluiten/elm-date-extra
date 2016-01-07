@@ -1,26 +1,52 @@
 # Date Extra Function
 
-** Temporary github repository **
+### Introduction
+A bunch of date related functionality.
 
-Collected and fairly tested date utilities created while working on a
-date picker.
+It is a start it is by no means complete and there maybe many good things we can do to make it harder to do wrong things by leveraging Elm's types.
+
+It currently tries to assist with offsets but does not do any more time zone support than what Date.fromString does in its own way.
+
+There is some fudging done to get timezone offset available in Elm without need it added at a native level. It may be a good idea in the future to introduce more access to javascript for more date functions or information.
+
+### Provenance
+
+This was created based upon code extracted from one of Robin's projects and put into  https://github.com/rluiten/elm-date-extra and from Luke's https://github.com/lukewestby/elm-date-extra/.
+
+The date time format code originally came from
+https://github.com/mgold/elm-date-format/ however I have modified it and hence any problems you discover with it in this package should be initially raised with me.
+
+While there are tests they can't possible cover the range of what can be done with dates. In addition Elm is at the mercy of the underlying javascript Date implementation and that is likely to have impact as well.
+
+### There be Dragons here. "Date's in General"
+
+Please be warned that there are many ways to manipulate dates that produce basically incorrect results. This library does not yet have much in the way of prevention of doing the wrong thing.
+
+Date, Time, DateTime, with or without offset and with or without Timezones make for an easily underestimated problem.
+
+This library is quite new and even though it has tests and written in Elm it might eat your lunch if you do something the authors had not thought of, and I can promise you there is sufficient complexity in "dates" that there is a lot we have not thought of.
+
+## Feedback, Suggestions
+
+It is hoped that with feedback from users and reviewers with deep Type-zen it will be possible to improve the API to reduce the chances of doing the wrong thing with out realising it.
+
+## Change Warning.
+
+Because this is new and many people are new to Elm and what can or should be done with its types to make developers lives better its quite likely the API may change markedly for a while.
+
+## Future
+
+I think there may be value in creating Types for each type of date. Types as covered in the Noda Time documentation such as `Instant`, `LocalTime` , `LocalDate`, `LocalDateTime`, `DateTimeZone`, `ZonedDateTime`, `Period` and `Duration`.
+
+We have a simple Period and Duration type at the moment, I am hope this is a step in the right direction and does not muddy the water.
+
+In the long run this may require writing our own date parser and introducing Elm native time zone structures in.
 
 
-The format code originally came from and was modified and extended.
-https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
+## Useful references
 
-Format.format is not fully integrated and a bit of an add on at the moment.
-The date hack stuff with utc and offset stuff is new. There is likely a bunch of other
-code that could be removed in favor of format when its stabilises with the modifications and interface I think will be required.
+http://momentjs.com/docs/
+http://nodatime.org/1.3.x/userguide/
+https://www.npmjs.com/package/timezonecomplete
 
-
-There is some fudging done to make timezone offset available in Elm without need it added at a native level. It may be a better idea to extend the
-existing Native to cover this, not sure.
-
-Put on github to have a backup, and to let people see it.
-
-It will be published as a package eventually, but likely merged with something
-else or under a different name or name space.
-
-
-BDate.elm does not even compile, its some ideas around NodaTime concepts and organization with types.
+Copyright (c) 2016 Robin Luiten

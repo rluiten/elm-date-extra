@@ -1,29 +1,67 @@
-module Date.Core where
+module Date.Core
+  ( monthToInt
+  , daysInMonth
+  , daysInNextMonth
+  , daysInPrevMonth
+  , daysInMonthDate
+  , isLeapYear
+  , isLeapYearDate
+  , yearToDayLength
+  , isoDayOfWeek
+  , toFirstOfMonth
+  , firstOfNextMonthDate
+  , lastOfMonthDate
+  , lastOfPrevMonthDate
+  , daysBackToStartOfWeek
+  , fromTime
+  , toTime
+  , nextDay
+  , prevDay
+  , nextMonth
+  , prevMonth
+  , epochDateStr
+  , ticksAMillisecond
+  , ticksASecond
+  , ticksAMinute
+  , ticksAnHour
+  , ticksADay
+  , ticksAWeek
+  ) where
 
-{-| Date core modul.
+{-| Date core.
 
-## Iteration Utility
-@docs nextMonth
-@docs prevMonth
-@docs nextDay
-@docs prevDay
-
-## Utility
+## Info
+@docs monthToInt
+@docs daysInMonth
+@docs daysInNextMonth
+@docs daysInPrevMonth
+@docs daysInMonthDate
 @docs isLeapYear
 @docs isLeapYearDate
-@docs daysInMonth
-@docs daysInMonthDate
-@docs monthToInt
 @docs yearToDayLength
 @docs isoDayOfWeek
+
+## Utility
+@docs toFirstOfMonth
+@docs firstOfNextMonthDate
+@docs lastOfMonthDate
+@docs lastOfPrevMonthDate
+@docs daysBackToStartOfWeek
 
 ## Conversion
 @docs fromTime
 @docs toTime
-@docs toHourMin
+
+## Iteration Utility
+@docs nextDay
+@docs prevDay
+@docs nextMonth
+@docs prevMonth
 
 ## Date constants
 @docs epochDateStr
+
+## Date constants
 @docs ticksAMillisecond
 @docs ticksASecond
 @docs ticksAMinute
@@ -34,7 +72,7 @@ module Date.Core where
 Copyright (c) 2016 Robin Luiten
 -}
 
-import Date exposing (Day (..), Date, Month (..))
+import Date exposing (Date, Day (..), Month (..))
 import Time
 
 
@@ -76,6 +114,57 @@ ticksAWeek : Int
 ticksAWeek = ticksADay * 7
 
 
+{-| Return the Iso DayOfWeek Monday 1, to Sunday 7. -}
+isoDayOfWeek : Date.Day -> Int
+isoDayOfWeek day =
+  case day of
+    Mon -> 1
+    Tue -> 2
+    Wed -> 3
+    Thu -> 4
+    Fri -> 5
+    Sat -> 6
+    Sun -> 7
+
+
+{-| Return next day in calendar sequence. -}
+nextDay : Day -> Day
+nextDay day =
+  case day of
+    Mon -> Tue
+    Tue -> Wed
+    Wed -> Thu
+    Thu -> Fri
+    Fri -> Sat
+    Sat -> Sun
+    Sun -> Mon
+
+
+{-| Return previous day in calendar sequence. -}
+prevDay : Day -> Day
+prevDay day =
+  case day of
+    Mon -> Sun
+    Tue -> Mon
+    Wed -> Tue
+    Thu -> Wed
+    Fri -> Thu
+    Sat -> Fri
+    Sun -> Sat
+
+
+{-| Convenience fromTime as time ticks are Elm Ints in this library. -}
+fromTime : Int -> Date
+fromTime =
+  Date.fromTime << toFloat
+
+
+{-| Convenience toTime as time ticks are Elm Ints in this library. -}
+toTime : Date -> Int
+toTime =
+    floor << Date.toTime
+
+
 {-| Return days in month for year month. -}
 daysInMonth : Int -> Month -> Int
 daysInMonth year month =
@@ -102,6 +191,50 @@ daysInMonth year month =
 daysInMonthDate : Date -> Int
 daysInMonthDate date =
   daysInMonth (Date.year date) (Date.month date)
+
+
+-- go to Calendar
+{-| Return True if Year is a leap year. -}
+isLeapYear : Int -> Bool
+isLeapYear year =
+  ((year % 4 == 0) && (year % 100 /= 0)) || ((year % 400) == 0)
+
+
+{-| Return True if Year of Date is a leap year. -}
+isLeapYearDate : Date -> Bool
+isLeapYearDate date =
+  isLeapYear (Date.year date)
+
+
+{-| Return number of days in a year. -}
+yearToDayLength : Int -> Int
+yearToDayLength year =
+  if isLeapYear year then
+    366
+  else
+    365
+
+
+{-| Return days in next calendar month. -}
+daysInNextMonth : Date -> Int
+daysInNextMonth date =
+  let
+    firstOfNextMonth = firstOfNextMonthDate date
+    nextMonthYear = Date.year firstOfNextMonth
+    nextMonthMonth = Date.month firstOfNextMonth
+  in
+    daysInMonth nextMonthYear nextMonthMonth
+
+
+{-| Return days in previous calendar month. -}
+daysInPrevMonth : Date -> Int
+daysInPrevMonth date =
+  let
+    lastOfPrevMonthDateVal = lastOfPrevMonthDate date
+    prevMonthYear = Date.year lastOfPrevMonthDateVal
+    prevMonthMonth = Date.month lastOfPrevMonthDateVal
+  in
+    daysInMonth prevMonthYear prevMonthMonth
 
 
 {-| Return month as integer. Jan = 1 to Dec = 12. -}
@@ -158,74 +291,65 @@ prevMonth month =
     Dec -> Nov
 
 
-{-| Useful -}
-isoDayOfWeekMon = isoDayOfWeek Date.Mon
 
-{-| Return the Iso DayOfWeek Monday 1, to Sunday 7. -}
-isoDayOfWeek : Date.Day -> Int
-isoDayOfWeek day =
-  case day of
-    Mon -> 1
-    Tue -> 2
-    Wed -> 3
-    Thu -> 4
-    Fri -> 5
-    Sat -> 6
-    Sun -> 7
+{-| Return first of next month date. -}
+firstOfNextMonthDate : Date -> Date
+firstOfNextMonthDate date =
+  fromTime ((lastOfMonthTicks date) + ticksADay)
 
 
-{-| Return next day in calendar sequence. -}
-nextDay : Day -> Day
-nextDay day =
-  case day of
-    Mon -> Tue
-    Tue -> Wed
-    Wed -> Thu
-    Thu -> Fri
-    Fri -> Sat
-    Sat -> Sun
-    Sun -> Mon
+{-| Return last of previous month date. -}
+lastOfPrevMonthDate : Date -> Date
+lastOfPrevMonthDate date =
+  fromTime ((firstOfMonthTicks date) - ticksADay)
 
 
-{-| Return previous day in calendar sequence. -}
-prevDay : Day -> Day
-prevDay day =
-  case day of
-    Mon -> Sun
-    Tue -> Mon
-    Wed -> Tue
-    Thu -> Wed
-    Fri -> Thu
-    Sat -> Fri
-    Sun -> Sat
+{-| Return date of first of month. -}
+toFirstOfMonth : Date -> Date
+toFirstOfMonth date =
+  fromTime (firstOfMonthTicks date)
 
 
-{-| Return True if Year is a leap year. -}
-isLeapYear : Int -> Bool
-isLeapYear year =
-  ((year % 4 == 0) && (year % 100 /= 0)) || ((year % 400) == 0)
+{- Return ticks to modify date to first of month. -}
+firstOfMonthTicks : Date -> Int
+firstOfMonthTicks date =
+  let
+    day = Date.day date
+    dateTicks = toTime date
+    -- _ = Debug.log("firstOfMonthTicks") (day, dateTicks)
+  in
+    dateTicks + ((1 - day) * ticksADay)
 
 
-{-| Return True if Year of Date is a leap year. -}
-isLeapYearDate : Date -> Bool
-isLeapYearDate date =
-  isLeapYear (Date.year date)
+{-| Resturn date of last day of month. -}
+lastOfMonthDate : Date -> Date
+lastOfMonthDate date =
+    fromTime (lastOfMonthTicks date)
 
 
-{-| Convenience fromTime as time ticks are Elm Ints in this library. -}
-fromTime : Int -> Date
-fromTime ticks = Date.fromTime (toFloat ticks)
+{- Return ticks to modify date to last day of month. -}
+lastOfMonthTicks : Date -> Int
+lastOfMonthTicks date =
+  let
+    year = Date.year date
+    month = Date.month date
+    day = Date.day date
+    dateTicks = toTime date
+    -- _ = Debug.log("lastOfMonthTicks") (day, dateTicks)
+    daysInMonthVal = daysInMonth year month
+    addDays = daysInMonthVal - day
+  in
+    dateTicks + (addDays * ticksADay)
 
 
-{-| Convenience toTime as time ticks are Elm Ints in this library. -}
-toTime : Date -> Int
-toTime date = floor (Date.toTime date)
-
-
-{-| Return number of days in a year. -}
-yearToDayLength : Int -> Int
-yearToDayLength year =
-  if isLeapYear year then
-    366
-  else
-    365
+{-| Days back to start of week day. -}
+daysBackToStartOfWeek : Date.Day -> Date.Day -> Int
+daysBackToStartOfWeek dateDay startOfWeekDay =
+  let
+    dateDayIndex = isoDayOfWeek dateDay
+    startOfWeekDayIndex = isoDayOfWeek startOfWeekDay
+  in
+    if dateDayIndex < startOfWeekDayIndex then
+       (7 + dateDayIndex) - startOfWeekDayIndex
+    else
+      dateDayIndex - startOfWeekDayIndex

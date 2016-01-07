@@ -1,30 +1,10 @@
 module BDate where
 
 {-| Another Date, many functions. Though experiment around a type ?
+
+Copyright (c) 2016 Robin Luiten
 -}
 
-import Date exposing (Day, Date, Month)
-import Date.I18n.En English
-
-type alias BDateConfig =
-  { -- i18n list of lookups Day, Month names for a start.
-    i18n :
-      { dayShort : Day -> String
-      , dayName : Day -> String
-      , monthShort : Month -> String
-      , monthName : Month -> String
-      }
-  }
-
-defaultConfig : BDateConfig
-defaultConfig =
-  { i18n =
-      { isoDayShort : English.dayShort
-      , isoDayName : English.dayName
-      , monthShort : English.monthShort
-      , monthName : English.monthName
-      }
-  }
 
 {-| BDate
 
@@ -46,7 +26,8 @@ type BDate
   | BOffset Int Int -- offset, ticks
   | BZoned String -- timezone string
 
-
+-- Think need seperate types, not Constructors under one type or cannot
+-- limit API by type for inputs etc.
 
 
 
@@ -56,7 +37,7 @@ IDEA:
 
 case myDate of
   split date into parts.... in pattern
-  
+
 A record might be better can match on just field names wanted ?
 - though it still does work of pulling it all apart
 
@@ -104,5 +85,82 @@ Durations for actions on
 
   Pull in tz database (olson database)
   Not sure format yet. maybe Decoder ?
+
+-}
+
+
+
+
+
+
+
+{-
+-- Bunch of create date functions, do not use date as input.
+
+{- Make a local date from year, rest fields default. -}
+makeDateY : { a | year : Int} -> Date
+makeDateY {year} =
+  unsafeFromString ""
+
+
+-- input idea ? "1981,Dec,32,12,23,55,333,-600" - urk parse.
+
+-- custom records for this stuff ?
+-- unique entry points or all.
+
+makeDateAllOffset :
+  { a
+  | year : Int
+  , month : Month
+  , day : Day
+  , hour : Int
+  , minute : Int
+  , second : Int
+  , millisecond : Int
+  , offsetMinutes : Int
+  }
+  -> Date
+makeDateAllOffset {year,month,day,hour,minute,second,millisecond,offsetMinutes} =
+  unsafeFromString ""
+
+-- makeDate {year, month} =
+
+
+type alias DateRec =
+  { year : Int
+  , month : Month
+  , day : Day
+  , hour : Int
+  , minute : Int
+  , second : Int
+  , millisecond : Int
+  , offsetMinutes : Int
+  }
+
+
+epochAsRecord : DateRec
+epochAsRecord =
+  { year = 1970
+  , month = Jan
+  , day = Thu
+  , hour = 0
+  , minute = 0
+  , second = 0
+  , millisecond = 0
+  , offsetMinutes = 0
+  }
+
+-}
+
+
+
+dateDiff : Scale.Scale -> Date -> Date -> Int
+dateDiff scale date1 date2 =
+  Debug.crash ("dateDiff Not implemented yet")
+
+
+{-
+-- There will be a proliferation of end points if we supply
+-- the following with DateScale parameter.
 
 -}

@@ -1,8 +1,22 @@
-module Date.Format where
+module Date.Format
+  ( format
+  , formatUtc
+  , formatOffset
+  , isoString
+  , utcIsoString
+  , isoDateString
+  , utcIsoDateString
+  , isoFormat
+  , isoMsecFormat
+  , isoOffsetFormat
+  , isoMsecOffsetFormat
+  , isoDateFormat
+  , isoTimeFormat
+  ) where
 
 {-| Date Format, turning dates into strings.
 
-The format code originally came from and was modified and extended.
+The format code originally came from and was modified and extended from.
 https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
 
 ## Notes
@@ -10,19 +24,17 @@ https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
 * hackDateAsUtc and hackDateAsOffset not sure should be exposed.
 
 ## Date presentation
-@docs isoString
-@docs isoDateString
-@docs isoTimeString
-@docs utcIsoString
-@docs utcIsoDateString
-@docs utcIsoTimeString
 @docs format
 @docs formatUtc
 @docs formatOffset
 
-## Date Hackery
-@docs hackDateAsUtc
-@docs hackDateAsOffset
+## Extra presentation convenience
+@docs isoString
+@docs utcIsoString
+
+## Low level formats used in specific places in library.
+@docs isoDateString
+@docs utcIsoDateString
 
 ## Useful strings for format
 @docs isoFormat
@@ -35,13 +47,45 @@ https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
 Copyright (c) 2016 Robin Luiten
 -}
 
-import Date exposing (Date, Month) -- (Day, Date, Month)
+import Date exposing (Date, Month)
 import Regex
 import String exposing (padLeft)
 
+import Date.Config as Config
 import Date.Core as Core
 import Date.Create as Create
-import Date.I18n.I_en_us as English
+import Date.Config.Config_en_us as English
+
+
+{-| ISO date time, 24hr. -}
+isoFormat : String
+isoFormat = "%Y-%m-%dT%H:%M:%S"
+
+
+{-| ISO Date time with milliseconds, 24hr. -}
+isoMsecFormat : String
+isoMsecFormat = "%Y-%m-%dT%H:%M:%S.%L"
+
+
+{-| ISO Date time with timezone, 24hr. -}
+isoOffsetFormat : String
+isoOffsetFormat = "%Y-%m-%dT%H:%M:%S%z"
+
+
+{-| ISO Date time with milliseconds and timezone, 24hr. -}
+isoMsecOffsetFormat : String
+isoMsecOffsetFormat = "%Y-%m-%dT%H:%M:%S.%L%z"
+
+
+{-| ISO Date. -}
+isoDateFormat : String
+isoDateFormat = "%Y-%m-%d"
+
+
+{-| ISO Time 24hr. -}
+isoTimeFormat : String
+isoTimeFormat = "%H:%M:%S"
+
 
 month : Date -> String
 month date =
@@ -63,61 +107,33 @@ yearInt year =
   padLeft 4 '0' <| toString year
 
 
-
-{-| Return date and time as string.
-
-This is very simple it does not support offsets
-or timezones.
--}
+{-| Return date and time as string in local zone. -}
 isoString : Date -> String
-isoString date =
-  (isoDateString date) ++ "T" ++ (isoTimeString date)
+isoString =
+  format English.config isoMsecOffsetFormat
 
 
-{-| This is a bit hacky, but useful in several cases in testing
-allready.
-
-TODO the best thing might be to expand Date's native stuff so
-offsets and such can be used in Elm.
-
-
-Return a date string represenation of the date but compensates
-for any time zone offset so the date is renderd in a utc time zone.
-
-In my timezone javascript environment which is +10:00
-
-Example hour is returned as 14 in my time zone.
-
-```
-  date = DateUtils.unsafeFromString "2016-06-05T04:03:02.111Z"
-
-  Format.isoString date == "2016-06-05T14:03:02.111Z"
-  DateUtils.utcIsoString date == "2016-06-05T04:03:02.111Z"
-```
-
-Offset support.
-This may need underlying get date as if it was UTC function ugh.
-Given utc datetime give me the normal local offset.
-
--}
+{-| Return date and time as string in ISO form with Z for UTC offset. -}
 utcIsoString : Date -> String
 utcIsoString date =
-  (isoString (hackDateAsUtc date)) ++ "Z"
+    (formatUtc English.config isoMsecFormat date) ++ "Z"
 
 
-{-| Utc variant of isoDateString. -}
+{-| Utc variant of isoDateString.
+
+Low level routine required by areas like checkDateResult to avoid
+recursive loops in Format.format.
+-}
 utcIsoDateString : Date -> String
 utcIsoDateString date =
-  (isoDateString (hackDateAsUtc date)) ++ "Z"
+  (isoDateString (hackDateAsUtc date))
 
 
-{-| Utc variant of isoTimeString. -}
-utcIsoTimeString : Date -> String
-utcIsoTimeString date =
-  (isoTimeString (hackDateAsUtc date)) ++ "Z"
+{-| Return date as string.
 
-
-{-| Return date as string. -}
+Low level routine required by areas like checkDateResult to avoid
+recursive loops in Format.format.
+-}
 isoDateString : Date -> String
 isoDateString date =
   let
@@ -125,27 +141,12 @@ isoDateString date =
     month = Date.month date
     day = Date.day date
   in
-               (String.padLeft 2 '0' (toString year))
-    --  ++ "-" ++ (toString month)
-     ++ "-" ++ (String.padLeft 2 '0' (toString (Core.monthToInt month)))
-     ++ "-" ++ (String.padLeft 2 '0' (toString day))
+    (String.padLeft 4 '0' (toString year)) ++ "-" ++
+    (String.padLeft 2 '0' (toString (Core.monthToInt month))) ++ "-" ++
+    (String.padLeft 2 '0' (toString day))
 
 
-{-| Return time as string. -}
-isoTimeString : Date -> String
-isoTimeString date =
-  let
-    hour = Date.hour date
-    minute = Date.minute date
-    second = Date.second date
-    millisecond = Date.millisecond date
-  in
-              (String.padLeft 2 '0' (toString hour))
-    ++ ":" ++ (String.padLeft 2 '0' (toString minute))
-    ++ ":" ++ (String.padLeft 2 '0' (toString second))
-    ++ "." ++ (String.padLeft 3 '0' (toString millisecond))
-
-
+-- candidate deprecation, once move to format
 {-| Adjust date as if it was in utc zone. -}
 hackDateAsUtc : Date -> Date
 hackDateAsUtc date =
@@ -155,26 +156,17 @@ hackDateAsUtc date =
 {-| Adjust date for time zone offset in minutes. -}
 hackDateAsOffset : Int -> Date -> Date
 hackDateAsOffset offsetMinutes date =
-  Core.fromTime <| Core.toTime date + (offsetMinutes * Core.ticksAMinute)
-
-
-{-| Useful iso date strings. -}
-isoFormat = "%Y-%m-%dT%H:%M:%S"
-{-| Useful iso date strings. -}
-isoMsecFormat = "%Y-%m-%dT%H:%M:%S.%L"
-{-| Useful iso date strings. -}
-isoOffsetFormat = "%Y-%m-%dT%H:%M:%S%z"
-{-| Useful iso date strings. -}
-isoMsecOffsetFormat = "%Y-%m-%dT%H:%M:%S%z"
-{-| Useful iso date strings. -}
-isoDateFormat = "%Y-%m-%d"
-{-| Useful iso date strings. -}
-isoTimeFormat = "%H:%M:%S"
+  --  Core.fromTime <| Core.toTime date + (offsetMinutes * Core.ticksAMinute)
+  -- let _ = Debug.log("hackDateAsOffset") (offsetMinutes)
+  -- in
+  Core.toTime date
+  |> (+) (offsetMinutes * Core.ticksAMinute)
+  |> Core.fromTime
 
 
 {- Date formatter.
-Initially from.
-https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
+
+Initially from https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm.
 -}
 formatRegex : Regex.Regex
 formatRegex = Regex.regex "%(Y|m|B|b|d|e|A|a|H|k|I|l|p|P|M|S|%|L|z|:z)"
@@ -183,39 +175,48 @@ formatRegex = Regex.regex "%(Y|m|B|b|d|e|A|a|H|k|I|l|p|P|M|S|%|L|z|:z)"
 {-| Use a format string to format a date.
 This gets time zone offset from provided date.
 -}
-format : String -> Date.Date -> String
-format formatStr date =
-  formatOffset (Create.getTimezoneOffset date) formatStr date
+format : Config.Config -> String -> Date.Date -> String
+format config formatStr date =
+  formatOffset config (Create.getTimezoneOffset date) formatStr date
 
 
 {-| Convert date to utc then format it with offset set to 0 if rendered. -}
-formatUtc : String -> Date.Date -> String
-formatUtc formatStr date =
-  formatOffset (Create.getTimezoneOffset date) formatStr (hackDateAsUtc date)
+formatUtc : Config.Config -> String -> Date.Date -> String
+formatUtc config formatStr date =
+  -- let _ = Debug.log ("formatUtc utcIsoString") (utcIsoString date, Core.ticksAMinute)
+  -- in
+  formatOffset config 0 formatStr date
 
 
 {-| This adjusts date for offset, and renders with the offset -}
-formatOffset : Int -> String -> Date.Date -> String
-formatOffset offset formatStr date =
+formatOffset : Config.Config -> Int -> String -> Date.Date -> String
+formatOffset config offset formatStr date =
+  let
+    hackOffset = (Create.getTimezoneOffset date) - offset
+  in
   (Regex.replace Regex.All formatRegex)
-    (formatToken offset (hackDateAsOffset offset date))
+    ( formatToken
+        config
+        offset
+        (hackDateAsOffset hackOffset date)
+    )
     formatStr
 
 
-formatToken : Int -> Date.Date -> Regex.Match -> String
-formatToken offset d m =
+formatToken : Config.Config -> Int -> Date.Date -> Regex.Match -> String
+formatToken config offset d m =
   let
     symbol = List.head m.submatches |> collapse |> Maybe.withDefault " "
   in
     case symbol of
       "Y" -> d |> Date.year |> toString
       "m" -> d |> Date.month |> Core.monthToInt |> padWith '0'
-      "B" -> d |> Date.month |> English.monthName
-      "b" -> d |> Date.month |> English.monthShort
+      "B" -> d |> Date.month |> config.i18n.monthName
+      "b" -> d |> Date.month |> config.i18n.monthShort
       "d" -> d |> Date.day |> padWith '0'
       "e" -> d |> Date.day |> padWith ' '
-      "A" -> d |> Date.dayOfWeek |> English.dayName
-      "a" -> d |> Date.dayOfWeek |> English.dayShort
+      "A" -> d |> Date.dayOfWeek |> config.i18n.dayName
+      "a" -> d |> Date.dayOfWeek |> config.i18n.dayShort
       "H" -> d |> Date.hour |> padWith '0'
       "k" -> d |> Date.hour |> padWith ' '
       "I" -> d |> Date.hour |> mod12 |> padWith '0'
@@ -254,14 +255,16 @@ mod12 h = h % 12
 
 
 padWith : Char -> a -> String
-padWith c = padLeft 2 c << toString
+padWith c =
+  padLeft 2 c << toString
 
 
 padWithN : Int -> Char -> a -> String
-padWithN n c = padLeft n c << toString
+padWithN n c =
+  padLeft n c << toString
 
 
 {- Return time zone offset in Hours and Minutes from minutes. -}
 toHourMin : Int -> (Int, Int)
 toHourMin offsetMinutes =
-    (offsetMinutes // 60, offsetMinutes % 60)
+  (offsetMinutes // 60, offsetMinutes % 60)

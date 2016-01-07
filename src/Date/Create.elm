@@ -1,4 +1,7 @@
-module Date.Create where
+module Date.Create
+  ( makeDateTicks
+  , getTimezoneOffset
+  ) where
 
 {-| Create dates and offsets.
 
@@ -121,17 +124,26 @@ Note if our date is in a given year we start counting full years after it.
 getYearTicksTo1970 year =
   iterateSum ((+)1) yearToTicks 1970 (year + 1) 0
 
+{-|  A general iterate for sum accumulator.
+-}
+iterateSum : (a -> a) -> (a -> number) -> a -> a -> number -> number
+iterateSum getNext getValue target current accumulator =
+  if current == target then
+    accumulator
+  else
+    iterateSum getNext getValue target
+      (getNext current) (accumulator + (getValue current))
+
 
 {-| Return the time zone offset of current javascript environment underneath
 Elm in Minutes. This should produce the same result getTimezoneOffset()
 for a given date in the same javascript VM.
 
-Time zone offset is always for a given date and time, not a one of current
-javascript runtime. So an input date is required.
+Time zone offset is always for a given date and time so an input date is required.
 
 Given that timezones change (though slowly) this is not strictly pure, but
-I suspect it is sufficiently pure. Is is dependent on the time zone mechanics
-of the javascript VM offsets.
+I suspect it is sufficiently pure. Is is dependent on the timezone mechanics
+of the javascript VM.
 
 
 ### Example zone stuff.
@@ -171,14 +183,3 @@ getTimezoneOffset date =
     -- _ = Debug.log("Date.Create getTimezoneOffset") (timezoneOffset)
   in
     timezoneOffset
-
-
-{-|  A general iterate for sum accumulator more efficient than iterate.
--}
-iterateSum : (a -> a) -> (a -> number) -> a -> a -> number -> number
-iterateSum getNext getValue target current accumulator =
-  if current == target then
-    accumulator
-  else
-    iterateSum getNext getValue target
-      (getNext current) (accumulator + (getValue current))

@@ -1,12 +1,24 @@
 {
     "version": "1.0.0",
-    "summary": "Extra Date functions, a start",
-    "repository": "https://github.com/user/elm-date-extratemp.git",
+    "summary": "Date Extra library exta stuff for working with dates.",
+    "repository": "https://github.com/user/elm-date-extra.git",
     "license": "BSD3",
     "source-directories": [
         "./src"
     ],
-    "exposed-modules": [],
+    "exposed-modules": [
+      "Date.Config",
+      "Date.Core",
+      "Date.Create",
+      "Date.Duration",
+      "Date.Format",
+      "Date.Period",
+      "Date.Scale",
+      "Date.Utils",
+      "Date.I18n.I_en_us",
+      "Date.Config.Config_en_us",
+      "Date.Config.Config_en_us"
+    ],
     "dependencies": {
         "elm-lang/core": "3.0.0 <= v < 4.0.0"
     },

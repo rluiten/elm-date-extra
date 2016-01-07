@@ -73,23 +73,3 @@ makeDateTicksTest5NegativeTicks3 _ =
   in
   test "makeDateTicks 1969-01-01T00:00Z negative ticks " <|
     assertEqual ticks (newTicks + timezoneTicks)
-
-
-
-
-{- This test is dependent on local machines javascript timezone offset.
-This was written in +10:00 offset in case you see this fail.
-
-This should not be enabled in commited source as it is too environment
-dependent. Built to verify understanding.
-
-Not useful anymore as time zone offset is for a given date, not just a given
-runtime, left here for now.
--}
-{-
-getTimezoneOffsetTest _ =
-  test "Get timezone offset of underlying javascript." <|
-    assertEqual
-      (-600) -- -600 minutes is +10:00 hours, Brisbane Australia
-      (Create.getTimezoneOffset)
--}

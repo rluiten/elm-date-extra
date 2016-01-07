@@ -2,6 +2,11 @@ module Date.I18n.I_en_us where
 
 {-| English values for day and month names.
 
+@docs dayShort
+@docs dayName
+@docs monthShort
+@docs monthName
+
 Copyright (c) 2016 Robin Luiten
 -}
 
@@ -10,6 +15,7 @@ import Date exposing (Day (..), Month (..))
 
 
 {-| Day short name. -}
+dayShort : Day -> String
 dayShort day =
   case day of
     Mon -> "Mon"
@@ -22,6 +28,7 @@ dayShort day =
 
 
 {-| Day full name. -}
+dayName : Day -> String
 dayName day =
   case day of
     Mon -> "Monday"
