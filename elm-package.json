@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "summary": "Date Extra library add/subtract/diff/format etc dates.",
     "repository": "https://github.com/rluiten/elm-date-extra.git",
     "license": "BSD3",
@@ -7,17 +7,17 @@
         "./src"
     ],
     "exposed-modules": [
-      "Date.Config",
-      "Date.Core",
-      "Date.Create",
-      "Date.Duration",
-      "Date.Format",
-      "Date.Period",
-      "Date.Floor",
-      "Date.Utils",
-      "Date.I18n.I_en_us",
-      "Date.Config.Config_en_us",
-      "Date.Config.Config_en_us"
+        "Date.Config",
+        "Date.Core",
+        "Date.Create",
+        "Date.Duration",
+        "Date.Format",
+        "Date.Period",
+        "Date.Floor",
+        "Date.Utils",
+        "Date.I18n.I_en_us",
+        "Date.Config.Config_en_us",
+        "Date.Config.Config_en_au"
     ],
     "dependencies": {
         "elm-lang/core": "3.0.0 <= v < 4.0.0"
