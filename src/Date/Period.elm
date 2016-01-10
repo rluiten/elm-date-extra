@@ -14,8 +14,10 @@ This module has no concept of Months or Years which have variable lenghts of tim
 For that see Duration.
 
 @docs add
-@docs Period
 @docs diff
+@docs Period
+@docs DeltaRecord
+@docs zeroDelta
 
 Copyright (c) 2016 Robin Luiten
 -}
@@ -101,10 +103,10 @@ addTimeUnit unit addend date =
     |> Core.fromTime
 
 
-{- Return a Period representing date difference. date1 - date2.
+{-| Return a Period representing date difference. date1 - date2.
 
-Add the Period result of this function to date2 with
-addend of 1 will return date1.
+If  you add the result of this function to date2 with addend of 1
+will return date1.
  -}
 diff : Date -> Date -> Period
 diff date1 date2 =
