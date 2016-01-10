@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "Date Extra library exta stuff for working with dates.",
-    "repository": "https://github.com/user/elm-date-extra.git",
+    "summary": "Date Extra library add/subtract/diff/format etc dates.",
+    "repository": "https://github.com/rluiten/elm-date-extra.git",
     "license": "BSD3",
     "source-directories": [
         "./src"

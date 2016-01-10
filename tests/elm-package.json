@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "Test for Date Extra",
-    "repository": "https://github.com/user/elm-date-extratemp.git",
+    "summary": "Date Extra library tests",
+    "repository": "https://github.com/rluiten/elm-date-extra.git",
     "license": "BSD3",
     "source-directories": [
         ".",
