@@ -3,10 +3,25 @@
 ### Introduction
 A collection of modules for working with dates and times.
 
+Includes
+* flexible formatting of dates into strings
+ * It has support for outputting dates with other offsets than local by some trickery.
+ * simple i18n support for long and short Day and Month names.
+ * see [DocFormat.md](DocFormat.md)
+* compare dates
+* add or subtract time periods on a date
+* date diff
+ * this is simple at moment and limited to Period module and the date fields
+  * `millisecond`, `second`, `minute`, `hour`, `day`, `week`
+* A function similar in concept to `floor` for Floats for dates called `floor`
+  for reducing date fields below a given date
+  field granularity to its minimum value.
+
 Example of formatting Dates
 ```elm
 import Date.Config.Config_en_au exposing (config)
 import Date.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
+
 
 displayString1 =
   Result.withDefault "Failed to get a date." <|
@@ -26,11 +41,10 @@ It is a start but it is by no means complete and there maybe many good things we
 
 There is some fudging done to get timezone offset available in Elm without needing it be added at a native level. It may be a good idea in the future to introduce more access to javascript for more date functions or information.
 
-See [DocFormat.md](DocFormat.md) for information about supported date format strings.
-
 ### Where did this come from.
 
-This was created based upon code extracted from one of Robin's projects and put into  https://github.com/rluiten/elm-date-extra and from Luke's https://github.com/lukewestby/elm-date-extra/.
+This was created based upon code extracted from one of Robin's projects and also from
+and from Luke's https://github.com/lukewestby/elm-date-extra/ and put into  https://github.com/rluiten/elm-date-extra.
 
 The date time format code originally came from
 https://github.com/mgold/elm-date-format/ however I have modified it and hence any problems you discover with it in this package should be initially raised with me.
@@ -52,18 +66,19 @@ It is hoped that with feedback from users and reviewers with deep Type-zen it wi
 #### Feedback that is of interest.
 
 * Suggestions to improve API and or package structure or Types.
- * Particularly interested in improvements that might make it easier to work with dates more predictable and reproducible.
+ * Particularly interested in improvements that might make it safer and easier to work with dates.
 * More Examples for example folder
-* Bugs
- * Please try to include sufficient detail to reproduce
+* Improved documentation.
+* Bugs.
+ * Please try to include sufficient detail to reproduce.
  * Better yet create a test and submit a pull request, even if you cant figure out how to fix it.
-* More tests
- * That demonstrate issues
- * That fill a short fall in existing tests.
+* More tests.
+ * That demonstrate issues.
+ * That fill a short fall in existing tests..
 
 ## Change Warning.
 
-Because this is new and many people are new to Elm and what can or should be done with its types to make developers lives better its quite likely the API may change quite a bit, so version numbers may climb rapidly.
+This library is new and knowing what can or should be done with Elm types is very much a learning process for me and I suspect many people. It is quite likely the API may change quite a bit, so version numbers may climb rapidly.
 
 ## Future
 
@@ -81,8 +96,10 @@ In the long run this may require writing a date parser and introducing Elm nativ
 
 ## Useful references
 
-http://momentjs.com/docs/
-http://nodatime.org/1.3.x/userguide/
-https://www.npmjs.com/package/timezonecomplete
+Many ideas and concepts shamelessly borrowed from the following.
+
+* http://momentjs.com/docs/
+* http://nodatime.org/1.3.x/userguide/
+* https://www.npmjs.com/package/timezonecomplete
 
 Copyright (c) 2016 Robin Luiten
