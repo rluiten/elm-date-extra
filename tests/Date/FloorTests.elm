@@ -1,42 +1,42 @@
-module Date.ScaleTests where
+module Date.FloorTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
 import Date.Format as Format
-import Date.Scale as Scale exposing (Scale (..))
+import Date.Floor as Floor exposing (Floor (..))
 import Date.Utils as DateUtils
 
 
 tests : Test
 tests =
-  suite "Date.Scale tests"
-    [ scaleDateTests ()
+  suite "Date.Floor tests"
+    [ floorDateTests ()
     ]
 
 
-scaleDateTests _ =
-  suite "scaleDate tests" <|
-    List.map runScaleDateTest scaleDateCases
+floorDateTests _ =
+  suite "floor tests" <|
+    List.map runFloorCase floorCases
 
 
-runScaleDateTest (dateStr, dateScale, expectedDate) =
+runFloorCase (dateStr, dateFloor, expectedDate) =
   let
     date : Date
     date = DateUtils.unsafeFromString dateStr
-    dateOut = Scale.scale dateScale date
+    dateOut = Floor.floor dateFloor date
     dateOutStr = Format.utcIsoString dateOut
     dateOut2Str = Format.isoString dateOut
-    -- _ = Debug.log("runScaleDateTest") (dateStr, date, dateScale, dateOut, dateOutStr, dateOut2Str)
+    -- _ = Debug.log("runFloorDateCase") (dateStr, date, dateFloor, dateOut, dateOutStr, dateOut2Str)
   in
-    test ("scale " ++ (toString dateScale)
+    test ("floor " ++ (toString dateFloor)
           ++ " on " ++ dateStr
           ++ ".") <|
       assertEqual (expectedDate) (dateOutStr)
 
 
-scaleDateCases =
+floorCases =
   [ ("2016-06-05T04:03:02.111Z", Millisecond, "2016-06-05T04:03:02.111Z")
   , ("2016-06-05T04:03:02.111Z", Second, "2016-06-05T04:03:02.000Z")
   , ("2016-06-05T04:03:02.111Z", Minute, "2016-06-05T04:03:00.000Z")
@@ -51,4 +51,14 @@ scaleDateCases =
 
   , ("2016-06-05T04:03:02.111+10:00", Month, "2016-05-31T14:00:00.000Z")
   , ("2016-06-05T04:03:02.111+10:00", Year, "2015-12-31T14:00:00.000Z")
+
+  -- verify dates before 1970 as there internal tick represenation is negative.
+  , ("1965-01-02T03:04:05.678Z", Millisecond, "1965-01-02T03:04:05.678Z")
+  , ("1965-01-02T03:04:05.678Z", Second, "1965-01-02T03:04:05.000Z")
+  , ("1965-01-02T03:04:05.678Z", Minute, "1965-01-02T03:04:00.000Z")
+  , ("1965-01-02T03:04:05.678Z", Hour, "1965-01-02T03:00:00.000Z")
+  , ("1965-01-02T03:04:05.678Z", Day, "1965-01-01T14:00:00.000Z")
+
+  , ("1965-03-02T03:04:05.678Z", Month, "1965-02-28T14:00:00.000Z")
+  , ("1965-03-02T03:04:05.678Z", Year, "1964-12-31T14:00:00.000Z")
   ]

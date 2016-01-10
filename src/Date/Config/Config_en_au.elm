@@ -1,4 +1,4 @@
-module Date.Config.Config_en_us where
+module Date.Config.Config_en_au where
 
 {-| This is the default english config for formatting dates.
 
@@ -22,7 +22,8 @@ config =
       }
   , format =
       { date = "%d/%m/%Y" -- DD/MM/YYY
-      , time = "%H:%M:%S"
-      , datetime = "%d/%m/%Y %H:%M:%S"
+      -- , longdate = "%A, %e %B %Y"
+      , time = "%I:%M:%S %p"
+      , datetime = "%d/%m/%Y %I:%M:%S %p"
       }
   }

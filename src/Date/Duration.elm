@@ -21,6 +21,7 @@ import Date exposing (Date, Month)
 import Date.Core as Core
 import Date.Period as Period
 
+
 {-| A Duration is time period that may vary with with calendar and time.
 
 Name of type copied from NodaTime.
@@ -35,7 +36,8 @@ type Duration
   | Month
   | Year
   -- | Combo {year,month,week,day,hour,min,sec,millisecond}
-  -- DateDiff can return a Duration Combo :) neat.
+  -- DateDiff could return a Duration with fields set
+  
 
 {-| Add duration * count to date. -}
 add : Duration -> Int -> Date -> Date
@@ -72,8 +74,7 @@ addMonthPositive goalDay monthCount date =
     nextMonthMaxDay = Core.daysInNextMonth date
     nextMonthTargetDay = min goalDay nextMonthMaxDay
     addDays = thisMonthMaxDay - (Date.day date) + nextMonthTargetDay
-    -- _ = Debug.log("addMonthPositive") (goalDay, addDays, monthCount, (Format.isoString date))
-    nextMonth = Core.fromTime ((Core.toTime date) + (addDays * Core.ticksADay))
+    nextMonth = Period.add Period.Day addDays date
   in
     if monthCount == 0 then
       date
@@ -87,8 +88,7 @@ addMonthNegative goalDay monthCount date =
     prevMonthMaxDay = Core.daysInPrevMonth date
     prevMonthTargetDay = min goalDay prevMonthMaxDay
     addDays = -(Date.day date) - (prevMonthMaxDay - prevMonthTargetDay)
-    -- _ = Debug.log("addMonthNegative'") (goalDay, addDays, monthCount, (Format.isoString date))
-    prevMonth = Core.fromTime ((Core.toTime date) + (addDays * Core.ticksADay))
+    prevMonth = Period.add Period.Day addDays date
   in
     if monthCount == 0 then
       date

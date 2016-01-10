@@ -151,16 +151,3 @@ epochAsRecord =
   }
 
 -}
-
-
-
-dateDiff : Scale.Scale -> Date -> Date -> Int
-dateDiff scale date1 date2 =
-  Debug.crash ("dateDiff Not implemented yet")
-
-
-{-
--- There will be a proliferation of end points if we supply
--- the following with DateScale parameter.
-
--}

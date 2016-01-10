@@ -30,7 +30,7 @@ import Time
 import Date.Core as Core
 import Date.Format as Format
 import Date.Period as Period
-import Date.Scale as Scale
+import Date.Floor as Floor
 import Date.Compare as Compare exposing (is, Compare2 (..))
 
 
@@ -79,7 +79,7 @@ isoWeek date =
             (inputYear - 1, isoWeekOne (inputYear - 1))
           else
             (inputYear, thisYearIsoWeek1)
-    dateAsDay = Scale.scale Scale.Day date
+    dateAsDay = Floor.floor Floor.Day date
     daysSinceWeek1 = (Core.toTime dateAsDay - (Core.toTime week1)) // Core.ticksADay
   in
     (year, (daysSinceWeek1 // 7) + 1, Core.isoDayOfWeek (Date.dayOfWeek date))

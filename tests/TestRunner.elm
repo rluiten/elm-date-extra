@@ -8,7 +8,7 @@ import String
 import Date.CoreTests
 import Date.PeriodTests
 import Date.DurationTests
-import Date.ScaleTests
+import Date.FloorTests
 import Date.CreateTests
 import Date.UtilsTests
 import Date.FormatTests
@@ -21,7 +21,7 @@ main =
         [ Date.CoreTests.tests
         , Date.PeriodTests.tests
         , Date.DurationTests.tests
-        , Date.ScaleTests.tests
+        , Date.FloorTests.tests
         , Date.CreateTests.tests
         , Date.UtilsTests.tests
         , Date.FormatTests.tests

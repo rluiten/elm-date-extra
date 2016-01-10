@@ -13,7 +13,7 @@
       "Date.Duration",
       "Date.Format",
       "Date.Period",
-      "Date.Scale",
+      "Date.Floor",
       "Date.Utils",
       "Date.I18n.I_en_us",
       "Date.Config.Config_en_us",

@@ -218,23 +218,13 @@ yearToDayLength year =
 {-| Return days in next calendar month. -}
 daysInNextMonth : Date -> Int
 daysInNextMonth date =
-  let
-    firstOfNextMonth = firstOfNextMonthDate date
-    nextMonthYear = Date.year firstOfNextMonth
-    nextMonthMonth = Date.month firstOfNextMonth
-  in
-    daysInMonth nextMonthYear nextMonthMonth
+  daysInMonthDate (firstOfNextMonthDate date)
 
 
 {-| Return days in previous calendar month. -}
 daysInPrevMonth : Date -> Int
 daysInPrevMonth date =
-  let
-    lastOfPrevMonthDateVal = lastOfPrevMonthDate date
-    prevMonthYear = Date.year lastOfPrevMonthDateVal
-    prevMonthMonth = Date.month lastOfPrevMonthDateVal
-  in
-    daysInMonth prevMonthYear prevMonthMonth
+  daysInMonthDate (lastOfPrevMonthDate date)
 
 
 {-| Return month as integer. Jan = 1 to Dec = 12. -}
@@ -289,7 +279,6 @@ prevMonth month =
     Oct -> Sep
     Nov -> Oct
     Dec -> Nov
-
 
 
 {-| Return first of next month date. -}
