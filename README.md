@@ -16,6 +16,7 @@ Includes
 * A function similar in concept to `floor` for Floats for dates called `floor`
   for reducing date fields below a given date
   field granularity to its minimum value.
+* Set date field module.
 
 Example of formatting Dates
 ```elm
@@ -92,6 +93,12 @@ In the long run this may require writing a date parser and introducing Elm nativ
 ## People Using this library.
 
 * Currently Robin on a new far from finished project. Only put this here because this section would be empty with out it.
+
+## Things to think abut for future development, not really a road map.
+
+* Consider a range checking year inputs, javascript getFullYear() only claims
+to work for years 1000 to 9999, this is probably a reasonable range for range
+checking. In this case also check ranges for fromTime and toTime functions ?
 
 
 ## Useful references

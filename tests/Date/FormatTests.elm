@@ -41,9 +41,10 @@ that cant produce this as integer into the javascript source.
 
 -}
 aTestTime = floor 1407833631116.0
-
-
 aTestTime2 = floor 1407855231116.0
+aTestTime3 = floor -48007855231116.0 -- year 448
+
+aTestTime4 = floor -68007855231116.0 -- problem year negative year out disabled test.
 
 
 formatTest _ =
@@ -65,6 +66,9 @@ formatTestCases =
   , ("with %% no space", " %12/08/2014", " %%%d/%m/%Y", aTestTime)
   , ("with milliseconds", "2014-08-12 (.116)", "%Y-%m-%d (.%L)", aTestTime)
   , ("with milliseconds", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
+  , ("small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3)
+
+  -- , ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
   ]
 
 

@@ -209,7 +209,7 @@ formatToken config offset d m =
     symbol = List.head m.submatches |> collapse |> Maybe.withDefault " "
   in
     case symbol of
-      "Y" -> d |> Date.year |> toString
+      "Y" -> d |> Date.year |> padWithN 4 '0'
       "m" -> d |> Date.month |> Core.monthToInt |> padWith '0'
       "B" -> d |> Date.month |> config.i18n.monthName
       "b" -> d |> Date.month |> config.i18n.monthShort

@@ -7,7 +7,10 @@ module Date.Floor
 to floor on Float so was named the same.
 
 This allows you to modify a date to reset to minimum values
-all values below a given granulasiry.
+all values below a given granularity.
+
+This operates in local time zone so if you are not in UTC time zone
+and you output date in UTC time zone the datefields will not be floored.
 
 Example `Floor.floor Hour date` will return a modified date with
 * Minutes to 0
@@ -17,14 +20,15 @@ Example `Floor.floor Hour date` will return a modified date with
 @docs floor
 @docs Floor
 
+This modules implementation became much simpler when Field module was introduced.
+
 Copyright (c) 2016 Robin Luiten
 -}
 
 import Date exposing (Date, Month (..))
 
 import Date.Core as Core
-import Date.Duration as Duration
-
+import Date.Field as Field
 
 {-| Date granularity of operations. -}
 type Floor
@@ -46,76 +50,20 @@ floor : Floor -> Date -> Date
 floor dateFloor date =
   case dateFloor of
     Millisecond -> date
-    Second -> floorSecond date
-    Minute -> floorMinute date
-    Hour -> floorHour date
-    Day -> floorDay date
-    Month -> floorMonth date
+    Second -> Field.fieldToDateClamp (Field.Millisecond 0) date
+    Minute -> Field.fieldToDateClamp (Field.Second 0) (floor Second date)
+    Hour -> Field.fieldToDateClamp (Field.Minute 0) (floor Minute date)
+    Day -> Field.fieldToDateClamp (Field.Hour 0) (floor Hour date)
+    Month -> Field.fieldToDateClamp (Field.DayOfMonth 1) (floor Day date)
     Year -> floorYear date
-
-
-floorSecond : Date -> Date
-floorSecond date =
-  let
-    ticks = (Date.millisecond date) * Core.ticksAMillisecond
-    newDate = Core.fromTime ((Core.toTime date) - ticks)
-    -- _ = Debug.log("floorSecond") (Format.utcFormat date, Format.utcFormat.isoString newDate)
-  in
-    newDate
-
-
-floorMinute : Date -> Date
-floorMinute date =
-  let
-    ticks = (Date.second date) * Core.ticksASecond
-    updatedDate = Core.fromTime ((Core.toTime date) - ticks)
-    newDate = floorSecond updatedDate
-    -- _ = Debug.log("floorMinute") (Format.formatUtc date, Format.utcFormat.isoString updatedDate, Format.utcFormat.isoString newDate)
-  in
-    newDate
-
-
-floorHour : Date -> Date
-floorHour date =
-  let
-    ticks = (Date.minute date) * Core.ticksAMinute
-    updatedDate = Core.fromTime ((Core.toTime date) - ticks)
-    newDate = floorMinute updatedDate
-    -- _ = Debug.log("floorHour  ") (Format.formatUtc date, Format.utcFormat.isoString updatedDate, Format.utcFormat.isoString newDate)
-  in
-    newDate
-
-
-floorDay : Date -> Date
-floorDay date =
-  let
-    ticks = (Date.hour date) * Core.ticksAnHour
-    updatedDate = Core.fromTime ((Core.toTime date) - ticks)
-    newDate = floorHour updatedDate
-    -- _ = Debug.log("floorDay   ") (Format.formatUtc date, Format.utcFormat.isoString updatedDate, Format.utcFormat.isoString newDate)
-  in
-    newDate
-
-
-floorMonth : Date -> Date
-floorMonth date =
-  let
-    ticks = ((Date.day date) - 1) * Core.ticksADay
-    updatedDate = Core.fromTime ((Core.toTime date) - ticks)
-    newDate = floorDay updatedDate
-    -- _ = Debug.log("floorMonth ") (Format.utcFormat.isoString date, Format.utcFormat.isoString updatedDate, Format.utcFormat.isoString newDate)
-  in
-    newDate
 
 
 floorYear : Date -> Date
 floorYear date =
   let
-    startYearDate = Duration.firstOfTheMonth date Jan
-    startMonthDate = Duration.firstOfTheMonth date (Date.month date)
+    startMonthDate = Field.fieldToDateClamp (Field.DayOfMonth 1) date
+    startYearDate = Field.fieldToDateClamp (Field.Month Jan) startMonthDate
     monthTicks = (Core.toTime startMonthDate) - (Core.toTime startYearDate)
     updatedDate = Core.fromTime ((Core.toTime date) - monthTicks)
-    newDate = floorMonth updatedDate
-    -- _ = Debug.log("floorYear  ") (Format.utcFormat.isoString date, Format.utcFormat.isoString updatedDate, Format.utcFormat.isoString newDate)
   in
-    newDate
+    floor Month updatedDate

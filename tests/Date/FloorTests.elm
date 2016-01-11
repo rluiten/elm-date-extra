@@ -17,7 +17,7 @@ tests =
 
 
 floorDateTests _ =
-  suite "floor tests" <|
+  suite "Floor tests" <|
     List.map runFloorCase floorCases
 
 
@@ -28,7 +28,7 @@ runFloorCase (dateStr, dateFloor, expectedDate) =
     dateOut = Floor.floor dateFloor date
     dateOutStr = Format.utcIsoString dateOut
     dateOut2Str = Format.isoString dateOut
-    -- _ = Debug.log("runFloorDateCase") (dateStr, date, dateFloor, dateOut, dateOutStr, dateOut2Str)
+    -- _ = Debug.log("runFloorCase") (dateStr, date, dateFloor, dateOut, dateOutStr, dateOut2Str)
   in
     test ("floor " ++ (toString dateFloor)
           ++ " on " ++ dateStr
