@@ -1,6 +1,7 @@
 module Date.Core
   ( monthToInt
   , daysInMonth
+  , monthList
   , daysInNextMonth
   , daysInPrevMonth
   , daysInMonthDate
@@ -33,6 +34,7 @@ module Date.Core
 ## Info
 @docs monthToInt
 @docs daysInMonth
+@docs monthList
 @docs daysInNextMonth
 @docs daysInPrevMonth
 @docs daysInMonthDate
@@ -163,6 +165,24 @@ fromTime =
 toTime : Date -> Int
 toTime =
     floor << Date.toTime
+
+
+{-| List of months in order from Jan to Dec. -}
+monthList : List Month
+monthList =
+  [ Jan
+  , Feb
+  , Mar
+  , Apr
+  , May
+  , Jun
+  , Jul
+  , Aug
+  , Sep
+  , Oct
+  , Nov
+  , Dec
+  ]
 
 
 {-| Return days in month for year month. -}

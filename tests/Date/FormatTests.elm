@@ -12,6 +12,7 @@ import Time exposing (Time)
 import Date.Core as Core
 import Date.Format as Format
 import Date.Config.Config_en_us as English
+import Date.Period as DPeriod exposing (Period (Hour))
 
 
 tests : Test
@@ -30,11 +31,19 @@ Time : 1407833631116
   is : 2014-08-12T18:53:51.116+10:00
   is : 2014-08-12T04:53:51.116-04:00
 
+Time : 1407855231116
+  is : 2014-08-12T14:53:51.116+00:00
+  is : 2014-08-13T00:53:51.116+10:00
+
+
 Using floor here to work around bug in Elm 0.16 on Windows
 that cant produce this as integer into the javascript source.
 
 -}
 aTestTime = floor 1407833631116.0
+
+
+aTestTime2 = floor 1407855231116.0
 
 
 formatTest _ =
@@ -56,7 +65,6 @@ formatTestCases =
   , ("with %% no space", " %12/08/2014", " %%%d/%m/%Y", aTestTime)
   , ("with milliseconds", "2014-08-12 (.116)", "%Y-%m-%d (.%L)", aTestTime)
   , ("with milliseconds", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
-
   ]
 
 
@@ -97,5 +105,13 @@ formatOffsetTestCases =
     )
   , ( "get back expected date in utc -12:00", "2014-08-12T20:53:51.116+12:00"
     , "%Y-%m-%dT%H:%M:%S.%L%:z", aTestTime, -720
+    )
+  , ( "12 hour time %I", "Wednesday, 13 August 2014 12:53:51 AM"
+    , "%A, %e %B %Y %I:%M:%S %p"
+    , aTestTime2, -600
+    )
+  , ( "12 hour time %l", "Wednesday, 13 August 2014 12:53:51 AM"
+    , "%A, %e %B %Y %l:%M:%S %p"
+    , aTestTime2, -600
     )
   ]

@@ -251,7 +251,11 @@ formatOffsetStr betweenHoursMinutes offset =
     ++ (padWith '0' minute)
 
 
-mod12 h = h % 12
+mod12 h =
+  if h % 12 == 0 then
+    12
+  else
+    h % 12
 
 
 padWith : Char -> a -> String
