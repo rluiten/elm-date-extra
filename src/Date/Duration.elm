@@ -37,7 +37,7 @@ type Duration
   | Year
   -- | Combo {year,month,week,day,hour,min,sec,millisecond}
   -- DateDiff could return a Duration with fields set
-  
+
 
 {-| Add duration * count to date. -}
 add : Duration -> Int -> Date -> Date
@@ -102,7 +102,10 @@ addYear yearCount date  =
   addMonth (12 * yearCount) date
 
 
-{-| Return first of month for year of date adjusted to given month. -}
+
+{-| Return first of month for year of date adjusted to given month.
+TODO WILL BE REMOVED IN FUTURE in favour of Field module.
+-}
 firstOfTheMonth : Date -> Month -> Date
 firstOfTheMonth baseDate targetMonth =
   let

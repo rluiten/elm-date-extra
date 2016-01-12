@@ -83,7 +83,7 @@ is comp date1 date2 =
         time1 >= time2
 
 
-{- Compare three dates.
+{-| Compare three dates.
 
 This figures out the low and high bounds from date2
 and date3 using minimum and maximum of them respectively.
