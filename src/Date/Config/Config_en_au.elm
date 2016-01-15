@@ -7,6 +7,7 @@ module Date.Config.Config_en_au where
 Copyright (c) 2016 Robin Luiten
 -}
 
+import Date
 import Date.Config as Config
 import Date.I18n.I_en_us as English
 
@@ -21,9 +22,11 @@ config =
       , monthName = English.monthName
       }
   , format =
-      { date = "%d/%m/%Y" -- DD/MM/YYY
-      -- , longdate = "%A, %e %B %Y"
-      , time = "%I:%M:%S %p"
-      , datetime = "%d/%m/%Y %I:%M:%S %p"
+      { date = "%-d/%m/%Y" -- d/MM/yyyy
+      , longDate = "%A, %-d %B %Y" -- dddd, d MMMM yyyy
+      , time = "%-I:%M %p" -- h:mm tt
+      , longTime = "%-I:%M:%S %p" -- h:mm:ss tt
+      , dateTime = "%-d/%m/%Y %-I:%M %p"  -- date + time
+      , firstDayOfWeek = Date.Mon
       }
   }

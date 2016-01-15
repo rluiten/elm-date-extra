@@ -26,7 +26,10 @@ type alias Config =
       }
   , format :
       { date : String
+      , longDate : String
       , time : String
-      , datetime : String
+      , longTime : String
+      , dateTime : String
+      , firstDayOfWeek : Date.Day
       }
   }

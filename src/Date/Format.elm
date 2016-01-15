@@ -169,7 +169,7 @@ hackDateAsOffset offsetMinutes date =
 Initially from https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm.
 -}
 formatRegex : Regex.Regex
-formatRegex = Regex.regex "%(Y|m|B|b|d|e|A|a|H|k|I|l|p|P|M|S|%|L|z|:z)"
+formatRegex = Regex.regex "%(Y|m|_m|-m|B|^B|b|^b|d|-d|e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
 
 
 {-| Use a format string to format a date.
@@ -202,7 +202,7 @@ formatOffset config offset formatStr date =
     )
     formatStr
 
-
+-- I don't like space padded variants. :( most annoying
 formatToken : Config.Config -> Int -> Date.Date -> Regex.Match -> String
 formatToken config offset d m =
   let
@@ -211,15 +211,24 @@ formatToken config offset d m =
     case symbol of
       "Y" -> d |> Date.year |> padWithN 4 '0'
       "m" -> d |> Date.month |> Core.monthToInt |> padWith '0'
+      "_m" -> d |> Date.month |> Core.monthToInt |> padWith ' '
+      "-m" -> d |> Date.month |> Core.monthToInt |> toString
       "B" -> d |> Date.month |> config.i18n.monthName
+      "^B" -> d |> Date.month |> config.i18n.monthName |> String.toUpper
       "b" -> d |> Date.month |> config.i18n.monthShort
+      "^b" -> d |> Date.month |> config.i18n.monthShort |> String.toUpper
       "d" -> d |> Date.day |> padWith '0'
+      "-d" -> d |> Date.day |> toString
       "e" -> d |> Date.day |> padWith ' '
       "A" -> d |> Date.dayOfWeek |> config.i18n.dayName
+      "^A" -> d |> Date.dayOfWeek |> config.i18n.dayName |> String.toUpper
       "a" -> d |> Date.dayOfWeek |> config.i18n.dayShort
+      "^a" -> d |> Date.dayOfWeek |> config.i18n.dayShort |> String.toUpper
       "H" -> d |> Date.hour |> padWith '0'
+      "-H" -> d |> Date.hour |> toString
       "k" -> d |> Date.hour |> padWith ' '
       "I" -> d |> Date.hour |> mod12 |> padWith '0'
+      "-I" -> d |> Date.hour |> mod12 |> toString
       "l" -> d |> Date.hour |> mod12 |> padWith ' '
       "p" -> if Date.hour d < 13 then "AM" else "PM"
       "P" -> if Date.hour d < 13 then "am" else "pm"
