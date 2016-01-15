@@ -1,6 +1,5 @@
 module Date.Duration
   ( add
-  , firstOfTheMonth
   , Duration (..)
   ) where
 
@@ -9,7 +8,6 @@ module Date.Duration
 Name of type concept copied from NodaTime.
 
 @docs add
-@docs firstOfTheMonth
 @docs Duration
 
 Copyright (c) 2016 Robin Luiten
@@ -100,18 +98,3 @@ addMonthNegative goalDay monthCount date =
 addYear : Int -> Date -> Date
 addYear yearCount date  =
   addMonth (12 * yearCount) date
-
-
-
-{-| Return first of month for year of date adjusted to given month.
-TODO WILL BE REMOVED IN FUTURE in favour of Field module.
--}
-firstOfTheMonth : Date -> Month -> Date
-firstOfTheMonth baseDate targetMonth =
-  let
-    date = Core.toFirstOfMonth baseDate
-    month = Date.month date
-    monthDiff =
-      (Core.monthToInt targetMonth) - (Core.monthToInt month)
-  in
-    add Month monthDiff date

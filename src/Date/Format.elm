@@ -146,7 +146,6 @@ isoDateString date =
     (String.padLeft 2 '0' (toString day))
 
 
--- candidate deprecation, once move to format
 {-| Adjust date as if it was in utc zone. -}
 hackDateAsUtc : Date -> Date
 hackDateAsUtc date =
