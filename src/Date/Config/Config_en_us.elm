@@ -12,7 +12,7 @@ import Date.Config as Config
 import Date.I18n.I_en_us as English
 
 
-{-| Config for en-us -}
+{-| Config for en-us. -}
 config : Config.Config
 config =
   { i18n =

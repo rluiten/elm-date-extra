@@ -17,6 +17,10 @@ import Date.Config.Config_en_au as Config_en_au
 import Date.Period as DPeriod exposing (Period (Hour))
 
 
+en_au_config = Config_en_au.config
+en_us_config = Config_en_us.config
+
+
 tests : Test
 tests =
   suite "Date.Format tests"
@@ -82,17 +86,17 @@ formatTestCases =
   , ("with milliseconds", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
   , ("small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3)
 
-  , ("Config_en_us date", "8/5/2014", (.date (.format (Config_en_us.config))), aTestTime5)
-  , ("Config_en_us longDate", "Tuesday, August 05, 2014", (.longDate (.format (Config_en_us.config))), aTestTime5)
-  , ("Config_en_us time", "5:53 AM", (.time (.format (Config_en_us.config))), aTestTime5)
-  , ("Config_en_us longTime", "5:53:51 AM", (.longTime (.format (Config_en_us.config))), aTestTime5)
-  , ("Config_en_us dateTime", "8/5/2014 5:53 AM", (.dateTime (.format (Config_en_us.config))), aTestTime5)
+  , ("Config_en_us date", "8/5/2014", en_us_config.format.date, aTestTime5)
+  , ("Config_en_us longDate", "Tuesday, August 05, 2014", en_us_config.format.longDate, aTestTime5)
+  , ("Config_en_us time", "5:53 AM", en_us_config.format.time, aTestTime5)
+  , ("Config_en_us longTime", "5:53:51 AM", en_us_config.format.longTime, aTestTime5)
+  , ("Config_en_us dateTime", "8/5/2014 5:53 AM", en_us_config.format.dateTime, aTestTime5)
 
-  , ("Config_en_au date", "5/08/2014", (.date (.format (Config_en_au.config))), aTestTime5)
-  , ("Config_en_au longDate", "Tuesday, 5 August 2014", (.longDate (.format (Config_en_au.config))), aTestTime5)
-  , ("Config_en_au time", "5:53 AM", (.time (.format (Config_en_au.config))), aTestTime5)
-  , ("Config_en_au longTime", "5:53:51 AM", (.longTime (.format (Config_en_au.config))), aTestTime5)
-  , ("Config_en_au dateTime", "5/08/2014 5:53 AM", (.dateTime (.format (Config_en_au.config))), aTestTime5)
+  , ("Config_en_au date", "5/08/2014", en_au_config.format.date, aTestTime5)
+  , ("Config_en_au longDate", "Tuesday, 5 August 2014", en_au_config.format.longDate, aTestTime5)
+  , ("Config_en_au time", "5:53 AM", en_au_config.format.time, aTestTime5)
+  , ("Config_en_au longTime", "5:53:51 AM", en_au_config.format.longTime, aTestTime5)
+  , ("Config_en_au dateTime", "5/08/2014 5:53 AM", en_au_config.format.dateTime, aTestTime5)
 
   -- , ("Config_en_us date", "x", Config_en_us.config.format.date, aTestTime)
   -- , ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)

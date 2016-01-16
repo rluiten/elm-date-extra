@@ -14,6 +14,8 @@ import Date.UtilsTests
 import Date.FormatTests
 import Date.CompareTests
 import Date.FieldTests
+import Date.ConfigTests
+
 
 main : Element
 main =
@@ -28,5 +30,6 @@ main =
         , Date.FormatTests.tests
         , Date.CompareTests.tests
         , Date.FieldTests.tests
+        , Date.ConfigTests.tests
         ]
     )
