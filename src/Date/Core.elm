@@ -78,7 +78,7 @@ import Date exposing (Date, Day (..), Month (..))
 import Time
 
 
-_ = Debug.log("Date Const ticks") (ticksASecond, ticksAMinute, ticksAnHour, ticksADay, ticksAWeek)
+-- _ = Debug.log("Date Const ticks") (ticksASecond, ticksAMinute, ticksAnHour, ticksADay, ticksAWeek)
 
 
 {-| Epoch starting point for tick 0. -}
