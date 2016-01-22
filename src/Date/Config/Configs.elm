@@ -3,7 +3,7 @@ module Date.Config.Configs
   , configs
   ) where
 
-{-| Get a Date Extra Config based upon ISO 639-1 code language country code.
+{-| Get a Date Extra Config based up on a locale code.
 
 @docs getConfig
 
@@ -30,7 +30,8 @@ configs =
 
 {-| Get a Date Extra Config for a locale id.
 
-Handles cc-cc, cc_cc formats ISO 639-1 codes.
+Lower case matches strings and accepts "-" or "_" to seperate
+the characters in code.
 
 Returns "en_us" config if it can't find a match in configs.
 -}
