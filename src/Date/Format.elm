@@ -19,10 +19,6 @@ module Date.Format
 The format code originally came from and was modified and extended from.
 https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
 
-## Notes
-* formatUtc and formatOffset are very new and not well tested.
-* hackDateAsUtc and hackDateAsOffset not sure should be exposed.
-
 ## Date presentation
 @docs format
 @docs formatUtc
@@ -55,6 +51,7 @@ import Date.Config as Config
 import Date.Core as Core
 import Date.Create as Create
 import Date.Config.Config_en_us as English
+import Date.Internal as Internal
 
 
 {-| ISO date time, 24hr. -}
@@ -126,7 +123,7 @@ recursive loops in Format.format.
 -}
 utcIsoDateString : Date -> String
 utcIsoDateString date =
-  (isoDateString (hackDateAsUtc date))
+  (isoDateString (Internal.hackDateAsUtc date))
 
 
 {-| Return date as string.
@@ -144,23 +141,6 @@ isoDateString date =
     (String.padLeft 4 '0' (toString year)) ++ "-" ++
     (String.padLeft 2 '0' (toString (Core.monthToInt month))) ++ "-" ++
     (String.padLeft 2 '0' (toString day))
-
-
-{-| Adjust date as if it was in utc zone. -}
-hackDateAsUtc : Date -> Date
-hackDateAsUtc date =
-  hackDateAsOffset (Create.getTimezoneOffset date) date
-
-
-{-| Adjust date for time zone offset in minutes. -}
-hackDateAsOffset : Int -> Date -> Date
-hackDateAsOffset offsetMinutes date =
-  --  Core.fromTime <| Core.toTime date + (offsetMinutes * Core.ticksAMinute)
-  -- let _ = Debug.log("hackDateAsOffset") (offsetMinutes)
-  -- in
-  Core.toTime date
-  |> (+) (offsetMinutes * Core.ticksAMinute)
-  |> Core.fromTime
 
 
 {- Date formatter.
@@ -197,7 +177,7 @@ formatOffset config offset formatStr date =
     ( formatToken
         config
         offset
-        (hackDateAsOffset hackOffset date)
+        (Internal.hackDateAsOffset hackOffset date)
     )
     formatStr
 

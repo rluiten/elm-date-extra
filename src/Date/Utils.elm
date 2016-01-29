@@ -4,12 +4,16 @@ module Date.Utils
   , dayList
   , isoWeek
   , isoWeekOne
+  , timeFromFields
+  , dateFromFields
   ) where
 
 {-| Date Utils.
 
 ## Date parsing
 @docs fromString
+@docs dateFromFields
+@docs timeFromFields
 
 **Be careful with unsafeFromString it will Debug.crash() if it cant parse date.**
 @docs unsafeFromString
@@ -27,8 +31,11 @@ import Regex
 import String
 import Time
 
+import Date.Create as Create
 import Date.Core as Core
+import Date.Field as Field
 import Date.Format as Format
+import Date.Internal as Internal
 import Date.Period as Period
 import Date.Floor as Floor
 import Date.Compare as Compare exposing (is, Compare2 (..))
@@ -160,3 +167,36 @@ checkDateResult dateStr date =
           )
       else
         Ok date
+
+
+{-| Create a date in current time zone from given fields.
+All field values are clamped to there allowed range values.
+This can only return dates in current time zone.
+
+Hours are input in 24 hour time range 0 to 23 valid.
+-}
+dateFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Date
+dateFromFields year month day hour minute second millisecond =
+  Date.fromTime 0
+    |> Field.fieldToDateClamp (Field.Year year)
+    |> Field.fieldToDateClamp (Field.Month month)
+    |> Field.fieldToDateClamp (Field.DayOfMonth day)
+    |> Field.fieldToDateClamp (Field.Hour hour)
+    |> Field.fieldToDateClamp (Field.Minute minute)
+    |> Field.fieldToDateClamp (Field.Second second)
+    |> Field.fieldToDateClamp (Field.Millisecond millisecond)
+
+
+{-| Create a time in current time zone from given fields, for
+when you dont care about the date part but need time part anyway.
+
+All field values are clamped to there allowed range values.
+This can only return dates in current time zone.
+
+Hours are input in 24 hour time range 0 to 23 valid.
+
+This defaults to year 1970, month Jan, day of month 1 for date part.
+-}
+timeFromFields : Int -> Int -> Int -> Int -> Date
+timeFromFields =
+  dateFromFields 1970 Jan 1

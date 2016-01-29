@@ -6,11 +6,15 @@ import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
+import Date.Config.Config_en_au as Config_en_au
 import Date.Core as Core
 import Date.Format as Format
 import Date.Create as Create
 import Date.Utils as DateUtils
 import TestUtils
+
+
+config_en_au = Config_en_au.config
 
 
 tests : Test
@@ -23,6 +27,7 @@ tests =
     , dayListTest ()
     , isoWeekOneTests ()
     , isoWeekTests ()
+    , fromFieldsTests ()
     ]
 
 
@@ -131,3 +136,44 @@ isoWeekCases =
   , ("2007-12-30", 2007, 52, 7)
   , ("2010-01-03", 2009, 53, 7)
   ]
+
+
+fromFieldsTests _ =
+  suite "dateFromFields timeFromFields tests"
+  [ test "test dateFromFields for Date time around code creation" <|
+      assertEqual
+        "2016-01-29T11:07:47.111+1000"
+        (testDateFromFields 2016 Date.Jan 29 11 07 47 111)
+  , test "test dateFromFields for Date time around epoch" <|
+      assertEqual
+        "1970-01-01T05:09:13.111+1000"
+        (testDateFromFields 1970 Date.Jan 1 5 9 13 111)
+  , test "test timeFromFields" <|
+      assertEqual
+        "1970-01-01T07:09:13.111+1000"
+        (testTimeFromFields 7 9 13 111)
+  ]
+
+
+-- helper
+testDateFromFields year month day hour minute second millisecond =
+  let
+    date = DateUtils.dateFromFields year month day hour minute second millisecond
+  in
+    Format.formatOffset
+      config_en_au
+      (Create.getTimezoneOffset date)
+      Format.isoMsecOffsetFormat
+      (date)
+
+
+-- helper
+testTimeFromFields hour minute second millisecond =
+  let
+    date = DateUtils.timeFromFields hour minute second millisecond
+  in
+    Format.formatOffset
+      config_en_au
+      (Create.getTimezoneOffset date)
+      Format.isoMsecOffsetFormat
+      (date)
