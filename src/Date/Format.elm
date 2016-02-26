@@ -206,11 +206,11 @@ formatToken config offset d m =
       "H" -> d |> Date.hour |> padWith '0'
       "-H" -> d |> Date.hour |> toString
       "k" -> d |> Date.hour |> padWith ' '
-      "I" -> d |> Date.hour |> mod12 |> padWith '0'
-      "-I" -> d |> Date.hour |> mod12 |> toString
-      "l" -> d |> Date.hour |> mod12 |> padWith ' '
-      "p" -> if Date.hour d < 13 then "AM" else "PM"
-      "P" -> if Date.hour d < 13 then "am" else "pm"
+      "I" -> d |> Date.hour |> hourMod12 |> padWith '0'
+      "-I" -> d |> Date.hour |> hourMod12 |> toString
+      "l" -> d |> Date.hour |> hourMod12 |> padWith ' '
+      "p" -> if Date.hour d < 12 then "AM" else "PM"
+      "P" -> if Date.hour d < 12 then "am" else "pm"
       "M" -> d |> Date.minute |> padWith '0'
       "S" -> d |> Date.second |> padWith '0'
       "L" -> d |> Date.millisecond |> padWithN 3 '0'
@@ -239,7 +239,7 @@ formatOffsetStr betweenHoursMinutes offset =
     ++ (padWith '0' minute)
 
 
-mod12 h =
+hourMod12 h =
   if h % 12 == 0 then
     12
   else
