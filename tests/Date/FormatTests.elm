@@ -93,8 +93,8 @@ formatTestCases =
   , ("Config_en_us time", "5:53 AM", en_us_config.format.time, aTestTime5)
   , ("Config_en_us longTime", "5:53:51 AM", en_us_config.format.longTime, aTestTime5)
   , ("Config_en_us dateTime", "8/5/2014 5:53 AM", en_us_config.format.dateTime, aTestTime5)
-  , ("Config_en_us dateTime", "8/4/2014 12:00 PM", en_us_config.format.dateTime, aTestTime6)
-  , ("Config_en_us dateTime", "8/4/2014 12:00 AM", en_us_config.format.dateTime, aTestTime7)
+  , ("Config_en_us dateTime test PM", "8/4/2014 12:00 PM", en_us_config.format.dateTime, aTestTime6)
+  , ("Config_en_us dateTime test AM", "8/4/2014 12:00 AM", en_us_config.format.dateTime, aTestTime7)
 
   , ("Config_en_au date", "5/08/2014", en_au_config.format.date, aTestTime5)
   , ("Config_en_au longDate", "Tuesday, 5 August 2014", en_au_config.format.longDate, aTestTime5)

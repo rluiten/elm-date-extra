@@ -6,6 +6,7 @@ module Date.Config.Configs
 {-| Get a Date Extra Config based up on a locale code.
 
 @docs getConfig
+@docs configs
 
 Copyright (c) 2016 Robin Luiten
 -}

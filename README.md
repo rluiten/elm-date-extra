@@ -66,6 +66,7 @@ It is hoped that with feedback from users and reviewers with deep Type-zen it wi
 
 #### Feedback that is of interest.
 
+* Additional locale for the Configs section.
 * Suggestions to improve API and or package structure or Types.
  * Particularly interested in improvements that might make it safer and easier to work with dates.
 * More Examples for example folder

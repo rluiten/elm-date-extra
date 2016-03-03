@@ -17,6 +17,7 @@
         "Date.Floor",
         "Date.Utils",
         "Date.I18n.I_en_us",
+        "Date.Config.Configs",
         "Date.Config.Config_en_us",
         "Date.Config.Config_en_au",
         "Date.Field"
