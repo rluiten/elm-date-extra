@@ -108,7 +108,7 @@ addTimeUnit unit addend date =
 If  you add the result of this function to date2 with addend of 1
 will return date1.
  -}
-diff : Date -> Date -> Period
+diff : Date -> Date -> DeltaRecord
 diff date1 date2 =
   let
     ticksDiff = Core.toTime date1 - Core.toTime date2
@@ -136,11 +136,10 @@ diff date1 date2 =
         , onlylDaysDiff % 7
         )
   in
-    Delta
-      { week = weekDiff
-      , day = dayDiff
-      , hour = hourDiff
-      , minute = minuteDiff
-      , second = secondDiff
-      , millisecond = millisecondDiff
-      }
+    { week = weekDiff
+    , day = dayDiff
+    , hour = hourDiff
+    , minute = minuteDiff
+    , second = secondDiff
+    , millisecond = millisecondDiff
+    }

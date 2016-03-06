@@ -95,34 +95,31 @@ runDiffCase (date1str, date2str, expectedDiff) =
 diffCases =
   [ ( "2015-06-10 11:43:55.213"
     , "2015-06-10 11:43:55.214"
-    , Delta
-        { week = 0
-        , day = 0
-        , hour = 0
-        , minute = 0
-        , second = 0
-        , millisecond = -1
-        }
+    , { week = 0
+      , day = 0
+      , hour = 0
+      , minute = 0
+      , second = 0
+      , millisecond = -1
+      }
     )
   , ( "2015-06-10 11:43:55.213"
     , "2015-06-02 10:42:54.212"
-    , Delta
-        { week = 1
-        , day = 1
-        , hour = 1
-        , minute = 1
-        , second = 1
-        , millisecond = 1
-        }
+    , { week = 1
+      , day = 1
+      , hour = 1
+      , minute = 1
+      , second = 1
+      , millisecond = 1
+      }
     )
   , ( "2015-06-02 10:42:54.212"
     , "2015-06-10 11:43:55.213"
-    , Delta
-        { week = -1
-        , day = -1
-        , hour = -1
-        , minute = -1
-        , second = -1
-        , millisecond = -1
-        }
+    , { week = -1
+      , day = -1
+      , hour = -1
+      , minute = -1
+      , second = -1
+      , millisecond = -1
+      }
     )  ]
