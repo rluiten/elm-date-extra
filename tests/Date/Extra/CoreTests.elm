@@ -1,10 +1,10 @@
-module Date.CoreTests where
+module Date.Extra.CoreTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 
-import Date.Core as Core
-import Date.Utils as DateUtils
+import Date.Extra.Core as Core
+import Date.Extra.Utils as DateUtils
 import TestUtils
 
 

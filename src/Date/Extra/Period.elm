@@ -1,4 +1,4 @@
-module Date.Period
+module Date.Extra.Period
   ( add
   , Period (..)
   , zeroDelta
@@ -24,7 +24,7 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date)
 
-import Date.Core as Core
+import Date.Extra.Core as Core
 
 
 {-| A Period.

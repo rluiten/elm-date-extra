@@ -1,11 +1,11 @@
-module Date.PeriodTests where
+module Date.Extra.PeriodTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Period as Period exposing (Period (..))
-import Date.Utils as DateUtils
+import Date.Extra.Period as Period exposing (Period (..))
+import Date.Extra.Utils as DateUtils
 import TestUtils
 
 

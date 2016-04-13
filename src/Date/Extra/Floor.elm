@@ -1,4 +1,4 @@
-module Date.Floor
+module Date.Extra.Floor
   ( floor
   , Floor (..)
   ) where
@@ -27,8 +27,8 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date, Month (..))
 
-import Date.Core as Core
-import Date.Field as Field
+import Date.Extra.Core as Core
+import Date.Extra.Field as Field
 
 {-| Date granularity of operations. -}
 type Floor

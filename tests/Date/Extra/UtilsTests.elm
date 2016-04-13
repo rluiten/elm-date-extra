@@ -1,4 +1,4 @@
-module Date.UtilsTests where
+module Date.Extra.UtilsTests where
 
 {- Copyright (c) 2016 Robin Luiten -}
 
@@ -6,11 +6,11 @@ import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Config.Config_en_au as Config_en_au
-import Date.Core as Core
-import Date.Format as Format
-import Date.Create as Create
-import Date.Utils as DateUtils
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Core as Core
+import Date.Extra.Format as Format
+import Date.Extra.Create as Create
+import Date.Extra.Utils as DateUtils
 import TestUtils
 
 

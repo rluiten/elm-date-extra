@@ -16,8 +16,8 @@ import Graphics.Element exposing (flow, down, leftAligned)
 import String
 import Text
 
-import Date.Config.Config_en_au exposing (config)
-import Date.Format as Format exposing (format)
+import Date.Extra.Config.Config_en_au exposing (config)
+import Date.Extra.Format as Format exposing (format)
 
 
 {- Modify the i18n in config to change month names so they area reversed. -}

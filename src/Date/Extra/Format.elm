@@ -1,4 +1,4 @@
-module Date.Format
+module Date.Extra.Format
   ( format
   , formatUtc
   , formatOffset
@@ -47,11 +47,11 @@ import Date exposing (Date, Month)
 import Regex
 import String exposing (padLeft)
 
-import Date.Config as Config
-import Date.Core as Core
-import Date.Create as Create
-import Date.Config.Config_en_us as English
-import Date.Internal as Internal
+import Date.Extra.Config as Config
+import Date.Extra.Core as Core
+import Date.Extra.Create as Create
+import Date.Extra.Config.Config_en_us as English
+import Date.Extra.Internal as Internal
 
 
 {-| ISO date time, 24hr. -}

@@ -1,4 +1,4 @@
-module Date.Create
+module Date.Extra.Create
   ( makeDateTicks
   , getTimezoneOffset
   ) where
@@ -13,7 +13,7 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date, Month (..))
 
-import Date.Core as Core
+import Date.Extra.Core as Core
 
 
 {-| Return raw epoch ticks since Unix epoch for given date.

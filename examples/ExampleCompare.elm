@@ -7,7 +7,7 @@ import Date
 import Graphics.Element exposing (flow, down, leftAligned)
 import Text
 
-import Date.Compare as Compare exposing (is, Compare2 (..))
+import Date.Extra.Compare as Compare exposing (is, Compare2 (..))
 
 
 {- Time 1407833631161.0 in utc is "2014-08-12 08:53:51.161" -}

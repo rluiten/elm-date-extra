@@ -1,10 +1,10 @@
-module Date.DurationTests where
+module Date.Extra.DurationTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Duration as Duration exposing (Duration (..))
+import Date.Extra.Duration as Duration exposing (Duration (..))
 import TestUtils
 
 

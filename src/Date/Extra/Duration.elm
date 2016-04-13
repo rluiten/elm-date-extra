@@ -1,4 +1,4 @@
-module Date.Duration
+module Date.Extra.Duration
   ( add
   , Duration (..)
   ) where
@@ -15,9 +15,9 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date, Month)
 
--- import Date.Calendar as Calendar
-import Date.Core as Core
-import Date.Period as Period
+-- import Date.Extra.Calendar as Calendar
+import Date.Extra.Core as Core
+import Date.Extra.Period as Period
 
 
 {-| A Duration is time period that may vary with with calendar and time.

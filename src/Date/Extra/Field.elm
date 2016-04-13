@@ -1,4 +1,4 @@
-module Date.Field
+module Date.Extra.Field
   ( fieldToDate
   , fieldToDateClamp
   , Field (..)
@@ -14,8 +14,8 @@ module Date.Field
 
 import Date exposing (Date, Day, Month)
 
-import Date.Core as Core
-import Date.Duration as Duration
+import Date.Extra.Core as Core
+import Date.Extra.Duration as Duration
 
 
 {-| Configured Field and Value to set on date.

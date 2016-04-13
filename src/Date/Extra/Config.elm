@@ -1,4 +1,4 @@
-module Date.Config where
+module Date.Extra.Config where
 
 {-| Date configuration.
 

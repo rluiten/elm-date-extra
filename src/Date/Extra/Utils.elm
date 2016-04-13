@@ -1,4 +1,4 @@
-module Date.Utils
+module Date.Extra.Utils
   ( fromString
   , unsafeFromString
   , dayList
@@ -31,14 +31,14 @@ import Regex
 import String
 import Time
 
-import Date.Create as Create
-import Date.Core as Core
-import Date.Field as Field
-import Date.Format as Format
-import Date.Internal as Internal
-import Date.Period as Period
-import Date.Floor as Floor
-import Date.Compare as Compare exposing (is, Compare2 (..))
+import Date.Extra.Create as Create
+import Date.Extra.Core as Core
+import Date.Extra.Field as Field
+import Date.Extra.Format as Format
+import Date.Extra.Internal as Internal
+import Date.Extra.Period as Period
+import Date.Extra.Floor as Floor
+import Date.Extra.Compare as Compare exposing (is, Compare2 (..))
 
 
 {-| Return a list of days dayLength long for successive days

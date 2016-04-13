@@ -1,4 +1,4 @@
-module Date.Core
+module Date.Extra.Core
   ( monthToInt
   , daysInMonth
   , monthList

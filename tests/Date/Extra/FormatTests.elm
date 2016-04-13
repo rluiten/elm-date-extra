@@ -1,4 +1,4 @@
-module Date.FormatTests where
+module Date.Extra.FormatTests where
 
 {- Test date format.
 
@@ -10,11 +10,11 @@ import ElmTest exposing (..)
 import Time exposing (Time)
 
 -- import Date.Config as Config
-import Date.Core as Core
-import Date.Format as Format
-import Date.Config.Config_en_us as Config_en_us
-import Date.Config.Config_en_au as Config_en_au
-import Date.Period as DPeriod exposing (Period (Hour))
+import Date.Extra.Core as Core
+import Date.Extra.Format as Format
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Period as DPeriod exposing (Period (Hour))
 
 
 en_au_config = Config_en_au.config

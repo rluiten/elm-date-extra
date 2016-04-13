@@ -1,12 +1,12 @@
-module Date.CreateTests where
+module Date.Extra.CreateTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Core as Core
-import Date.Create as Create
-import Date.Utils as DateUtils
+import Date.Extra.Core as Core
+import Date.Extra.Create as Create
+import Date.Extra.Utils as DateUtils
 
 
 tests : Test

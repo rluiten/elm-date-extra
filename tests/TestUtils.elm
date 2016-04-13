@@ -8,9 +8,9 @@ import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Core as Core
-import Date.Format as Format
-import Date.Utils as DateUtils
+import Date.Extra.Core as Core
+import Date.Extra.Format as Format
+import Date.Extra.Utils as DateUtils
 
 
 dateStr = Format.isoString -- probably bad idea for now using.

@@ -1,12 +1,12 @@
-module Date.Internal where
+module Date.Extra.Internal where
 
 {-| This module not exposed to clients.
 -}
 
 import Date exposing (Date)
 
-import Date.Core as Core
-import Date.Create as Create
+import Date.Extra.Core as Core
+import Date.Extra.Create as Create
 
 
 {-| Adjust date as if it was in utc zone. -}

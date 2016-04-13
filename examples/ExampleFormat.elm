@@ -7,8 +7,8 @@ import Date
 import Graphics.Element exposing (flow, down, leftAligned)
 import Text
 
-import Date.Config.Config_en_au exposing (config)
-import Date.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
+import Date.Extra.Config.Config_en_au exposing (config)
+import Date.Extra.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
 
 
 {- Configured format with config and format string.
@@ -18,7 +18,7 @@ import Date.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
 displayString1 =
   Result.withDefault "Failed to get a date." <|
     Result.map
-      (format config config.format.datetime)
+      (format config config.format.dateTime)
       (Date.fromString "2015-06-01 12:45:14.211Z")
 
 

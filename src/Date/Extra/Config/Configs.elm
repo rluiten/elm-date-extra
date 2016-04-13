@@ -1,4 +1,4 @@
-module Date.Config.Configs
+module Date.Extra.Config.Configs
   ( getConfig
   , configs
   ) where
@@ -15,9 +15,9 @@ import Dict exposing (Dict)
 import Regex exposing (replace, regex, HowMany (All))
 import String
 
-import Date.Config as Config exposing (Config)
-import Date.Config.Config_en_us as Config_en_us
-import Date.Config.Config_en_au as Config_en_au
+import Date.Extra.Config as Config exposing (Config)
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_en_au as Config_en_au
 
 
 {-| Built in configurations. -}

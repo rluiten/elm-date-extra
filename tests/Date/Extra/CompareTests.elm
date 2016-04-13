@@ -1,4 +1,4 @@
-module Date.CompareTests where
+module Date.Extra.CompareTests where
 
 {- Test date comparison.
 
@@ -9,8 +9,8 @@ import Date exposing (Date)
 import ElmTest exposing (..)
 import Time exposing (Time)
 
-import Date.Compare as Compare exposing (Compare2 (..), Compare3 (..))
-import Date.Core as Core
+import Date.Extra.Compare as Compare exposing (Compare2 (..), Compare3 (..))
+import Date.Extra.Core as Core
 
 
 tests : Test

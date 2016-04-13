@@ -1,4 +1,4 @@
-module Date.Config.Config_en_us where
+module Date.Extra.Config.Config_en_au where
 
 {-| This is the default english config for formatting dates.
 
@@ -8,11 +8,11 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date
-import Date.Config as Config
-import Date.I18n.I_en_us as English
+import Date.Extra.Config as Config
+import Date.Extra.I18n.I_en_us as English
 
 
-{-| Config for en-us. -}
+{-| Config for en-au. -}
 config : Config.Config
 config =
   { i18n =
@@ -22,11 +22,11 @@ config =
       , monthName = English.monthName
       }
   , format =
-      { date = "%-m/%-d/%Y" -- M/d/YYY
-      , longDate = "%A, %B %d, %Y" -- dddd, MMMM dd, yyyy
-      , time = "%-H:%M %p" -- h:mm tt
-      , longTime = "%-H:%M:%S %p" -- h:mm:ss tt
-      , dateTime = "%-m/%-d/%Y %-I:%M %p" -- date + time
+      { date = "%-d/%m/%Y" -- d/MM/yyyy
+      , longDate = "%A, %-d %B %Y" -- dddd, d MMMM yyyy
+      , time = "%-I:%M %p" -- h:mm tt
+      , longTime = "%-I:%M:%S %p" -- h:mm:ss tt
+      , dateTime = "%-d/%m/%Y %-I:%M %p"  -- date + time
       , firstDayOfWeek = Date.Mon
       }
   }

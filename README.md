@@ -3,6 +3,8 @@
 ### Introduction
 A collection of modules for working with dates and times.
 
+2016/04/3 v4 changed the name space from `Date.` to `Date.Extra.` for all modules.
+
 Includes
 * flexible formatting of dates into strings
  * It has support for outputting dates with other offsets than local by some trickery.
@@ -20,14 +22,14 @@ Includes
 
 Example of formatting Dates
 ```elm
-import Date.Config.Config_en_au exposing (config)
-import Date.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
+import Date.Extra.Config.Config_en_au exposing (config)
+import Date.Extra.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
 
 
 displayString1 =
   Result.withDefault "Failed to get a date." <|
     Result.map
-      (format config config.format.datetime)
+      (format config config.format.dateTime)
       (Date.fromString "2015-06-01 12:45:14.211Z")
 
 

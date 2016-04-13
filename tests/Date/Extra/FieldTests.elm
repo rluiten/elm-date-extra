@@ -1,13 +1,13 @@
-module Date.FieldTests where
+module Date.Extra.FieldTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 -- import Time exposing (Time)
 
-import Date.Format as Format
--- import Date.Floor as Floor exposing (Floor (..))
-import Date.Utils as DateUtils
-import Date.Field as Field exposing (Field (..))
+import Date.Extra.Format as Format
+-- import Date.Extra.Floor as Floor exposing (Floor (..))
+import Date.Extra.Utils as DateUtils
+import Date.Extra.Field as Field exposing (Field (..))
 
 
 tests : Test

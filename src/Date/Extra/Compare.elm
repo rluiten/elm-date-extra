@@ -1,4 +1,4 @@
-module Date.Compare
+module Date.Extra.Compare
   ( is
   , is3
   , Compare2 (..)
@@ -17,7 +17,7 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date)
 
-import Date.Core as Core
+import Date.Extra.Core as Core
 
 
 {-| Date comparison type for 2 dates.

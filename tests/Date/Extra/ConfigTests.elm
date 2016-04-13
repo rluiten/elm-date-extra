@@ -1,11 +1,11 @@
-module Date.ConfigTests where
+module Date.Extra.ConfigTests where
 
 import Date exposing (Date)
 import ElmTest exposing (..)
 
-import Date.Config.Config_en_au as Config_en_au
-import Date.Config.Config_en_us as Config_en_us
-import Date.Config.Configs as Configs
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Configs as Configs
 
 
 config_en_au = Config_en_au.config
