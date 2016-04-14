@@ -33,7 +33,6 @@ import Time
 
 import Date.Extra.Create as Create
 import Date.Extra.Core as Core
-import Date.Extra.Field as Field
 import Date.Extra.Format as Format
 import Date.Extra.Internal as Internal
 import Date.Extra.Period as Period
@@ -110,7 +109,7 @@ compensation of input ranges when converting strings to Dates.
 
 This method makes some known undesirable no Err results return Err.
 
-Example produces `Ok "2012-03-02"` in javascript
+This example produces `Ok "2012-03-02"` withou the checkDateResult.
 ```
   aDate = (Date.fromString "2012-02-31")
 ```
@@ -145,26 +144,28 @@ checkDateResult dateStr date =
     let
       -- we only check for extra logic if dateStr matches this regex
       extraCheck = Regex.regex "^\\d{4}-\\d{1,2}-\\d{1,2}"
-      endsWithUTCOffset =
-           String.endsWith "Z" dateStr
-        || String.endsWith "+00:00" dateStr
-        || String.endsWith "+0000" dateStr
-        || String.endsWith "+00" dateStr
-      checkDatePart =
-        if endsWithUTCOffset then
-          Format.utcIsoDateString date
-        else
-          Format.isoDateString date
     in
       if Regex.contains extraCheck dateStr then
-        if String.startsWith checkDatePart dateStr then
-          Ok date
-        else
-          Err
-          ( "Error leading date part got converted from \""
-            ++ dateStr ++ "\" to \""
-            ++ checkDatePart ++ "\""
-          )
+        let
+          endsWithUTCOffset =
+               String.endsWith "Z" dateStr
+            || String.endsWith "+00:00" dateStr
+            || String.endsWith "+0000" dateStr
+            || String.endsWith "+00" dateStr
+          checkDatePart =
+            if endsWithUTCOffset then
+              Format.utcIsoDateString date
+            else
+              Format.isoDateString date
+        in
+          if String.startsWith checkDatePart dateStr then
+            Ok date
+          else
+            Err
+            ( "Error leading date part got converted from \""
+              ++ dateStr ++ "\" to \""
+              ++ checkDatePart ++ "\""
+            )
       else
         Ok date
 
