@@ -169,22 +169,63 @@ checkDateResult dateStr date =
         Ok date
 
 
+-- Reference data used by dateFromFields
+zeroDate = Date.fromTime 0
+zeroDateHourCompensate = (Date.hour zeroDate)
+zeroDateMinuteCompensate = (Date.minute zeroDate)
+
+
 {-| Create a date in current time zone from given fields.
 All field values are clamped to there allowed range values.
 This can only return dates in current time zone.
 
 Hours are input in 24 hour time range 0 to 23 valid.
+
+At the moment Day (3rd parameter) is only clamped between 1 - 31.
+
+Using algorithm from http://howardhinnant.github.io/date_algorithms.html
+Specifically days_from_civil function.
+
+The two `*Compensate` values adjust for the zone offset time
+introduced by `Date.fromTime 0` for local timezone.
 -}
 dateFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Date
 dateFromFields year month day hour minute second millisecond =
-  Date.fromTime 0
-    |> Field.fieldToDateClamp (Field.Year year)
-    |> Field.fieldToDateClamp (Field.Month month)
-    |> Field.fieldToDateClamp (Field.DayOfMonth day)
-    |> Field.fieldToDateClamp (Field.Hour hour)
-    |> Field.fieldToDateClamp (Field.Minute minute)
-    |> Field.fieldToDateClamp (Field.Second second)
-    |> Field.fieldToDateClamp (Field.Millisecond millisecond)
+  let
+    c_millisecond = clamp 0 999 millisecond
+    c_second = clamp 0 59 second
+    c_minute = clamp 0 59 minute
+    c_hour = clamp 0 23 hour
+    c_day = clamp 1 31 day -- cheating for less work
+    c_year = if year < 0 then 0 else year
+    deltaPeriod =
+      Period.Delta
+        { millisecond = c_millisecond
+        , second = c_second
+        , minute = c_minute - zeroDateMinuteCompensate
+        , hour = c_hour - zeroDateHourCompensate
+        , day = daysFromCivil c_year (Core.monthToInt month) c_day
+        , week = 0
+        }
+  in
+    Period.add deltaPeriod 1 zeroDate
+
+{-| Returns number of days since civil 1970-01-01.  Negative values indicate
+    days prior to 1970-01-01.
+
+Reference: http://stackoverflow.com/questions/7960318/math-to-convert-seconds-since-1970-into-date-and-vice-versa
+Which references: http://howardhinnant.github.io/date_algorithms.html
+-}
+daysFromCivil: Int -> Int -> Int -> Int
+daysFromCivil year month day =
+  let
+    y = year - if month <= 2 then 1 else 0
+    era = (if y >= 0 then y else y-399) // 400
+    yoe = y - (era * 400) -- [0, 399]
+    doy = (153*(month + (if month > 2 then -3 else 9)) + 2)//5 + day-1 -- [0, 365]
+    doe = yoe * 365 + yoe//4 - yoe//100 + doy -- [0, 146096]
+  in
+    era * 146097 + doe - 719468
 
 
 {-| Create a time in current time zone from given fields, for
