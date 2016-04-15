@@ -178,11 +178,8 @@ zeroDateMinuteCompensate = (Date.minute zeroDate)
 
 {-| Create a date in current time zone from given fields.
 All field values are clamped to there allowed range values.
-This can only return dates in current time zone.
-
 Hours are input in 24 hour time range 0 to 23 valid.
-
-At the moment Day (3rd parameter) is only clamped between 1 - 31.
+This return dates in current time zone.
 
 Using algorithm from http://howardhinnant.github.io/date_algorithms.html
 Specifically days_from_civil function.
@@ -193,23 +190,23 @@ introduced by `Date.fromTime 0` for local timezone.
 dateFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Date
 dateFromFields year month day hour minute second millisecond =
   let
-    c_millisecond = clamp 0 999 millisecond
-    c_second = clamp 0 59 second
-    c_minute = clamp 0 59 minute
-    c_hour = clamp 0 23 hour
-    c_day = clamp 1 31 day -- cheating for less work
     c_year = if year < 0 then 0 else year
     deltaPeriod =
       Period.Delta
-        { millisecond = c_millisecond
-        , second = c_second
-        , minute = c_minute - zeroDateMinuteCompensate
-        , hour = c_hour - zeroDateHourCompensate
-        , day = daysFromCivil c_year (Core.monthToInt month) c_day
+        { millisecond = (clamp 0 999 millisecond)
+        , second = (clamp 0 59 second)
+        , minute = (clamp 0 59 minute) - zeroDateMinuteCompensate
+        , hour = (clamp 0 23 hour) - zeroDateHourCompensate
+        , day =
+            daysFromCivil
+              c_year
+              (Core.monthToInt month)
+              (clamp 1 (Core.daysInMonth c_year month) day)
         , week = 0
         }
   in
     Period.add deltaPeriod 1 zeroDate
+
 
 {-| Returns number of days since civil 1970-01-01.  Negative values indicate
     days prior to 1970-01-01.
