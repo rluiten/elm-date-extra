@@ -1,9 +1,10 @@
 module Date.Extra.Period
   ( add
-  , Period (..)
-  , zeroDelta
   , DeltaRecord
   , diff
+  , Period (..)
+  , toTicks
+  , zeroDelta
   ) where
 
 {-| Period is a fixed length of time.
@@ -18,6 +19,7 @@ For that see Duration.
 @docs Period
 @docs DeltaRecord
 @docs zeroDelta
+@docs toTicks
 
 Copyright (c) 2016 Robin Luiten
 -}
@@ -69,7 +71,9 @@ zeroDelta =
   }
 
 
-{- Return tick counts for periods. -}
+{-| Return tick counts for periods.
+Useful to get total ticks in a Delta.
+-}
 toTicks : Period -> Int
 toTicks period =
   case period of

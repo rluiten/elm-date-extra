@@ -24,9 +24,12 @@ en_us_config = Config_en_us.config
 tests : Test
 tests =
   suite "Date.Format tests"
-    [ formatTest ()
-    , formatUtcTest ()
-    , formatOffsetTest ()
+    [ suite "format tests" <|
+        List.map runFormatTest formatTestCases
+    , suite "formatUtc tests" <|
+        List.map runFormatUtcTest formatUtcTestCases
+    , suite "formatOffset tests" <|
+        List.map runformatOffsetTest formatOffsetTestCases
     ]
 
 
@@ -36,6 +39,11 @@ Time : 1407833631116
   is : 2014-08-12T08:53:51.116+00:00
   is : 2014-08-12T18:53:51.116+10:00
   is : 2014-08-12T04:53:51.116-04:00
+
+  In a specific time zone... that showed errors.
+  "Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)""
+  toUTCString() is : "Tue, 12 Aug 2014 08:53:51 GMT"
+  toISOString() is : "2014-08-12T08:53:51.116Z"
 
 Time : 1407855231116
   is : 2014-08-12T14:53:51.116+00:00
@@ -55,28 +63,22 @@ aTestTime5 = floor 1407182031000.0 -- 2014-08-04T19:53:51.000Z
 aTestTime6 = floor 1407117600000.0 -- 2014-08-04T12:00:00.000+10:00
 aTestTime7 = floor 1407074400000.0 -- 2014-08-04T00:00:00.000+10:00
 
-formatTest _ =
-  suite "format tests" <|
-    List.map runFormatTest formatTestCases
-
 
 -- forces to +10:00 time zone so will run on any time zone
 runFormatTest (name, expected, formatStr, time) =
-  test name <|
-    assertEqual
-      expected
-      (Format.formatOffset Config_en_us.config -600 formatStr (Core.fromTime time))
-
-
-_ = Debug.log("asdfasdf 1") Config_en_us.config
-c = Config_en_us.config
-_ = Debug.log("asdfasdf 2") c.format
-_ = Debug.log("asdfasdf 3") (.format Config_en_us.config)
-_ = Debug.log("asdfasdf 4") (.format (Config_en_us.config) )
-_ = Debug.log("4a") (.date (.format (Config_en_us.config)))
--- _ = Debug.log("4b") (Config_en_us.config.format.date)  -- THIS IS WHACK.
--- d = Config_en_us.config.format.date
--- _ = Debug.log("asdfasdf 5") d
+  let
+    asDate = Core.fromTime time
+    -- _ = Debug.log "runFormatTest"
+    --   ( "name", name
+    --   , (Date.year asDate, Date.month asDate, Date.day asDate, Date.hour asDate)
+    --   , "time", time
+    --   , "format", (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+    --   )
+  in
+    test name <|
+      assertEqual
+        expected
+        (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -85,7 +87,10 @@ formatTestCases =
   , ("with %% ", "% 12/08/2014", "%% %d/%m/%Y", aTestTime)
   , ("with %% no space", " %12/08/2014", " %%%d/%m/%Y", aTestTime)
   , ("with milliseconds", "2014-08-12 (.116)", "%Y-%m-%d (.%L)", aTestTime)
-  , ("with milliseconds", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
+
+  -- in EDT GMT-04:00
+  -- Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)
+  , ("with milliseconds 2", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
   , ("small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3)
 
   , ("Config_en_us date", "8/5/2014", en_us_config.format.date, aTestTime5)
@@ -102,14 +107,11 @@ formatTestCases =
   , ("Config_en_au longTime", "5:53:51 AM", en_au_config.format.longTime, aTestTime5)
   , ("Config_en_au dateTime", "5/08/2014 5:53 AM", en_au_config.format.dateTime, aTestTime5)
 
-  -- , ("Config_en_us date", "x", Config_en_us.config.format.date, aTestTime)
-  -- , ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
+  , ("Config_en_us date", "8/12/2014", en_us_config.format.date, aTestTime)
+
+  -- year rendered negative ? boggle :) disabled for not supporting at moment
+  --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
   ]
-
-
-formatUtcTest _ =
-  suite "formatUtc tests" <|
-    List.map runFormatUtcTest formatUtcTestCases
 
 
 runFormatUtcTest (name, expected, formatStr, time) =
@@ -124,11 +126,6 @@ formatUtcTestCases =
     , "%Y-%m-%dT%H:%M:%S.%L%:z", aTestTime
     )
   ]
-
-
-formatOffsetTest _ =
-  suite "formatOffset tests" <|
-    List.map runformatOffsetTest formatOffsetTestCases
 
 
 runformatOffsetTest (name, expected, formatStr, time, offset) =

@@ -3,6 +3,7 @@ module Date.Extra.Format
   , formatUtc
   , formatOffset
   , isoString
+  , isoStringNoOffset
   , utcIsoString
   , isoDateString
   , utcIsoDateString
@@ -26,6 +27,7 @@ https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm
 
 ## Extra presentation convenience
 @docs isoString
+@docs isoStringNoOffset
 @docs utcIsoString
 
 ## Low level formats used in specific places in library.
@@ -110,6 +112,15 @@ isoString =
   format English.config isoMsecOffsetFormat
 
 
+{-| Return date and time as string in local zone, without
+a timezone offset as otuput by `Format.isoString`.
+Introduced to deal with dates assuming local time zone.
+-}
+isoStringNoOffset : Date -> String
+isoStringNoOffset =
+  format English.config isoMsecFormat
+
+
 {-| Return date and time as string in ISO form with Z for UTC offset. -}
 utcIsoString : Date -> String
 utcIsoString date =
@@ -137,6 +148,7 @@ isoDateString date =
     year = Date.year date
     month = Date.month date
     day = Date.day date
+    -- _ = Debug.log "isoDateString" (year, month, day, Date.hour date, Date.minute date)
   in
     (String.padLeft 4 '0' (toString year)) ++ "-" ++
     (String.padLeft 2 '0' (toString (Core.monthToInt month))) ++ "-" ++
@@ -148,7 +160,9 @@ isoDateString date =
 Initially from https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Format.elm.
 -}
 formatRegex : Regex.Regex
-formatRegex = Regex.regex "%(Y|m|_m|-m|B|^B|b|^b|d|-d|e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
+formatRegex =
+  Regex.regex
+    "%(Y|m|_m|-m|B|^B|b|^b|d|-d|e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
 
 
 {-| Use a format string to format a date.
@@ -169,19 +183,24 @@ formatUtc config formatStr date =
 
 {-| This adjusts date for offset, and renders with the offset -}
 formatOffset : Config.Config -> Int -> String -> Date.Date -> String
-formatOffset config offset formatStr date =
+formatOffset config targetOffset formatStr date =
   let
-    hackOffset = (Create.getTimezoneOffset date) - offset
+    dateOffset = (Create.getTimezoneOffset date)
+    hackOffset = dateOffset - targetOffset
+    -- _ = Debug.log "> formatOffset offset"
+    --   ( ( Date.year date , Date.month date , Date.day date , Date.hour date , Date.minute date )
+    --   , ( "dateOffset", dateOffset , "targetOffset", targetOffset , "hackOffset", hackOffset )
+    --   )
   in
   (Regex.replace Regex.All formatRegex)
     ( formatToken
         config
-        offset
+        targetOffset
         (Internal.hackDateAsOffset hackOffset date)
     )
     formatStr
 
--- I don't like space padded variants. :( most annoying
+
 formatToken : Config.Config -> Int -> Date.Date -> Regex.Match -> String
 formatToken config offset d m =
   let

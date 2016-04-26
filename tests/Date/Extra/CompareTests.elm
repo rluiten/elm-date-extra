@@ -16,9 +16,12 @@ import Date.Extra.Core as Core
 tests : Test
 tests =
   suite "Date.Compare tests"
-    [ isTests ()
-    , is3Tests ()
+    [ suite "is tests" <|
+        List.map runIsCase isCases
+    , suite "is3 tests" <|
+        List.map runIs3Case is3TestCases
     ]
+
 
 {-
 Have no way to easilly change into out of daylight saving
@@ -38,11 +41,6 @@ Time : 1407833631114
 aTestTime6 = floor 1407833631116.0
 aTestTime5 = floor 1407833631115.0
 aTestTime4 = floor 1407833631114.0
-
-
-isTests _ =
-  suite "is tests" <|
-    List.map runIsCase isCases
 
 
 runIsCase (name, comp, date1, date2, expected) =
@@ -97,10 +95,6 @@ isCases =
     )
   ]
 
-
-is3Tests _ =
-  suite "is3 tests" <|
-    List.map runIs3Case is3TestCases
 
 
 runIs3Case (name, comp, date1, date2, date3, expected) =

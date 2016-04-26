@@ -1,38 +1,40 @@
 module Date.Extra.Core
-  ( monthToInt
-  , daysInMonth
-  , monthList
+  ( daysInMonth
   , daysInNextMonth
   , daysInPrevMonth
   , daysInMonthDate
+  , daysBackToStartOfWeek
+  , epochDateStr
+  , firstOfNextMonthDate
+  , fromTime
+  , intToMonth
   , isLeapYear
   , isLeapYearDate
-  , yearToDayLength
   , isoDayOfWeek
-  , toFirstOfMonth
-  , firstOfNextMonthDate
   , lastOfMonthDate
   , lastOfPrevMonthDate
-  , daysBackToStartOfWeek
-  , fromTime
-  , toTime
+  , monthList
+  , monthToInt
   , nextDay
-  , prevDay
   , nextMonth
+  , prevDay
   , prevMonth
-  , epochDateStr
-  , ticksAMillisecond
-  , ticksASecond
-  , ticksAMinute
   , ticksAnHour
   , ticksADay
+  , ticksAMillisecond
+  , ticksAMinute
+  , ticksASecond
   , ticksAWeek
+  , toFirstOfMonth
+  , toTime
+  , yearToDayLength
   ) where
 
 {-| Date core.
 
 ## Info
 @docs monthToInt
+@docs intToMonth
 @docs daysInMonth
 @docs monthList
 @docs daysInNextMonth
@@ -263,6 +265,35 @@ monthToInt month =
     Oct -> 10
     Nov -> 11
     Dec -> 12
+
+
+{-| Return integer as month. Jan <= 1 Feb == 2 up to Dec > 11. -}
+intToMonth : Int -> Month
+intToMonth month =
+  if (month <= 1) then
+    Jan
+  else if (month ==  2) then
+    Feb
+  else if (month ==  3) then
+    Mar
+  else if (month ==  4) then
+    Apr
+  else if (month ==  5) then
+    May
+  else if (month ==  6) then
+    Jun
+  else if (month ==  7) then
+    Jul
+  else if (month ==  8) then
+    Aug
+  else if (month ==  9) then
+    Sep
+  else if (month == 10) then
+    Oct
+  else if (month == 11) then
+    Nov
+  else
+    Dec
 
 
 {-| Return next month in calendar sequence. -}

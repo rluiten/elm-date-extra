@@ -9,6 +9,7 @@ import ElmTest exposing (..)
 import Time exposing (Time)
 
 import Date.Extra.Core as Core
+import Date.Extra.Create as Create
 import Date.Extra.Format as Format
 import Date.Extra.Utils as DateUtils
 
@@ -16,47 +17,51 @@ import Date.Extra.Utils as DateUtils
 dateStr = Format.isoString -- probably bad idea for now using.
 
 
-{-| Helper for testing Date transform functions.
-Time for comparison, as Date equality comparisons
-in Elm dont work right as of 2016/01/01.
+{-| Helper for testing Date transform functions without offset.
 -}
 assertDateFunc :
-       String
-    -> String
-    -> (Date -> Date)
-    -> Assertion
-assertDateFunc inputDate expectedDate dateFunc =
-  assertEqual
-    ( Result.map
-        Date.toTime
-        (DateUtils.fromString expectedDate)
-    )
-    ( Result.map
-        ( \testDate ->
-            -- let _ = debugDumpDateFunc expectedDate testDate dateFunc
-            -- in
-            Date.toTime (dateFunc testDate)
-        )
-        ( let
-            resultDate = DateUtils.fromString inputDate
-            -- _ = Debug.log("assertDateFunc (inputDate, resultDate)")
-            --   ( inputDate
-            --   , case resultDate of
-            --       Ok date -> Format.isoString date
-            --       Err msg -> "Err " ++ msg
-            --   )
-          in
-            resultDate
-        )
-    )
+     String
+  -> String
+  -> (Date -> Date) -> Assertion
+assertDateFunc inputDateStr expectedDateStr dateFunc =
+  let
+    inputDate = DateUtils.unsafeFromString inputDateStr
+    outputDate = dateFunc inputDate
+    expectedDate = DateUtils.unsafeFromString expectedDateStr
+    -- _ = Debug.log "assertDateFunc "
+    --   ( "inputDate", inputDateStr, Format.isoStringNoOffset inputDate, Date.toTime inputDate
+    --   , "expectedDate", expectedDateStr
+    --   , "outputDate", Format.isoStringNoOffset outputDate, Date.toTime outputDate
+    --   )
+  in
+    assertEqual expectedDateStr (Format.isoStringNoOffset outputDate)
+
+
+{-| Helper for testing Date transform functions, including offset.
+-}
+assertDateFuncOffset :
+     String
+  -> String
+  -> (Date -> Date) -> Assertion
+assertDateFuncOffset inputDateStr expectedDateStr dateFunc =
+  let
+    inputDate = DateUtils.unsafeFromString inputDateStr
+    outputDate = dateFunc inputDate
+    -- _ = Debug.log "assertDateFunc "
+    --   ( "inputDate", inputDateStr, Format.isoString inputDate, Date.toTime inputDate
+    --   , "expectedDate", expectedDateStr
+    --   , "outputDate", Format.isoString outputDate, Date.toTime outputDate
+    --   )
+  in
+    assertEqual expectedDateStr (Format.isoString outputDate)
 
 
 debugDumpDateFunc expectedDate testDate dateFunc =
   let
     _ = Debug.log("expectedDate")
       ( expectedDate
-      , Result.map Core.toTime (DateUtils.fromString expectedDate)
-      , Result.map Format.isoString (DateUtils.fromString expectedDate)
+      , Result.map Core.toTime (Date.fromString expectedDate)
+      , Result.map Format.isoString (Date.fromString expectedDate)
       )
     _ = Debug.log("testDate, toTime testDate")
       ( dateStr testDate
@@ -118,3 +123,28 @@ logDate date =
     _ = Debug.log("logDate") (Format.utcIsoString date)
   in
     date
+
+
+
+
+{-| Return min and max zone offsets in current zone.
+
+As a rule (fst (getZoneOffsets year)) will return standard timezoneOffset
+for local zone as per referenced information.
+
+http://stackoverflow.com/questions/11887934/check-if-daylight-saving-time-is-in-effect-and-if-it-is-for-how-many-hours/11888430#11888430
+-}
+getZoneOffsets : Int -> (Int, Int)
+getZoneOffsets year =
+  let
+    jan01offset =
+      Create.dateFromFields year Date.Jan 1 0 0 0 0
+        |> Create.getTimezoneOffset
+    jul01offset =
+      Create.dateFromFields year Date.Jun 1 0 0 0 0
+        |> Create.getTimezoneOffset
+    minOffset = min jan01offset jul01offset
+    maxOffset = max jan01offset jul01offset
+    -- _ = Debug.log "isOffset" (minOffset, maxOffset, jan01offset, jul01offset)
+  in
+    (minOffset, maxOffset)

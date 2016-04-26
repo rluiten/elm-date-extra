@@ -22,36 +22,72 @@ addTests _ =
     (List.map runAddCase addCases)
 
 
-runAddCase : (String, Period, Int, String) -> Test
-runAddCase (inputDate, period, addend, expectedDate) =
+runAddCase : ( String , Period, Int , String ) -> Test
+runAddCase (inputDateStr, period, addend, expectedDateStr) =
   test
-    ( "input " ++ inputDate
+    ( "input " ++ inputDateStr
       ++ " add " ++ (toString period)
       ++ " addend " ++ (toString addend)
-      ++ " expects " ++ expectedDate
+      ++ " expects " ++ expectedDateStr
     ) <|
     TestUtils.assertDateFunc
-      inputDate
-      expectedDate
+      inputDateStr
+      expectedDateStr
       (Period.add period addend)
 
 
 addCases =
-  [ ("2015-06-10 11:43:55.213", Millisecond, 1, "2015-06-10 11:43:55.214")
-  , ("2015-06-10 11:43:55.213", Second, 1, "2015-06-10 11:43:56.213")
-  , ("2015-06-10 11:43:55.213", Minute, 1, "2015-06-10 11:44:55.213")
-  , ("2015-06-10 11:43:55.213", Hour, 1, "2015-06-10 12:43:55.213")
-  , ("2015-06-10 11:43:55.213", Day, 1, "2015-06-11 11:43:55.213")
-  , ("2015-06-10 11:43:55.213", Week, 1, "2015-06-17 11:43:55.213")
+  [ ( "2015/06/10 11:43:55.213"
+    , Millisecond, 1
+    , "2015-06-10T11:43:55.214"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Second, 1
+    , "2015-06-10T11:43:56.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Minute, 1
+    , "2015-06-10T11:44:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Hour, 1
+    , "2015-06-10T12:43:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Day, 1
+    , "2015-06-11T11:43:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Week, 1
+    , "2015-06-17T11:43:55.213"
+    )
 
-  , ("2015-06-10 11:43:55.213", Millisecond, -1, "2015-06-10 11:43:55.212")
-  , ("2015-06-10 11:43:55.213", Second, -1, "2015-06-10 11:43:54.213")
-  , ("2015-06-10 11:43:55.213", Minute, -1, "2015-06-10 11:42:55.213")
-  , ("2015-06-10 11:43:55.213", Hour, -1, "2015-06-10 10:43:55.213")
-  , ("2015-06-10 11:43:55.213", Day, -1, "2015-06-09 11:43:55.213")
-  , ("2015-06-10 11:43:55.213", Week, -1, "2015-06-03 11:43:55.213")
+  , ( "2015/06/10 11:43:55.213"
+    , Millisecond, -1
+    , "2015-06-10T11:43:55.212"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Second, -1
+    , "2015-06-10T11:43:54.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Minute, -1
+    , "2015-06-10T11:42:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Hour, -1
+    , "2015-06-10T10:43:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Day, -1
+    , "2015-06-09T11:43:55.213"
+    )
+  , ( "2015/06/10 11:43:55.213"
+    , Week, -1
+    , "2015-06-03T11:43:55.213"
+    )
 
-  , ("2015-06-10 11:43:55.213"
+  , ( "2015/06/10 11:43:55.213"
     , Delta
       { week = 1
       , day = 1
@@ -61,8 +97,9 @@ addCases =
       , millisecond = 1
       }
     , 1
-    , "2015-06-18 12:44:56.214")
-  , ("2015-06-10 11:43:55.213"
+    , "2015-06-18T12:44:56.214"
+    )
+  , ( "2015/06/10 11:43:55.213"
     , Delta
       { week = 1
       , day = 1
@@ -72,7 +109,8 @@ addCases =
       , millisecond = 1
       }
     , -1
-    , "2015-06-02 10:42:54.212")
+    , "2015-06-02T10:42:54.212"
+    )
   ]
 
 
@@ -80,21 +118,23 @@ diffTests _ =
   suite "Date.Period diff tests"
     (List.map runDiffCase diffCases)
 
-runDiffCase (date1str, date2str, expectedDiff) =
+
+runDiffCase (date1Str, date2Str, expectedDiff) =
   test
-    ( "diff date1 " ++ date1str
-      ++ " date2 = " ++ date2str
+    ( "diff date1 " ++ date1Str
+      ++ " date2 = " ++ date2Str
     ) <|
     assertEqual
       expectedDiff
       ( Period.diff
-          (DateUtils.unsafeFromString date1str)
-          (DateUtils.unsafeFromString date2str)
+          (DateUtils.unsafeFromString date1Str)
+          (DateUtils.unsafeFromString date2Str)
       )
 
+
 diffCases =
-  [ ( "2015-06-10 11:43:55.213"
-    , "2015-06-10 11:43:55.214"
+  [ ( "2015/06/10 11:43:55.213"
+    , "2015/06/10 11:43:55.214"
     , { week = 0
       , day = 0
       , hour = 0
@@ -103,8 +143,8 @@ diffCases =
       , millisecond = -1
       }
     )
-  , ( "2015-06-10 11:43:55.213"
-    , "2015-06-02 10:42:54.212"
+  , ( "2015/06/10 11:43:55.213"
+    , "2015/06/02 10:42:54.212"
     , { week = 1
       , day = 1
       , hour = 1
@@ -113,8 +153,8 @@ diffCases =
       , millisecond = 1
       }
     )
-  , ( "2015-06-02 10:42:54.212"
-    , "2015-06-10 11:43:55.213"
+  , ( "2015/06/02 10:42:54.212"
+    , "2015/06/10 11:43:55.213"
     , { week = -1
       , day = -1
       , hour = -1
@@ -122,4 +162,5 @@ diffCases =
       , second = -1
       , millisecond = -1
       }
-    )  ]
+    )
+  ]
