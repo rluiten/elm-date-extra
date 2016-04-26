@@ -7,11 +7,14 @@ A collection of modules for working with dates and times.
 
 Includes
 * flexible formatting of dates into strings
- * It has support for outputting dates with other offsets than local by some trickery.
+ * It has support for outputting dates with other offsets than local by deriving a timezone offset for a dates.
  * simple i18n support for long and short Day and Month names.
  * see [DocFormat.md](DocFormat.md)
 * compare dates
 * add or subtract time periods on a date
+ * When modifying dates using Duration Day, Week, Month, Year the
+ library compensates for daylight saving hour varations it should
+ behave very much like momentjs in its add subtract date field functions.
 * date diff
  * this is simple at moment and limited to Period module and the date fields
   * `millisecond`, `second`, `minute`, `hour`, `day`, `week`
@@ -19,6 +22,7 @@ Includes
   for reducing date fields below a given date
   field granularity to its minimum value.
 * Set date field module.
+
 
 Example of formatting Dates
 ```elm

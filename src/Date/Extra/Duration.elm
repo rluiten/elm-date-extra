@@ -146,7 +146,7 @@ addMonth monthCount date =
     monthInt = Core.monthToInt (Date.month date)
     day = Date.day date
     inputCivil = Internal.daysFromCivil year monthInt day
-    newMonthInt = (monthInt + monthCount)
+    newMonthInt = monthInt + monthCount
     targetMonthInt = newMonthInt % 12
     yearOffset =
       if newMonthInt < 0 then

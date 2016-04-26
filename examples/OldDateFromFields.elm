@@ -11,8 +11,8 @@ import Task exposing (Task, andThen)
 import Text
 import Date exposing (Day (..), Date, Month (..))
 
+import Date.Extra.Create as Create
 import Date.Extra.Field as Field
-import Date.Extra.Utils as DateUtils
 
 
 main =
@@ -52,8 +52,8 @@ dateFromFields year month day hour minute second millisecond =
 
 oldFn1 _= dateFromFields 1971 Date.Jan 29 11 07 47 111
 oldFn2 _= dateFromFields 2016 Date.Jan 29 11 07 47 111
-newFn1 _= DateUtils.dateFromFields 1971 Date.Jan 29 11 07 47 111
-newFn2 _= DateUtils.dateFromFields 2016 Date.Jan 29 11 07 47 111
+newFn1 _= Create.dateFromFields 1971 Date.Jan 29 11 07 47 111
+newFn2 _= Create.dateFromFields 2016 Date.Jan 29 11 07 47 111
 
 
 mySuite =
