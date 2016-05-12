@@ -1,4 +1,4 @@
-module Date.Extra.Config.Config_en_au where
+module Date.Extra.Config.Config_en_au exposing (..)
 
 {-| This is the default english config for formatting dates.
 

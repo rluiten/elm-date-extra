@@ -1,11 +1,11 @@
-module Date.Extra.Period
+module Date.Extra.Period exposing
   ( add
   , DeltaRecord
   , diff
   , Period (..)
   , toTicks
   , zeroDelta
-  ) where
+  )
 
 {-| Period is a fixed length of time.
 

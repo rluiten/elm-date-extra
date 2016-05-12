@@ -1,8 +1,8 @@
-module Date.Extra.Create
+module Date.Extra.Create exposing
   ( getTimezoneOffset
   , dateFromFields
   , timeFromFields
-  ) where
+  )
 
 {-| Create dates and offsets.
 

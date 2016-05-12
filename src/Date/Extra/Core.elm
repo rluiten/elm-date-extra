@@ -1,4 +1,4 @@
-module Date.Extra.Core
+module Date.Extra.Core exposing
   ( daysInMonth
   , daysInNextMonth
   , daysInPrevMonth
@@ -28,7 +28,7 @@ module Date.Extra.Core
   , toFirstOfMonth
   , toTime
   , yearToDayLength
-  ) where
+  )
 
 {-| Date core.
 

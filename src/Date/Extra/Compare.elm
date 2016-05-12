@@ -1,9 +1,9 @@
-module Date.Extra.Compare
+module Date.Extra.Compare exposing
   ( is
   , is3
   , Compare2 (..)
   , Compare3 (..)
-  ) where
+  )
 
 {-| Compare dates.
 
