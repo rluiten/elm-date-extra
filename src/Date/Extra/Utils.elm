@@ -1,9 +1,9 @@
-module Date.Extra.Utils
+module Date.Extra.Utils exposing
   ( unsafeFromString
   , dayList
   , isoWeek
   , isoWeekOne
-  ) where
+  )
 
 {-| Date Utils.
 

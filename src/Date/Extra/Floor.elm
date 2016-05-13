@@ -1,7 +1,7 @@
-module Date.Extra.Floor
+module Date.Extra.Floor exposing
   ( floor
   , Floor (..)
-  ) where
+  )
 
 {-| Reduce a date to a given granularity this is similar in concept
 to floor on Float so was named the same.

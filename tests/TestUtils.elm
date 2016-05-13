@@ -1,4 +1,4 @@
-module TestUtils where
+module TestUtils exposing (..)
 
 {-| Useful for testing with ElmTest.
 

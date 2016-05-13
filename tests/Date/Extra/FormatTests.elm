@@ -1,4 +1,4 @@
-module Date.Extra.FormatTests where
+module Date.Extra.FormatTests exposing (..)
 
 {- Test date format.
 

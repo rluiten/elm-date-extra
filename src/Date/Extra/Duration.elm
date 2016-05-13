@@ -1,7 +1,7 @@
-module Date.Extra.Duration
+module Date.Extra.Duration exposing
   ( add
   , Duration (..)
-  ) where
+  )
 
 {-| A Duration is a length of time that may vary with with calendar date
 and time. It can be used to modify a date.

@@ -1,4 +1,4 @@
-module Date.Extra.FieldTests where
+module Date.Extra.FieldTests exposing (..)
 
 import Date exposing (Date)
 import ElmTest exposing (..)

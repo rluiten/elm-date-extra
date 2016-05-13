@@ -1,7 +1,7 @@
-module Date.Extra.Config.Configs
+module Date.Extra.Config.Configs exposing
   ( getConfig
   , configs
-  ) where
+  )
 
 {-| Get a Date Extra Config based up on a locale code.
 

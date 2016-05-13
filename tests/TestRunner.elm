@@ -1,7 +1,6 @@
-module TestRunner where
+module TestRunner exposing (..)
 
 {- Copyright (c) 2016 Robin Luiten -}
-import Graphics.Element exposing (Element)
 import ElmTest exposing (..)
 import String
 
@@ -18,21 +17,19 @@ import Date.Extra.ConfigTests as ConfigTests
 import Date.Extra.ConvertingTests as ConvertingTests
 
 
-main : Element
-main =
-  elementRunner
-    ( suite "Element Test Runner Tests"
-        [ test "Dummy passing test." (assertEqual True True)
-        , CreateTests.tests
-        , UtilsTests.tests
-        , CoreTests.tests
-        , PeriodTests.tests
-        , DurationTests.tests
-        , FloorTests.tests
-        , FormatTests.tests
-        , CompareTests.tests
-        , FieldTests.tests
-        , ConfigTests.tests
-        , ConvertingTests.tests
-        ]
-    )
+main : Program Never
+main = runSuite <|
+  suite "Element Test Runner Tests"
+    [ test "Dummy passing test." (assertEqual True True)
+    , CreateTests.tests
+    , UtilsTests.tests
+    , CoreTests.tests
+    , PeriodTests.tests
+    , DurationTests.tests
+    , FloorTests.tests
+    , FormatTests.tests
+    , CompareTests.tests
+    , FieldTests.tests
+    , ConfigTests.tests
+    , ConvertingTests.tests
+    ]
