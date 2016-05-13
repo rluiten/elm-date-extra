@@ -1,4 +1,4 @@
-module Date.Extra.Internal where
+module Date.Extra.Internal exposing (..)
 
 {-| This module is not exposed to clients.
 

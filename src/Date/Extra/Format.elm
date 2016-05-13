@@ -1,4 +1,4 @@
-module Date.Extra.Format
+module Date.Extra.Format exposing
   ( format
   , formatUtc
   , formatOffset
@@ -13,7 +13,7 @@ module Date.Extra.Format
   , isoMsecOffsetFormat
   , isoDateFormat
   , isoTimeFormat
-  ) where
+  )
 
 {-| Date Format, turning dates into strings.
 

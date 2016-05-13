@@ -1,4 +1,4 @@
-module Date.Extra.I18n.I_en_us where
+module Date.Extra.I18n.I_en_us exposing (..)
 
 {-| English values for day and month names.
 

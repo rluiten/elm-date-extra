@@ -1,4 +1,4 @@
-module Date.Extra.CompareTests where
+module Date.Extra.CompareTests exposing (..)
 
 {- Test date comparison.
 

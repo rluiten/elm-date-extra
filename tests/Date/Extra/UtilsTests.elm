@@ -1,4 +1,4 @@
-module Date.Extra.UtilsTests where
+module Date.Extra.UtilsTests exposing (..)
 
 {- Copyright (c) 2016 Robin Luiten -}
 

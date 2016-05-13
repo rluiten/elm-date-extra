@@ -1,8 +1,8 @@
-module Date.Extra.Field
+module Date.Extra.Field exposing
   ( fieldToDate
   , fieldToDateClamp
   , Field (..)
-  ) where
+  )
 
 {-| Setting a date field on a date.
 

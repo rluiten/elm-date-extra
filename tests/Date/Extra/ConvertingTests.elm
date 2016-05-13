@@ -1,4 +1,4 @@
-module Date.Extra.ConvertingTests where
+module Date.Extra.ConvertingTests exposing (..)
 
 {- Test conversion of dates
 
