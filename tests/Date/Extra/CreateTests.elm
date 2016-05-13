@@ -223,7 +223,7 @@ testNeg0330NewFoundland _ =
         assertEqual (Result.Ok 150)
           ( Result.map
               Create.getTimezoneOffset
-              (Date.fromString "2016/03/13 03:00:00.000")
+              (Date.fromString "2016-03-13T03:00:00.000-0330")
           )
 
     , test "getTimezoneOffset just before daylight saving from time" <|

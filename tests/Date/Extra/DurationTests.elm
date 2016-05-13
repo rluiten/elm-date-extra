@@ -14,18 +14,21 @@ tests : Test
 tests =
   let
     currentOffsets = TestUtils.getZoneOffsets 2015
+    _ = Debug.log "currentOffsets" currentOffsets
     currentOffsetTest (offsets, test) =
-      if currentOffsets == offsets then Just test else Nothing
+      if currentOffsets == offsets then Just (test ()) else Nothing
   in
   suite "Date.Duration tests" <|
     List.filterMap currentOffsetTest
       [ ( (-600, -600)
-        , suite "At moment biased to offset UTC+1000 no daylight saving)"
+        , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
             (List.map runAddCase addCases)
+          )
         )
       , ( (150, 210)
-        , suite "Date.Duration tests for offsets at Newfoundland -0330"
+        , (\_ -> suite "Date.Duration tests for offsets at Newfoundland -0330"
             (List.map runAddCase addCasesTZNeg0330)
+          )
         )
       ]
 

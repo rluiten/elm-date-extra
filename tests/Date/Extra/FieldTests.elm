@@ -1,12 +1,15 @@
 module Date.Extra.FieldTests exposing (..)
 
+import Debug
 import Date exposing (Date)
 import ElmTest exposing (..)
 -- import Time exposing (Time)
 
+import Date.Extra.Create as Create
 import Date.Extra.Format as Format
 import Date.Extra.Utils as DateUtils
 import Date.Extra.Field as Field exposing (Field (..))
+import TestUtils
 
 
 tests : Test
@@ -21,8 +24,7 @@ tests =
 
 runFieldCase (dateStr, field, expectedDate) =
   let
-    date : Date
-    date = DateUtils.unsafeFromString dateStr
+    date = TestUtils.fudgeDate dateStr
     dateOut = Field.fieldToDate field date
     dateOutStr = Maybe.map Format.isoStringNoOffset dateOut
     -- dateOut2Str = Maybe.map Format.isoStringNoOffset dateOut
@@ -35,7 +37,7 @@ runFieldCase (dateStr, field, expectedDate) =
 
 
 fieldCases =
-  [ ( "2016/06/05 04:03:02.111"
+    [ ( "2016/06/05 04:03:02.111"
     , Millisecond 1
     , Just "2016-06-05T04:03:02.001"
     )
@@ -112,8 +114,7 @@ fieldCases =
 
 runFieldClampCase (dateStr, field, expectedDate) =
   let
-    date : Date
-    date = DateUtils.unsafeFromString dateStr
+    date = TestUtils.fudgeDate dateStr
     dateOut = Field.fieldToDateClamp field date
     dateOutStr = Format.isoStringNoOffset dateOut
     -- dateOut2Str = Format.isoStringNoOffset dateOut

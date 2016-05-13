@@ -3,7 +3,10 @@
 ### Introduction
 A collection of modules for working with dates and times.
 
-2016/04/3 v4 changed the name space from `Date.` to `Date.Extra.` for all modules.
+* 2016/04/3 4.0.0
+ * Changed the name space from `Date.` to `Date.Extra.` for all modules.
+* 2016/05/13 5.0.1
+ * Update to Elm 0.17.
 
 Includes
 * flexible formatting of dates into strings

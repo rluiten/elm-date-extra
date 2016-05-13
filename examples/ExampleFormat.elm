@@ -4,8 +4,8 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date
-import Graphics.Element exposing (flow, down, leftAligned)
-import Text
+import Html exposing (Html, button, div, text)
+import Html.App as Html
 
 import Date.Extra.Config.Config_en_au exposing (config)
 import Date.Extra.Format as Format exposing (format, formatUtc, isoMsecOffsetFormat)
@@ -32,13 +32,25 @@ displayString2 =
       (Date.fromString "2015-06-01 12:45:14.211Z")
 
 
-{- This displays a list of strings on screen conveniently. -}
-stringsToElement =
-  flow down << (List.map (leftAligned << Text.fromString))
-
-
 main =
-  stringsToElement
-    [ "Display String 1 Australian date time format \"" ++ displayString1 ++ "\". "
-    , "Display String 2 UTC iso format \"" ++ displayString2 ++ "\". "
+  Html.beginnerProgram
+    { model = ()
+    , view = view
+    , update = (\_ model -> model)
+    }
+
+view model =
+  div []
+  [ div []
+    [ text
+      (  "Display String 1 Australian date time format \""
+      ++ displayString1 ++ "\". "
+      )
     ]
+  , div []
+    [ text
+      (  "Display String 2 UTC iso format \""
+      ++ displayString2 ++ "\". "
+      )
+    ]
+  ]

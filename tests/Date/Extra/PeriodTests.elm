@@ -127,8 +127,8 @@ runDiffCase (date1Str, date2Str, expectedDiff) =
     assertEqual
       expectedDiff
       ( Period.diff
-          (DateUtils.unsafeFromString date1Str)
-          (DateUtils.unsafeFromString date2Str)
+          (TestUtils.fudgeDate date1Str)
+          (TestUtils.fudgeDate date2Str)
       )
 
 

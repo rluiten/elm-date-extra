@@ -7,6 +7,7 @@ import Time exposing (Time)
 import Date.Extra.Format as Format
 import Date.Extra.Floor as Floor exposing (Floor (..))
 import Date.Extra.Utils as DateUtils
+import TestUtils
 
 
 tests : Test
@@ -17,7 +18,7 @@ tests =
 
 runFloorCase (dateStr, dateFloor, expectedDate) =
   let
-    inputDate = DateUtils.unsafeFromString dateStr
+    inputDate = TestUtils.fudgeDate dateStr
     dateOut = Floor.floor dateFloor inputDate
     dateOutStr = Format.isoStringNoOffset dateOut
     dateOut2Str = Format.isoStringNoOffset dateOut

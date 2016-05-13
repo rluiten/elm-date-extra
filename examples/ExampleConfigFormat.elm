@@ -12,9 +12,9 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date
-import Graphics.Element exposing (flow, down, leftAligned)
+import Html exposing (Html, button, div, text)
+import Html.App as Html
 import String
-import Text
 
 import Date.Extra.Config.Config_en_au exposing (config)
 import Date.Extra.Format as Format exposing (format)
@@ -44,15 +44,26 @@ formatReverseMonthName = format configReverseMonthName myDateFormat
 testDate1 = Date.fromTime 1407833631161.0
 
 
-{- This displays a list of strings on screen conveniently. -}
-stringsToElement =
-  flow down << (List.map (leftAligned << Text.fromString))
-
-
 main =
-  stringsToElement
-    [ "Display String 1 en_au config \""
-        ++ (formatOriginal testDate1)  ++ "\". "
-    , "Display String 1 using modified reverse monthName config \""
-        ++ (formatReverseMonthName testDate1)  ++ "\". "
+  Html.beginnerProgram
+    { model = ()
+    , view = view
+    , update = (\_ model -> model)
+    }
+
+
+view model =
+  div []
+  [ div []
+    [ text
+      (  "Display String 1 en_au config \""
+      ++ (formatOriginal testDate1)  ++ "\". "
+      )
     ]
+  , div []
+    [ text
+      (  "Test is date1 Before date2 should be True and is = "
+      ++ (formatReverseMonthName testDate1)  ++ "\". "
+      )
+    ]
+  ]

@@ -4,8 +4,8 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date
-import Graphics.Element exposing (flow, down, leftAligned)
-import Text
+import Html exposing (Html, button, div, text)
+import Html.App as Html
 
 import Date.Extra.Compare as Compare exposing (is, Compare2 (..))
 
@@ -18,15 +18,25 @@ testDate1 = Date.fromTime 1407833631161.0
 testDate2 = Date.fromTime 1407833631162.0
 
 
-{- This displays a list of strings on screen conveniently. -}
-stringListToElement =
-  flow down << (List.map (leftAligned << Text.fromString))
-
-
 main =
-  stringListToElement
-    [ "Test is date1 After date2 should be False and is = "
-        ++ (toString (is After testDate1 testDate2)) ++ ". "
-    , "Test is date1 Before date2 should be True and is = "
-        ++ (toString (is Before testDate1 testDate2)) ++ ". "
+  Html.beginnerProgram
+    { model = ()
+    , view = view
+    , update = (\_ model -> model)
+    }
+
+view model =
+  div []
+  [ div []
+    [ text
+      (  "Test is date1 After date2 should be False and is = "
+      ++ (toString (is After testDate1 testDate2)) ++ ". "
+      )
     ]
+  , div []
+    [ text
+      (  "Test is date1 Before date2 should be True and is = "
+      ++ (toString (is Before testDate1 testDate2)) ++ ". "
+      )
+    ]
+  ]

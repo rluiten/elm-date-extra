@@ -6,6 +6,7 @@ Copyright (c) 2016 Robin Luiten
 -}
 import Date exposing (Date)
 import ElmTest exposing (..)
+import String
 import Time exposing (Time)
 
 import Date.Extra.Core as Core
@@ -13,6 +14,8 @@ import Date.Extra.Create as Create
 import Date.Extra.Format as Format
 import Date.Extra.Utils as DateUtils
 
+import Date.Extra.Config.Config_en_au as Config
+config = Config.config
 
 dateStr = Format.isoString -- probably bad idea for now using.
 
@@ -25,7 +28,8 @@ assertDateFunc :
   -> (Date -> Date) -> Assertion
 assertDateFunc inputDateStr expectedDateStr dateFunc =
   let
-    inputDate = DateUtils.unsafeFromString inputDateStr
+    -- inputDate = DateUtils.unsafeFromString inputDateStr
+    inputDate = fudgeDate inputDateStr
     outputDate = dateFunc inputDate
     expectedDate = DateUtils.unsafeFromString expectedDateStr
     -- _ = Debug.log "assertDateFunc "
@@ -45,7 +49,8 @@ assertDateFuncOffset :
   -> (Date -> Date) -> Assertion
 assertDateFuncOffset inputDateStr expectedDateStr dateFunc =
   let
-    inputDate = DateUtils.unsafeFromString inputDateStr
+    -- inputDate = DateUtils.unsafeFromString inputDateStr
+    inputDate = fudgeDate inputDateStr
     outputDate = dateFunc inputDate
     -- _ = Debug.log "assertDateFunc "
     --   ( "inputDate", inputDateStr, Format.isoString inputDate, Date.toTime inputDate
@@ -148,3 +153,46 @@ getZoneOffsets year =
     -- _ = Debug.log "isOffset" (minOffset, maxOffset, jan01offset, jul01offset)
   in
     (minOffset, maxOffset)
+
+
+--
+-- firefox wont parse "2016/06/05 04:03:02.111" it really
+-- requires "2016-06-05T04:03:02.111+1000" with local offset
+-- to get right offset we need a date to start with so
+-- we convert str into date with out milliseconds then
+-- again with milliseconds and right format with offset.
+--
+fudgeDate : String -> Date
+fudgeDate str =
+  let
+    _ = Debug.log "fudgeDate" str
+  in
+    case String.split "." str of
+      _::[] -> -- no "." so no milliseconds so dont do tricky
+        DateUtils.unsafeFromString str
+
+      beforeDot::afterDot ->
+        -- afterDot maybe .XXX or .XXX-Offset so check for + or - of offset and do nothing
+        let
+          strAfterDot = String.concat afterDot
+        in
+          if String.contains "+" strAfterDot
+            || String.contains "-" strAfterDot then
+            DateUtils.unsafeFromString str
+          else
+            let
+              date = DateUtils.unsafeFromString beforeDot
+              newStr =
+                String.concat
+                  [ Format.format config Format.isoFormat date
+                  , "."
+                  , strAfterDot
+                  , Format.format config "%z" date
+                  ]
+              _ = Debug.log "fudgeDate newStr" newStr
+            in
+              DateUtils.unsafeFromString newStr
+
+      [] ->
+        DateUtils.unsafeFromString str
+        --Debug.crash "We got a fed a date not in expected format" True
