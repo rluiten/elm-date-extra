@@ -4,8 +4,6 @@ module TestRunner exposing (..)
 import ElmTest exposing (..)
 import String
 
-import Html exposing (Html, text)
-
 import Date.Extra.CreateTests as CreateTests
 import Date.Extra.UtilsTests as UtilsTests
 import Date.Extra.CoreTests as CoreTests
@@ -19,21 +17,19 @@ import Date.Extra.ConfigTests as ConfigTests
 import Date.Extra.ConvertingTests as ConvertingTests
 
 
-main : Html a
-main = text <|
-  consoleRunner
-    ( suite "Element Test Runner Tests"
-        [ test "Dummy passing test." (assertEqual True True)
-        , CreateTests.tests
-        , UtilsTests.tests
-        , CoreTests.tests
-        , PeriodTests.tests
-        , DurationTests.tests
-        , FloorTests.tests
-        , FormatTests.tests
-        , CompareTests.tests
-        , FieldTests.tests
-        , ConfigTests.tests
-        , ConvertingTests.tests
-        ]
-    )
+main : Program Never
+main = runSuite <|
+  suite "Element Test Runner Tests"
+    [ test "Dummy passing test." (assertEqual True True)
+    , CreateTests.tests
+    , UtilsTests.tests
+    , CoreTests.tests
+    , PeriodTests.tests
+    , DurationTests.tests
+    , FloorTests.tests
+    , FormatTests.tests
+    , CompareTests.tests
+    , FieldTests.tests
+    , ConfigTests.tests
+    , ConvertingTests.tests
+    ]
