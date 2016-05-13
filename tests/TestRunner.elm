@@ -1,7 +1,6 @@
-module TestRunner where
+module TestRunner exposing (..)
 
 {- Copyright (c) 2016 Robin Luiten -}
-import Graphics.Element exposing (Element)
 import ElmTest exposing (..)
 import String
 
@@ -20,7 +19,7 @@ import Date.Extra.ConvertingTests as ConvertingTests
 
 main : Element
 main =
-  elementRunner
+  consoleRunner
     ( suite "Element Test Runner Tests"
         [ test "Dummy passing test." (assertEqual True True)
         , CreateTests.tests
