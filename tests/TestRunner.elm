@@ -10,6 +10,7 @@ import Date.Extra.CoreTests as CoreTests
 import Date.Extra.PeriodTests as PeriodTests
 import Date.Extra.DurationTests as DurationTests
 import Date.Extra.FloorTests as FloorTests
+import Date.Extra.CeilTests as CeilTests
 import Date.Extra.FormatTests as FormatTests
 import Date.Extra.CompareTests as CompareTests
 import Date.Extra.FieldTests as FieldTests
@@ -27,6 +28,7 @@ main = runSuite <|
     , PeriodTests.tests
     , DurationTests.tests
     , FloorTests.tests
+    , CeilTests.tests
     , FormatTests.tests
     , CompareTests.tests
     , FieldTests.tests
