@@ -30,6 +30,7 @@ import Date exposing (Date, Month (..))
 import Date.Extra.Core as Core
 import Date.Extra.Field as Field
 
+
 {-| Date granularity of operations. -}
 type Floor
   = Millisecond

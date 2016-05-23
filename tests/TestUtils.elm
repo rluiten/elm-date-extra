@@ -164,9 +164,9 @@ getZoneOffsets year =
 --
 fudgeDate : String -> Date
 fudgeDate str =
-  let
-    _ = Debug.log "fudgeDate" str
-  in
+  -- let
+  --   _ = Debug.log "fudgeDate" str
+  -- in
     case String.split "." str of
       _::[] -> -- no "." so no milliseconds so dont do tricky
         DateUtils.unsafeFromString str
@@ -189,7 +189,7 @@ fudgeDate str =
                   , strAfterDot
                   , Format.format config "%z" date
                   ]
-              _ = Debug.log "fudgeDate newStr" newStr
+              -- _ = Debug.log "fudgeDate newStr" newStr
             in
               DateUtils.unsafeFromString newStr
 

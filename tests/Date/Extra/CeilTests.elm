@@ -2,19 +2,23 @@ module Date.Extra.CeilTests exposing (..)
 
 import ElmTest exposing (..)
 import Date.Extra.Ceil as Ceil
+import Date.Extra.Floor as Floor
 import Date.Extra.Format as Format
 import TestUtils
+
 
 tests: Test
 tests =
   suite "Date.Ceil tests" <|
     List.map runCeilCase ceilCases
 
+
 type alias CeilCase =
   { dateString: String
   , ceil: Ceil.Ceil
   , expected: String
   }
+
 
 runCeilCase: CeilCase -> Test
 runCeilCase { dateString, ceil, expected } =
@@ -23,11 +27,13 @@ runCeilCase { dateString, ceil, expected } =
     ceilDate = Ceil.ceil ceil date
     ceilDateStr = Format.isoStringNoOffset ceilDate
   in
-    test ("ceil " ++ (toString ceil)
-      ++ " on " ++ dateString
-      ++ ".") <|
+    test
+      ( "ceil " ++ (toString ceil)
+        ++ " on " ++ dateString
+        ++ "."
+      ) <|
+      (assertEqual expected ceilDateStr)
 
-    (assertEqual expected ceilDateStr)
 
 ceilCases : List CeilCase
 ceilCases =
