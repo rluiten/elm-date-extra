@@ -7,6 +7,9 @@ A collection of modules for working with dates and times.
  * Changed the name space from `Date.` to `Date.Extra.` for all modules.
 * 2016/05/13 5.0.1
  * Update to Elm 0.17.
+* 2016/05/23 6.0.0
+ * Changing name of floor and ceil to startOfTime an endOfTime respectively and
+ moved them into TimeUnit module.
 
 Includes
 * flexible formatting of dates into strings
