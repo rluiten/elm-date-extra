@@ -18,6 +18,8 @@ import String
 import Date.Extra.Config as Config exposing (Config)
 import Date.Extra.Config.Config_en_us as Config_en_us
 import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_gb as Config_en_gb
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
 
 
 {-| Built in configurations. -}
@@ -26,6 +28,8 @@ configs =
   Dict.fromList
     [ ("en_au", Config_en_au.config)
     , ("en_us", Config_en_us.config)
+    , ("en_gb", Config_en_gb.config)
+    , ("fr_fr", Config_fr_fr.config)
     ]
 
 

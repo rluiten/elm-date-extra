@@ -27,6 +27,6 @@ config =
       , time = "%-H:%M %p" -- h:mm tt
       , longTime = "%-H:%M:%S %p" -- h:mm:ss tt
       , dateTime = "%-m/%-d/%Y %-I:%M %p" -- date + time
-      , firstDayOfWeek = Date.Mon
+      , firstDayOfWeek = Date.Sun
       }
   }
