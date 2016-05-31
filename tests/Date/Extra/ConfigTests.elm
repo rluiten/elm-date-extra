@@ -5,11 +5,15 @@ import ElmTest exposing (..)
 
 import Date.Extra.Config.Config_en_au as Config_en_au
 import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_fr_fr as Config_en_gb
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
 import Date.Extra.Config.Configs as Configs
 
 
 config_en_au = Config_en_au.config
 config_en_us = Config_en_us.config
+config_en_gb = Config_en_gb.config
+config_fr_fr = Config_fr_fr.config
 
 
 tests : Test
@@ -31,4 +35,12 @@ tests =
         assertEqual
           config_en_us.format
           (Configs.getConfig "anything").format
+    , test "getConfig en_gb" <|
+        assertEqual
+          config_en_gb.format
+          (Configs.getConfig "en_gb").format
+    , test "getConfig fr_fr" <|
+        assertEqual
+          config_fr_fr.format
+          (Configs.getConfig "fr_fr").format
     ]
