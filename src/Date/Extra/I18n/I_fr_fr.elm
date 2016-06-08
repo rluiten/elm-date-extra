@@ -18,59 +18,59 @@ import Date exposing (Day (..), Month (..))
 dayShort : Day -> String
 dayShort day =
   case day of
-    Mon -> "lun"
-    Tue -> "mar"
-    Wed -> "mer"
-    Thu -> "jeu"
-    Fri -> "ven"
-    Sat -> "sam"
-    Sun -> "dim"
+    Mon -> "Lun"
+    Tue -> "Mar"
+    Wed -> "Mer"
+    Thu -> "Jeu"
+    Fri -> "Ven"
+    Sat -> "Sam"
+    Sun -> "Dim"
 
 
 {-| Day full name. -}
 dayName : Day -> String
 dayName day =
   case day of
-    Mon -> "lundi"
-    Tue -> "mardi"
-    Wed -> "mercredi"
-    Thu -> "jeudi"
-    Fri -> "vendredi"
-    Sat -> "samedi"
-    Sun -> "dimanche"
+    Mon -> "Lundi"
+    Tue -> "Mardi"
+    Wed -> "Mercredi"
+    Thu -> "Jeudi"
+    Fri -> "Vendredi"
+    Sat -> "Samedi"
+    Sun -> "Dimanche"
 
 
 {-| Month short name. -}
 monthShort : Month -> String
 monthShort month =
   case month of
-    Jan -> "jan"
-    Feb -> "fév"
-    Mar -> "mar"
-    Apr -> "avr"
-    May -> "mai"
-    Jun -> "jun"
-    Jul -> "jul"
-    Aug -> "aou"
-    Sep -> "sep"
-    Oct -> "oct"
-    Nov -> "nov"
-    Dec -> "déc"
+    Jan -> "Jan"
+    Feb -> "Fév"
+    Mar -> "Mar"
+    Apr -> "Avr"
+    May -> "Mai"
+    Jun -> "Jun"
+    Jul -> "Jul"
+    Aug -> "Aou"
+    Sep -> "Sep"
+    Oct -> "Oct"
+    Nov -> "Nov"
+    Dec -> "Déc"
 
 
 {-| Month full name. -}
 monthName : Month -> String
 monthName month =
   case month of
-    Jan -> "janvier"
-    Feb -> "février"
-    Mar -> "mars"
-    Apr -> "avril"
-    May -> "mai"
-    Jun -> "juin"
-    Jul -> "juillet"
-    Aug -> "août"
-    Sep -> "septembre"
-    Oct -> "octobre"
-    Nov -> "novembre"
-    Dec -> "décembre"
+    Jan -> "Janvier"
+    Feb -> "Février"
+    Mar -> "Mars"
+    Apr -> "Avril"
+    May -> "Mai"
+    Jun -> "Juin"
+    Jul -> "Juillet"
+    Aug -> "Août"
+    Sep -> "Septembre"
+    Oct -> "Octobre"
+    Nov -> "Novembre"
+    Dec -> "Décembre"
