@@ -20,6 +20,7 @@
         "Date.Extra.Config.Configs",
         "Date.Extra.Config.Config_en_us",
         "Date.Extra.Config.Config_en_au",
+        "Date.Extra.Config.Config_fr_fr",
         "Date.Extra.Field"
     ],
     "dependencies": {
