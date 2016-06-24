@@ -126,18 +126,18 @@ diff date1 date2 =
       - (minuteDiff * Core.ticksAMinute)
       - (secondDiff * Core.ticksASecond)
       - (millisecondDiff * Core.ticksAMillisecond)
-    onlylDaysDiff = ticksDayDiff // Core.ticksADay
+    onlyDaysDiff = ticksDayDiff // Core.ticksADay
     (weekDiff, dayDiff) =
-      if onlylDaysDiff < 0 then
+      if onlyDaysDiff < 0 then
         let
-          absDayDiff = abs onlylDaysDiff
+          absDayDiff = abs onlyDaysDiff
         in
           ( negate (absDayDiff // 7)
           , negate (absDayDiff % 7)
           )
       else
-        ( onlylDaysDiff // 7
-        , onlylDaysDiff % 7
+        ( onlyDaysDiff // 7
+        , onlyDaysDiff % 7
         )
   in
     { week = weekDiff

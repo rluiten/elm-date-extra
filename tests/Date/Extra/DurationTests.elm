@@ -19,18 +19,104 @@ tests =
       if currentOffsets == offsets then Just (test ()) else Nothing
   in
   suite "Date.Duration tests" <|
-    List.filterMap currentOffsetTest
-      [ ( (-600, -600)
-        , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
-            (List.map runAddCase addCases)
-          )
-        )
-      , ( (150, 210)
-        , (\_ -> suite "Date.Duration tests for offsets at Newfoundland -0330"
-            (List.map runAddCase addCasesTZNeg0330)
-          )
-        )
-      ]
+    [ suite "Duration.add" <|
+        List.filterMap currentOffsetTest
+          [ ( (-600, -600)
+            , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
+                (List.map runAddCase addCases)
+              )
+            )
+          , ( (150, 210)
+            , (\_ -> suite "Date.Duration tests for offsets at Newfoundland -0330"
+                (List.map runAddCase addCasesTZNeg0330)
+              )
+            )
+          ]
+    , suite "Duration.diff" <|
+        List.filterMap currentOffsetTest
+          [ ( (-600, -600)
+            , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
+                (List.map runDiffCase diffCases)
+              )
+            )
+          ]
+    ]
+
+
+runDiffCase : ( String , String, Duration.DeltaRecord ) -> Test
+runDiffCase (date1Str, date2Str, expectedDiff) =
+  test
+    ( "date1 " ++ date1Str
+      ++ " date2 " ++ date2Str
+      ++ " expects \n DeltaRecord : " ++ (toString expectedDiff) ++ "\n"
+      -- ++ " expects " ++ delta ++ "\n"
+    ) <|
+      let
+        d1 = TestUtils.fudgeDate date1Str
+        d2 = TestUtils.fudgeDate date2Str
+        diff = Duration.diff d1 d2
+        -- a = Debug.log "diff" (toString diff)
+      in
+        assertEqual expectedDiff diff
+
+
+diffCases : List ( String , String, Duration.DeltaRecord )
+diffCases =
+  [
+    ( "2015/06/10 11:43:55.213"
+    , "2015/06/10 11:43:55.212"
+    , { year = 0, month = 0, day = 0
+      , hour = 0, minute = 0, second = 0, millisecond = 1
+      }
+    )
+  , ( "2015/06/10 11:43:55.212"
+    , "2015/06/10 11:43:55.213"
+    , { year = 0, month = 0, day = 0
+      , hour = 0, minute = 0, second = 0, millisecond = -1
+      }
+    )
+  , ( "2015/06/10 11:43:56.211"
+    , "2015/06/10 11:43:55.212"
+    , { year = 0, month = 0, day = 0
+      , hour = 0, minute = 0, second = 0, millisecond = 999
+      }
+    )
+  , ( "2015/06/10 11:43:55.212"
+    , "2015/03/10 11:43:55.212"
+    , { year = 0, month = 3, day = 0
+      , hour = 0, minute = 0, second = 0, millisecond = 0
+      }
+    )
+  , ( "2015/03/20 11:43:55.212"
+    , "2016/05/15 11:43:55.212"
+    , { year = -1, month = -1, day = -26
+      , hour = 0, minute = 0, second = 0, millisecond = 0
+      }
+    )
+  , ( "2016/05/15 11:43:55.212"
+    , "2015/03/20 11:43:55.212"
+    , { year = 1, month = 1, day = 26
+      , hour = 0, minute = 0, second = 0, millisecond = 0
+      }
+    )
+
+  -- NOTE: this is 25 days for one month. because April is 30 days.
+  -- compare to next test, same days of successive months but number of day in month differs.
+  , ( "2016/05/15 11:43:55.212"
+    , "2016/04/20 11:43:55.212"
+    , { year = 0, month = 0, day = 25
+      , hour = 0, minute = 0, second = 0, millisecond = 0
+      }
+    )
+  -- NOTE: This is 1 month 26 days for one month. because Mar is 31 days.
+  , ( "2016/05/15 11:43:55.212"
+    , "2016/03/20 11:43:55.212"
+    , { year = 0, month = 1, day = 26
+      , hour = 0, minute = 0, second = 0, millisecond = 0
+      }
+    )
+  ]
+
 
 {-
 Test cases for Newfoundland UTC-0330 timezone.

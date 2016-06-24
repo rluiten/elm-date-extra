@@ -3,6 +3,7 @@
 ### Introduction
 A collection of modules for working with dates and times.
 
+Only major changes are listed here.
 * 2016/04/3 4.0.0
  * Changed the name space from `Date.` to `Date.Extra.` for all modules.
 * 2016/05/13 5.0.1
@@ -106,6 +107,7 @@ In the long run this may require writing a date parser and introducing Elm nativ
 ## People Using this library.
 
 * Currently Robin on a new far from finished project. Only put this here because this section would be empty with out it.
+* Feel free to contact me to let me know you are using this library.
 
 ## Things to think abut for future development, not really a road map.
 
