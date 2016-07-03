@@ -17,9 +17,12 @@
         "Date.Extra.TimeUnit",
         "Date.Extra.Utils",
         "Date.Extra.I18n.I_en_us",
+        "Date.Extra.I18n.I_fr_fr",
+        "Date.Extra.I18n.I_pl_pl",
         "Date.Extra.Config.Configs",
         "Date.Extra.Config.Config_en_us",
         "Date.Extra.Config.Config_en_au",
+        "Date.Extra.Config.Config_en_gb",
         "Date.Extra.Config.Config_fr_fr",
         "Date.Extra.Config.Config_pl_pl",
         "Date.Extra.Field"
