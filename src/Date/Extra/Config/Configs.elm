@@ -20,6 +20,7 @@ import Date.Extra.Config.Config_en_us as Config_en_us
 import Date.Extra.Config.Config_en_au as Config_en_au
 import Date.Extra.Config.Config_en_gb as Config_en_gb
 import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_pl_pl as Config_pl_pl
 
 
 {-| Built in configurations. -}
@@ -30,6 +31,7 @@ configs =
     , ("en_us", Config_en_us.config)
     , ("en_gb", Config_en_gb.config)
     , ("fr_fr", Config_fr_fr.config)
+    , ("pl_pl", Config_pl_pl.config)
     ]
 
 
