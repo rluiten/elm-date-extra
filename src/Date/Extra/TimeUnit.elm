@@ -108,7 +108,7 @@ startOfTimeYear date =
 {-| Return a date created by increasing to maximum value all values below
 a given TimeUnit granularity.
 
-This ceils in local time zone values, as the date element parts
+This modifies in local time zone values, as the date element parts
 are pulled straight from the local time zone date values.
 -}
 endOfTime : TimeUnit -> Date -> Date
