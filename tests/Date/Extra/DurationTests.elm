@@ -14,7 +14,7 @@ tests : Test
 tests =
   let
     currentOffsets = TestUtils.getZoneOffsets 2015
-    _ = Debug.log "currentOffsets" currentOffsets
+    _ = Debug.log "DurationTests currentOffsets" currentOffsets
     currentOffsetTest (offsets, test) =
       if currentOffsets == offsets then Just (test ()) else Nothing
   in

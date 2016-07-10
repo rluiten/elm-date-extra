@@ -42,18 +42,20 @@ epochDate = Date.fromTime 0
 
 
 {- The TimezoneOffset of epochDate in current vm.
+Return is negated to match sign of getTimeZoneOffsset
 
 Y/M/D comes out 1969-12-31. The date time zone offset is negative hours minutes
 Y/M/D comes out 1970-01-01. The date time offset is positive hours minutes
+
 -}
 epochTimezoneOffset =
   let
     inMinutes = (Date.hour epochDate * 60) + Date.minute epochDate
   in
     if ((Date.year epochDate) == 1969) then
-      inMinutes - (24*60)
+      -(inMinutes - (24*60))
     else
-      inMinutes
+      -inMinutes
 
 
 {-| Create a date in current time zone from given fields.
@@ -73,12 +75,27 @@ dateFromFields year month day hour minute second millisecond =
     (Internal.ticksFromFields year month day hour minute second millisecond)
 
 
+{-
+This now compensates for current timezone offset compared to epoch offset.
+In relation to #17.
+-}
 adjustedTicksToDate : Int -> Date
 adjustedTicksToDate ticks =
-  Period.add
-    Period.Millisecond
-    (ticks - (epochTimezoneOffset * Core.ticksAMinute))
-    epochDate
+  let
+    date =
+      Period.add
+        Period.Millisecond
+        (ticks + (epochTimezoneOffset * Core.ticksAMinute))
+        epochDate
+    dateOffset = getTimezoneOffset date
+  in
+    if dateOffset == epochTimezoneOffset then
+      date
+    else
+      Period.add
+        Period.Minute
+        (dateOffset - epochTimezoneOffset)
+        date
 
 
 {-| Create a time in current time zone from given fields, for
