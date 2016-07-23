@@ -23,9 +23,9 @@ The input `String` may contain any of the following substrings, which will be ex
 * `%^b` - Uppercase abbreviated month name, e.g. `"JUL"`
 * `%d` - Zero-padded day of month, e.g `"02"`
 * `%-d` - Day of month, e.g `"2"`
-* `%-D` - Day of month, e.g `"2nd"`
+* `%-D` - Ordinal Day of month, e.g `"2nd"`
 * `%e` - Space-padded day of month, e.g `" 2"`
-* `%E` - Space-padded day of month, e.g `" 2nd"`
+* `%E` - Space-padded ordinal day of month, e.g `" 2nd"`
 * `%A` - Day of week in full, e.g. `"Wednesday"`
 * `%^A` - Uppercase Day of week in full, e.g. `"WEDNESDAY"`
 * `%a` - Day of week, abbreviated to three letters, e.g. `"Wed"`
