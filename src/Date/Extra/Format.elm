@@ -201,6 +201,7 @@ formatOffset config targetOffset formatStr date =
     formatStr
 
 {-| Gives an ordinal string based on the day of the month -}
+toOrdinalDay : Int -> String
 toOrdinalDay day =
   case day of
     1 -> "1st"
