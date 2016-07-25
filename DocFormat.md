@@ -23,9 +23,11 @@ The input `String` may contain any of the following substrings, which will be ex
 * `%^b` - Uppercase abbreviated month name, e.g. `"JUL"`
 * `%d` - Zero-padded day of month, e.g `"02"`
 * `%-d` - Day of month, e.g `"2"`
-* `%-D` - Ordinal Day of month, e.g `"2nd"`
+* `%-@d` - Day of Month with language idiom suffix Day of month, e.g `"2nd"`
+ * this currently only does this in english language
 * `%e` - Space-padded day of month, e.g `" 2"`
-* `%E` - Space-padded ordinal day of month, e.g `" 2nd"`
+* `%@e` - Space-padded Day of Month with language idiom suffix, e.g `" 2nd"`
+ * this currently only does this in english language
 * `%A` - Day of week in full, e.g. `"Wednesday"`
 * `%^A` - Uppercase Day of week in full, e.g. `"WEDNESDAY"`
 * `%a` - Day of week, abbreviated to three letters, e.g. `"Wed"`

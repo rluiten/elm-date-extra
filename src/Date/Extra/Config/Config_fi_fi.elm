@@ -20,6 +20,7 @@ config =
       , dayName = Finnish.dayName
       , monthShort = Finnish.monthShort
       , monthName = Finnish.monthName
+      , dayOfMonthWithSuffix = Finnish.dayOfMonthWithSuffix
       }
   , format =
       { date = "%-d.%-m.%Y" -- d.m.YYYY

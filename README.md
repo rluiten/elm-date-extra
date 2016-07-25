@@ -11,6 +11,12 @@ Only major changes are listed here.
 * 2016/05/23 6.0.0
  * Changing name of floor and ceil to startOfTime an endOfTime respectively and
  moved them into TimeUnit module.
+* 2016/07/25 8.0.0
+ * Add new format codes to format output day of month with a language idiom suffix.
+   * In English eg for 2015/04/02 '%-@d' outputs '2nd', '%@e' outputs ' 2nd'
+ * Only English has an implementation in place, I have no idea if this idiom
+ exists in other languages so French, Finish and Polish currently only
+ output day of month as decimal integer.
 
 Includes
 * flexible formatting of dates into strings

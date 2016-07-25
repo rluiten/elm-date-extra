@@ -6,6 +6,7 @@ module Date.Extra.I18n.I_pl_pl exposing (..)
 @docs dayName
 @docs monthShort
 @docs monthName
+@docs dayOfMonthWithSuffix
 
 Copyright (c) 2016 Bartosz Sokół
 -}
@@ -74,3 +75,10 @@ monthName month =
     Oct -> "październik"
     Nov -> "listopad"
     Dec -> "grudzień"
+
+
+{-| This may not do anything in French -}
+dayOfMonthWithSuffix : Bool -> Int -> String
+dayOfMonthWithSuffix pad day =
+  case day of
+    _ -> (toString day)

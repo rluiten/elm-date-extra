@@ -23,6 +23,7 @@ type alias Config =
       , dayName : Day -> String
       , monthShort : Month -> String
       , monthName : Month -> String
+      , dayOfMonthWithSuffix : Bool -> Int -> String
       }
   , format :
       { date : String

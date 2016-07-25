@@ -20,6 +20,7 @@ config =
       , dayName = English.dayName
       , monthShort = English.monthShort
       , monthName = English.monthName
+      , dayOfMonthWithSuffix = English.dayOfMonthWithSuffix
       }
   , format =
       { date = "%-d/%m/%Y" -- d/MM/yyyy

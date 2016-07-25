@@ -20,6 +20,7 @@ config =
       , dayName = Polish.dayName
       , monthShort = Polish.monthShort
       , monthName = Polish.monthName
+      , dayOfMonthWithSuffix = Polish.dayOfMonthWithSuffix
       }
   , format =
       { date = "%d.%m.%Y" -- dd.MM.yyyy
