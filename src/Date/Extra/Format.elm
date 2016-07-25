@@ -230,7 +230,7 @@ formatToken config offset d m =
       "d" -> d |> Date.day |> padWith '0'
       "-d" -> d |> Date.day |> toString
       "-D" -> d |> Date.day |> toOrdinalDay
-      "E" -> d |> Date.day |> toOrdinalDay |> String.append " "
+      "E" -> d |> Date.day |> toOrdinalDay |> (padLeft 4 ' ')
       "e" -> d |> Date.day |> padWith ' '
       "A" -> d |> Date.dayOfWeek |> config.i18n.dayName
       "^A" -> d |> Date.dayOfWeek |> config.i18n.dayName |> String.toUpper

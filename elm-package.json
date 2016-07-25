@@ -1,5 +1,5 @@
 {
-    "version": "7.2.1",
+    "version": "7.2.2",
     "summary": "Date Extra library add/subtract/diff/format etc dates.",
     "repository": "https://github.com/rluiten/elm-date-extra.git",
     "license": "BSD3",

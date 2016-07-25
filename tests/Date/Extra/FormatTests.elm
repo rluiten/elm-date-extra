@@ -62,7 +62,8 @@ aTestTime4 = floor -68007855231116.0 -- problem year negative year out disabled 
 aTestTime5 = floor 1407182031000.0 -- 2014-08-04T19:53:51.000Z
 aTestTime6 = floor 1407117600000.0 -- 2014-08-04T12:00:00.000+10:00
 aTestTime7 = floor 1407074400000.0 -- 2014-08-04T00:00:00.000+10:00
-
+aTestTime8 = floor 1375426800000.0 -- 2013-08-02T17:00:00.000+10:00
+aTestTime9 = floor -55427130000000.0 -- 0213-08-02T17:00:00.000+10:00
 
 -- forces to +10:00 time zone so will run on any time zone
 runFormatTest (name, expected, formatStr, time) =
@@ -111,6 +112,12 @@ formatTestCases =
 
   -- year rendered negative ? boggle :) disabled for not supporting at moment
   --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
+
+  , ("Check day 12 ordinal date format with out padding", "[12][12th]", "[%-d][%-D]", aTestTime)
+  , ("Check day 12 ordinal date format with padding", "[12][12th]", "[%e][%E]", aTestTime)
+  , ("Check day 2 ordinal date format with out padding", "[2][2nd]", "[%-d][%-D]", aTestTime8)
+  , ("Check day 2 ordinal date format with padding", "[ 2][ 2nd]", "[%e][%E]", aTestTime8)
+  , ("Check short year field ", "0213", "%Y", aTestTime9)
   ]
 
 
