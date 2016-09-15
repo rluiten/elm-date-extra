@@ -13,6 +13,7 @@ Copyright (c) 2016 Bruno Girin
 
 
 import Date exposing (Day (..), Month (..))
+import String exposing (padLeft)
 
 
 {-| Day short name. -}
@@ -77,8 +78,26 @@ monthName month =
     Dec -> "Décembre"
 
 
-{-| This may not do anything in French -}
+{-| Returns a common French idiom for days of month.
+Pad indicates space pad the day of month value so single
+digit outputs have space padding to make them same
+length as double digit days of month.
+
+Note that the French idiom is to use the ordinal number
+for the first day of the month (1er janvier) and
+cardinal numbers for all other days (15 janvier). This
+method doesn't pad the value on the right even if the
+`pad` argument is `true`.
+-}
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
-  case day of
-    _ -> (toString day)
+  let
+    value =
+      case day of
+        1 -> "1er"
+        _ -> (toString day)
+  in
+    if pad then
+      padLeft 4 ' ' value
+    else
+      value
