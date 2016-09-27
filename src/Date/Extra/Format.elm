@@ -47,7 +47,7 @@ Copyright (c) 2016 Robin Luiten
 
 import Date exposing (Date, Month)
 import Regex
-import String exposing (padLeft)
+import String exposing (padLeft, right)
 
 import Date.Extra.Config as Config
 import Date.Extra.Core as Core
@@ -162,7 +162,7 @@ Initially from https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/Form
 formatRegex : Regex.Regex
 formatRegex =
   Regex.regex
-    "%(Y|m|_m|-m|B|^B|b|^b|d|-d|-@d|e|@e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
+    "%(y|Y|m|_m|-m|B|^B|b|^b|d|-d|-@d|e|@e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
 
 
 {-| Use a format string to format a date.
@@ -209,6 +209,7 @@ formatToken config offset d m =
   in
     case symbol of
       "Y" -> d |> Date.year |> padWithN 4 '0'
+      "y" -> d |> Date.year |> right 2 |> padWithN 2 '0'
       "m" -> d |> Date.month |> Core.monthToInt |> padWith '0'
       "_m" -> d |> Date.month |> Core.monthToInt |> padWith ' '
       "-m" -> d |> Date.month |> Core.monthToInt |> toString
