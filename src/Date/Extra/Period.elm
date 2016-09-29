@@ -7,12 +7,10 @@ module Date.Extra.Period exposing
   , zeroDelta
   )
 
-{-| Period is a fixed length of time.
+{-| Period is a fixed length of time. It is an elapsed time concept, which
+does not include the concept of Years Months or Daylight saving variations.
 
 Name of type concept copied from NodaTime.
-
-This module has no concept of Months or Years which have variable lenghts of time.
-For that see Duration.
 
 @docs add
 @docs diff

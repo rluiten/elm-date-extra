@@ -97,6 +97,8 @@ zeroDelta =
 
 {- Return true if this Duration unit compensates for crossing daylight saving
 boundaries.
+TODO this may need to compensate for day light saving for all fields as all of them
+can cause the date to change the zone offset.
 -}
 requireDaylightCompensateInAdd : Duration -> Bool
 requireDaylightCompensateInAdd duration =
