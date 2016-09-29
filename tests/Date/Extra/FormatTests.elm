@@ -118,6 +118,7 @@ formatTestCases =
   , ("Check day 2 ordinal date format with out padding", "[2][2nd]", "[%-d][%-@d]", aTestTime8)
   , ("Check day 2 ordinal date format with padding", "[ 2][ 2nd]", "[%e][%@e]", aTestTime8)
   , ("Check short year field ", "0213", "%Y", aTestTime9)
+  , ("Check 2 digit year field ", "13", "%y", aTestTime9)
   ]
 
 

@@ -209,7 +209,7 @@ formatToken config offset d m =
   in
     case symbol of
       "Y" -> d |> Date.year |> padWithN 4 '0'
-      "y" -> d |> Date.year |> right 2 |> padWithN 2 '0'
+      "y" -> d |> Date.year |> padWithN 2 '0' |> right 2
       "m" -> d |> Date.month |> Core.monthToInt |> padWith '0'
       "_m" -> d |> Date.month |> Core.monthToInt |> padWith ' '
       "-m" -> d |> Date.month |> Core.monthToInt |> toString
