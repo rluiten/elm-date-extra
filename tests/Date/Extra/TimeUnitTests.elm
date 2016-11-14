@@ -1,7 +1,8 @@
 module Date.Extra.TimeUnitTests exposing (..)
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Format as Format
@@ -12,10 +13,10 @@ import TestUtils
 
 tests : Test
 tests =
-  suite "TimeUnit tests" <|
-    [ suite "TimeUnit.startOfTime tests" <|
+  describe "TimeUnit tests" <|
+    [ describe "TimeUnit.startOfTime tests" <|
         List.map runStartOfTimeCase startOfTimeCases
-    ,  suite "TimeUnit.endOfTime tests" <|
+    ,  describe "TimeUnit.endOfTime tests" <|
         List.map runEndOfTimeCase endOfTimeCases
     ]
 
@@ -29,7 +30,7 @@ runStartOfTimeCase (dateStr, timeUnit, expectedDate) =
     test ("unit " ++ (toString timeUnit)
           ++ " on " ++ dateStr
           ++ ".") <|
-      assertEqual (expectedDate) (dateOutStr)
+      \() -> Expect.equal (expectedDate) (dateOutStr)
 
 
 startOfTimeCases =
@@ -64,7 +65,7 @@ runEndOfTimeCase (dateStr, timeUnit, expectedDate) =
     test ("unit " ++ (toString timeUnit)
           ++ " on " ++ dateStr
           ++ ".") <|
-      assertEqual (expectedDate) (dateOutStr)
+      \() -> Expect.equal (expectedDate) (dateOutStr)
 
 
 endOfTimeCases =

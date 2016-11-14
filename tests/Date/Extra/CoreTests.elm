@@ -1,8 +1,8 @@
 module Date.Extra.CoreTests exposing (..)
 
 import Date exposing (Date)
-import ElmTest exposing (..)
-
+import Test exposing (..)
+import Expect
 import Date.Extra.Core as Core
 import Date.Extra.Create as Create
 import Date.Extra.Utils as DateUtils
@@ -11,55 +11,55 @@ import TestUtils
 
 tests : Test
 tests =
-  suite "Date.Core tests"
-    [ test "Dummy passing test." (assertEqual True True)
+  describe "Date.Core tests"
+    [ test "Dummy passing test." (\() -> Expect.equal True True)
 
     , let
         nd3 = Core.nextDay << Core.nextDay << Core.nextDay
         nd7 = nd3 << nd3 << Core.nextDay
       in
         test "nextDay cycles through all days" <|
-          assertEqual Date.Mon (nd7 Date.Mon)
+          \() -> Expect.equal Date.Mon (nd7 Date.Mon)
 
     , let
         pd3 = Core.prevDay << Core.prevDay << Core.prevDay
         pd7 = pd3 << pd3 << Core.prevDay
       in
         test "prevDay cycles through all days" <|
-          assertEqual Date.Mon (pd7 Date.Mon)
+          \() -> Expect.equal Date.Mon (pd7 Date.Mon)
 
     , test "2016 is a leap year in length" <|
-        assertEqual 366 (Core.yearToDayLength 2016)
+        \() -> Expect.equal 366 (Core.yearToDayLength 2016)
 
     , test "1900 is not a leap year in length" <|
-        assertEqual 365 (Core.yearToDayLength 1900)
+        \() -> Expect.equal 365 (Core.yearToDayLength 1900)
 
     , test "2016 is a leap year" <|
-        assertEqual True (Core.isLeapYear 2016)
+        \() -> Expect.equal True (Core.isLeapYear 2016)
 
     , test "1900 is not a leap year" <|
-        assertEqual False (Core.isLeapYear 1900)
+        \() -> Expect.equal False (Core.isLeapYear 1900)
 
     , let
         nm3 = Core.nextMonth << Core.nextMonth << Core.nextMonth
         nm12 = nm3 << nm3 << nm3 << nm3
       in
         test "nextMonth cycles through all months" <|
-          assertEqual Date.Jan (nm12 Date.Jan)
+          \() -> Expect.equal Date.Jan (nm12 Date.Jan)
 
     , let
         pm3 = Core.prevMonth << Core.prevMonth << Core.prevMonth
         pm12 = pm3 << pm3 << pm3 << pm3
       in
         test "prevMonth cycles through all months" <|
-          assertEqual Date.Jan (pm12 Date.Jan)
+          \() -> Expect.equal Date.Jan (pm12 Date.Jan)
 
     , test "daysInprevMonth" <|
-        assertEqual 29
+        \() -> Expect.equal 29
           (Core.daysInPrevMonth (Create.dateFromFields 2012 Date.Mar 04 11 34 0 0))
 
     , test "daysInNextMonth" <|
-        assertEqual 31
+        \() -> Expect.equal 31
           (Core.daysInNextMonth (Create.dateFromFields 2011 Date.Dec 25 22 23 0 0))
 
     , test "toFirstOfMonth \"2015-11-11 11:45\" is \"2015-11-01 11:45\"" <|
@@ -105,7 +105,7 @@ tests =
           Core.firstOfNextMonthDate
 
     -- this is all the possible cases.
-    , suite "DateUtils.daysBackToStartOfWeek tests" <|
+    , describe "DateUtils.daysBackToStartOfWeek tests" <|
         List.map
           runBackToStartofWeekTests
             [ (Date.Mon, Date.Mon, 0)
@@ -173,6 +173,6 @@ runBackToStartofWeekTests (dateDay, startOfWeekDay, expectedOffset) =
     (  "dateDay " ++ (toString dateDay)
     ++ " for startOfWeekDay " ++ (toString startOfWeekDay)
     ++ " expects Offsetback of " ++ (toString expectedOffset) ) <|
-  assertEqual
+  \() -> Expect.equal
     (expectedOffset)
     (Core.daysBackToStartOfWeek dateDay startOfWeekDay)

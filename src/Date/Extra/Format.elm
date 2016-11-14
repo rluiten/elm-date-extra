@@ -244,7 +244,7 @@ formatToken config offset d m =
 
 
 collapse : Maybe (Maybe a) -> Maybe a
-collapse m = Maybe.andThen m identity
+collapse m = m |> Maybe.andThen identity
 
 
 formatOffsetStr : String -> Int -> String

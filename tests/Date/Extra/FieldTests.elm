@@ -2,7 +2,8 @@ module Date.Extra.FieldTests exposing (..)
 
 import Debug
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 -- import Time exposing (Time)
 
 import Date.Extra.Create as Create
@@ -14,10 +15,10 @@ import TestUtils
 
 tests : Test
 tests =
-  suite "Date.Field tests"
-    [ suite "fieldDate tests" <|
+  describe "Date.Field tests"
+    [ describe "fieldDate tests" <|
         List.map runFieldCase fieldCases
-    , suite "fieldDateClamp tests" <|
+    , describe "fieldDateClamp tests" <|
         List.map runFieldClampCase fieldClampCases
     ]
 
@@ -33,7 +34,7 @@ runFieldCase (dateStr, field, expectedDate) =
     test ("field " ++ (toString field)
           ++ " on " ++ dateStr
           ++ " expects " ++ toString expectedDate ++ ".\n") <|
-      assertEqual (expectedDate) (dateOutStr)
+      \() -> Expect.equal (expectedDate) (dateOutStr)
 
 
 fieldCases =
@@ -123,7 +124,7 @@ runFieldClampCase (dateStr, field, expectedDate) =
     test ("field " ++ (toString field)
           ++ " on " ++ dateStr
           ++ " expects " ++ toString expectedDate ++ ".\n") <|
-      assertEqual (expectedDate) (dateOutStr)
+      \() -> Expect.equal (expectedDate) (dateOutStr)
 
 
 -- these are same input cases as FieldCases, different results for clamp
