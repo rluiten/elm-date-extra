@@ -1,11 +1,12 @@
 module TestUtils exposing (..)
 
-{-| Useful for testing with ElmTest.
+{-| Useful for testing with Test.
 
 Copyright (c) 2016 Robin Luiten
 -}
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import String
 import Time exposing (Time)
 
@@ -25,7 +26,7 @@ dateStr = Format.isoString -- probably bad idea for now using.
 assertDateFunc :
      String
   -> String
-  -> (Date -> Date) -> Assertion
+  -> (Date -> Date) -> (() -> Expect.Expectation)
 assertDateFunc inputDateStr expectedDateStr dateFunc =
   let
     -- inputDate = DateUtils.unsafeFromString inputDateStr
@@ -38,7 +39,7 @@ assertDateFunc inputDateStr expectedDateStr dateFunc =
     --   , "outputDate", Format.isoStringNoOffset outputDate, Date.toTime outputDate
     --   )
   in
-    assertEqual expectedDateStr (Format.isoStringNoOffset outputDate)
+    \() -> Expect.equal expectedDateStr (Format.isoStringNoOffset outputDate)
 
 
 {-| Helper for testing Date transform functions, including offset.
@@ -46,7 +47,7 @@ assertDateFunc inputDateStr expectedDateStr dateFunc =
 assertDateFuncOffset :
      String
   -> String
-  -> (Date -> Date) -> Assertion
+  -> (Date -> Date) -> (() -> Expect.Expectation)
 assertDateFuncOffset inputDateStr expectedDateStr dateFunc =
   let
     -- inputDate = DateUtils.unsafeFromString inputDateStr
@@ -58,7 +59,7 @@ assertDateFuncOffset inputDateStr expectedDateStr dateFunc =
     --   , "outputDate", Format.isoString outputDate, Date.toTime outputDate
     --   )
   in
-    assertEqual expectedDateStr (Format.isoString outputDate)
+    \() -> Expect.equal expectedDateStr (Format.isoString outputDate)
 
 
 debugDumpDateFunc expectedDate testDate dateFunc =
@@ -87,25 +88,26 @@ assertResultEqualWithOffset :
      Result String Float
   -> Result String Float
   -> Int
-  -> Assertion
+  -> (() -> Expect.Expectation)
 assertResultEqualWithOffset expected test offset =
-  case expected of
-    Ok expectedTicks ->
-      case test of
-        Ok testTicks ->
-          let _ = Debug.log("ooo") (expectedTicks - testTicks)
-          in
-          assertEqual expectedTicks (testTicks + (toFloat offset))
-        Err msg ->
-          let
-            _ = Debug.log ("assertResultEqualWithOffset Err ") (msg)
-          in
-            assert False
-    Err msg ->
-      let
-        _ = Debug.log ("assertResultEqualWithOffset Err ") (msg)
-      in
-        assert False
+  \() -> 
+    case expected of
+      Ok expectedTicks ->
+        case test of
+          Ok testTicks ->
+            let _ = Debug.log("ooo") (expectedTicks - testTicks)
+            in
+            Expect.equal expectedTicks (testTicks + (toFloat offset))
+          Err msg ->
+            let
+              _ = Debug.log ("assertResultEqualWithOffset Err ") (msg)
+            in
+              Expect.fail msg
+      Err msg ->
+        let
+          _ = Debug.log ("assertResultEqualWithOffset Err ") (msg)
+        in
+          Expect.fail msg
 
 
 

@@ -5,7 +5,8 @@ module Date.Extra.ConvertingTests exposing (..)
 Copyright (c) 2016 Robin Luiten
 -}
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 
 
 import Date.Extra.Config.Config_en_au exposing (config)
@@ -14,7 +15,7 @@ import Date.Extra.Format as Format exposing (format, formatUtc, isoMsecOffsetFor
 
 tests : Test
 tests =
-  suite "Date conversion tests"
+  describe "Date conversion tests"
     [ convertingDates
     ]
 
@@ -29,19 +30,18 @@ dateToISO date =
 
 convertingDates : Test
 convertingDates =
-  suite
+  describe
     "Converting a date to ISO String"
     [ test
         "output is exactly the same as iso input v1"
-        (assertEqual
+        (\() -> Expect.equal
           (Ok "2016-03-22T17:30:00.000+0000")
-          (Date.fromString "2016-03-22T17:30:00.000Z" `Result.andThen` (Ok << dateToISO))
+          (Date.fromString "2016-03-22T17:30:00.000Z" |> Result.andThen (Ok << dateToISO))
         )
     , test
-      "output is exactly the same as iso input v2"
-      (assertEqual
-        (Ok "2016-03-22T17:30:00.000Z")
-        (Date.fromString "2016-03-22T17:30:00.000Z" `Result.andThen` (Ok << robDateToISO)
-      )
-    )
+        "output is exactly the same as iso input v2"
+        (\() -> Expect.equal
+          (Ok "2016-03-22T17:30:00.000Z")
+          (Date.fromString "2016-03-22T17:30:00.000Z" |> Result.andThen (Ok << robDateToISO))
+        )
     ]

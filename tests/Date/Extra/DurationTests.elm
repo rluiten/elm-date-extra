@@ -1,7 +1,8 @@
 module Date.Extra.DurationTests exposing (..)
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Create as Create
@@ -18,24 +19,24 @@ tests =
     currentOffsetTest (offsets, test) =
       if currentOffsets == offsets then Just (test ()) else Nothing
   in
-  suite "Date.Duration tests" <|
-    [ suite "Duration.add" <|
+  describe "Date.Duration tests" <|
+    [ describe "Duration.add" <|
         List.filterMap currentOffsetTest
           [ ( (-600, -600)
-            , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
+            , (\_ -> describe "At moment biased to offset UTC+1000 no daylight saving)"
                 (List.map runAddCase addCases)
               )
             )
           , ( (150, 210)
-            , (\_ -> suite "Date.Duration tests for offsets at Newfoundland -0330"
+            , (\_ -> describe "Date.Duration tests for offsets at Newfoundland -0330"
                 (List.map runAddCase addCasesTZNeg0330)
               )
             )
           ]
-    , suite "Duration.diff" <|
+    , describe "Duration.diff" <|
         List.filterMap currentOffsetTest
           [ ( (-600, -600)
-            , (\_ -> suite "At moment biased to offset UTC+1000 no daylight saving)"
+            , (\_ -> describe "At moment biased to offset UTC+1000 no daylight saving)"
                 (List.map runDiffCase diffCases)
               )
             )
@@ -57,7 +58,7 @@ runDiffCase (date1Str, date2Str, expectedDiff) =
         diff = Duration.diff d1 d2
         -- a = Debug.log "diff" (toString diff)
       in
-        assertEqual expectedDiff diff
+        \() -> Expect.equal expectedDiff diff
 
 
 diffCases : List ( String , String, Duration.DeltaRecord )

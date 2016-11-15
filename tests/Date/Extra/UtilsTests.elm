@@ -3,7 +3,8 @@ module Date.Extra.UtilsTests exposing (..)
 {- Copyright (c) 2016 Robin Luiten -}
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Config.Config_en_au as Config_en_au
@@ -18,8 +19,8 @@ config_en_au = Config_en_au.config
 
 tests : Test
 tests =
-  suite "Date.Utils tests"
-    [ test "Dummy passing test." (assertEqual True True)
+  describe "Date.Utils tests"
+    [ test "Dummy passing test." (\() -> Expect.equal True True)
 
     , let
         resultList =
@@ -28,9 +29,9 @@ tests =
         resultListDays = List.map Date.day resultList
       in
         test "Test 2016 Jan calendar grid date list." <|
-          assertEqual ([28..31] ++ [1..31]) resultListDays
+          \() -> Expect.equal ((List.range 28 31) ++ (List.range 1 31)) resultListDays
 
-    , suite "isoWeekOne tests" <|
+    , describe "isoWeekOne tests" <|
         List.map runIsoWeekOneTest
           [ (2005, "2005-01-03T00:00:00.000")
           , (2006, "2006-01-02T00:00:00.000")
@@ -40,7 +41,7 @@ tests =
           , (2010, "2010-01-04T00:00:00.000")
           ]
 
-    , suite "isoWeek tests" <|
+    , describe "isoWeek tests" <|
         List.map runIsoWeekTest
           [ ("2005/Jan/01", 2004, 53, 6)
           , ("2005/Jan/02", 2004, 53, 7)
@@ -54,13 +55,13 @@ tests =
 
 runIsoWeekOneTest (year, expectedDateStr) =
   test ("isoWeekOne of year " ++ (toString year)) <|
-    assertEqual
+    \() -> Expect.equal
       (expectedDateStr)
       (Format.isoStringNoOffset (DateUtils.isoWeekOne year))
 
 
 runIsoWeekTest (dateStr, expectedYear, expectedWeek, expectedIsoDay) =
   test ("isoWeek of " ++ dateStr) <|
-    assertEqual
+    \() -> Expect.equal
       (expectedYear, expectedWeek, expectedIsoDay)
       (DateUtils.isoWeek (DateUtils.unsafeFromString(dateStr)))

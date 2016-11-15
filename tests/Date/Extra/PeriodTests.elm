@@ -1,7 +1,8 @@
 module Date.Extra.PeriodTests exposing (..)
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Period as Period exposing (Period (..))
@@ -11,14 +12,14 @@ import TestUtils
 
 tests : Test
 tests =
-  suite "Date.Period tests"
+  describe "Date.Period tests"
     [ addTests ()
     , diffTests ()
     ]
 
 
 addTests _ =
-  suite "Date.Period add tests"
+  describe "Date.Period add tests"
     (List.map runAddCase addCases)
 
 
@@ -115,7 +116,7 @@ addCases =
 
 
 diffTests _ =
-  suite "Date.Period diff tests"
+  describe "Date.Period diff tests"
     (List.map runDiffCase diffCases)
 
 
@@ -124,7 +125,7 @@ runDiffCase (date1Str, date2Str, expectedDiff) =
     ( "diff date1 " ++ date1Str
       ++ " date2 = " ++ date2Str
     ) <|
-    assertEqual
+    \() -> Expect.equal
       expectedDiff
       ( Period.diff
           (TestUtils.fudgeDate date1Str)

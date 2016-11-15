@@ -40,15 +40,15 @@ starting from startDate.
 -}
 dayList : Int -> Date -> List (Date)
 dayList dayLength startDate =
-  List.reverse (dayList' dayLength startDate [])
+  List.reverse (dayList_ dayLength startDate [])
 
 
-dayList' : Int -> Date -> List (Date) -> List (Date)
-dayList' dayLength date list =
+dayList_ : Int -> Date -> List (Date) -> List (Date)
+dayList_ dayLength date list =
   if dayLength == 0 then
     list
   else
-    dayList'
+    dayList_
       (dayLength - 1)
       -- (addDays 1 date)
       (Period.add Period.Day 1 date)

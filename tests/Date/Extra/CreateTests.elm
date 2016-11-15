@@ -1,7 +1,8 @@
 module Date.Extra.CreateTests exposing (..)
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Config.Config_en_au as Config_en_au
@@ -27,8 +28,8 @@ tests =
     currentOffsetTest (offsets, test) =
       if currentOffsets == offsets then Just (test ()) else Nothing
   in
-    suite "Create module tests" <|
-      [ suite "Create.getTimezoneOffset - each suite PASSES in matching time zone ONLY." <|
+    describe "Create module tests" <|
+      [ describe "Create.getTimezoneOffset - each describe PASSES in matching time zone ONLY." <|
         List.filterMap currentOffsetTest
           [ ( (-600, -600) -- Brisbane no day light saving
             , testPos10Brisbane
@@ -40,7 +41,7 @@ tests =
             , testNeg0330NewFoundland
             )
           ]
-      , suite "Create.dateFromFields Create.timeFromFields"
+      , describe "Create.dateFromFields Create.timeFromFields"
           [ fromFieldsTests()
           ]
       ]
@@ -53,19 +54,19 @@ testPos10Sydney _ =
   in
     if currentOffsets /= (-660, -600) then
       test
-        """This test suite requires to be run in a specific time zone.
+        """This test describe requires to be run in a specific time zone.
            Sydney UTC+1000 with daylight saving variations.
         """ <|
-        assertEqual True False
+        \() -> Expect.equal True False
     else
-      suite "Timezone +1000 Sydney (daylight saving)"
-        [ test "Dummy passing test." (assertEqual True True)
+      describe "Timezone +1000 Sydney (daylight saving)"
+        [ test "Dummy passing test." (\() -> Expect.equal True True)
 
         , test "getTimezoneOffset at Epoch" <|
-            assertEqual -660 (Create.getTimezoneOffset (Date.fromTime 0))
+            \() -> Expect.equal -660 (Create.getTimezoneOffset (Date.fromTime 0))
 
         , test "getTimezoneOffset in standard" <|
-            assertEqual (Result.Ok -600)
+            \() -> Expect.equal (Result.Ok -600)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016-06-01")
@@ -84,24 +85,24 @@ testPos10Sydney _ =
           Sun Oct 04 2015 03:00:00 GMT+1100 (Local Daylight Time)
           ----- -}
         , test "getTimezoneOffset just before daylight saving" <|
-            assertEqual (Result.Ok -600)
+            \() -> Expect.equal (Result.Ok -600)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015-10-04 01:59:59.999")
               )
 
         , test "getTimezoneOffset just after daylight saving" <|
-            assertEqual (Result.Ok -660)
+            \() -> Expect.equal (Result.Ok -660)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015-10-04 02:00:00.000")
               )
 
         , test "getTimezoneOffset just before daylight saving from time" <|
-            assertEqual -600 (Create.getTimezoneOffset (Date.fromTime 1443887999999.0))
+            \() -> Expect.equal -600 (Create.getTimezoneOffset (Date.fromTime 1443887999999.0))
 
         , test "getTimezoneOffset just into daylight saving from time" <|
-            assertEqual -660 (Create.getTimezoneOffset (Date.fromTime 1443888000000.0))
+            \() -> Expect.equal -660 (Create.getTimezoneOffset (Date.fromTime 1443888000000.0))
 
 
           {- -----
@@ -119,27 +120,27 @@ testPos10Sydney _ =
 
           ----- -}
         , test "getTimezoneOffset just before standard" <|
-            assertEqual (Result.Ok -660)
+            \() -> Expect.equal (Result.Ok -660)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015-04-05 02:59:59.9999")
               )
 
         , test "getTimezoneOffset just into standard" <|
-            assertEqual (Result.Ok -600)
+            \() -> Expect.equal (Result.Ok -600)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015-04-05 03:00:00.000")
               )
 
         , test "getTimezoneOffset just before standard from time" <|
-            assertEqual -660 (Create.getTimezoneOffset (Date.fromTime 1428163199999.0))
+            \() -> Expect.equal -660 (Create.getTimezoneOffset (Date.fromTime 1428163199999.0))
 
         , test "getTimezoneOffset just after standard1 from time" <|
-            assertEqual -600 (Create.getTimezoneOffset (Date.fromTime 1428166800000.0))
+            \() -> Expect.equal -600 (Create.getTimezoneOffset (Date.fromTime 1428166800000.0))
 
         , test "getTimezoneOffset just after standard2 from time" <|
-            assertEqual -600 (Create.getTimezoneOffset (Date.fromTime 1428163200000.0))
+            \() -> Expect.equal -600 (Create.getTimezoneOffset (Date.fromTime 1428163200000.0))
         ]
 
 
@@ -150,19 +151,19 @@ testPos10Brisbane _ =
   in
     if currentOffsets /= (-600, -600) then
       test
-        """This test suite requires to be run in a specific time zone.
+        """This test describe requires to be run in a specific time zone.
            Brisbane UTC+1000 with no daylight saving.
         """ <|
-        assertEqual True False
+        \() -> Expect.equal True False
     else
-      suite "Timezone +1000 Brisbane (no daylight saving)"
-        [ test "Dummy passing test." (assertEqual True True)
+      describe "Timezone +1000 Brisbane (no daylight saving)"
+        [ test "Dummy passing test." (\() -> Expect.equal True True)
 
         , test "getTimezoneOffset at Epoch" <|
-            assertEqual -600 (Create.getTimezoneOffset (Date.fromTime 0))
+            \() -> Expect.equal -600 (Create.getTimezoneOffset (Date.fromTime 0))
 
         , test "getTimezoneOffset in standard" <|
-            assertEqual (Result.Ok -600)
+            \() -> Expect.equal (Result.Ok -600)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016-01-01")
@@ -176,26 +177,26 @@ testNeg0330NewFoundland _ =
   in
     if currentOffsets /= (150, 210) then
       test
-        """This test suite requires to be run in a specific time zone.
+        """This test describe requires to be run in a specific time zone.
            Newfoundland UTC-0330 with offsets of -02:30 and -03:30.
         """ <|
-        assertEqual True False
+        \() -> Expect.equal True False
     else
-      suite "Timezone -0330 Newfoundland (daylight saving)"
-        [ test "Dummy passing test." (assertEqual True True)
+      describe "Timezone -0330 Newfoundland (daylight saving)"
+        [ test "Dummy passing test." (\() -> Expect.equal True True)
 
         , test "getTimezoneOffset at Epoch" <|
-            assertEqual 210 (Create.getTimezoneOffset (Date.fromTime 0))
+            \() -> Expect.equal 210 (Create.getTimezoneOffset (Date.fromTime 0))
 
         , test "getTimezoneOffset in standard" <|
-            assertEqual (Result.Ok 210)
+            \() -> Expect.equal (Result.Ok 210)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016/01/01")
               )
 
         , test "getTimezoneOffset in day light saving" <|
-            assertEqual (Result.Ok 150)
+            \() -> Expect.equal (Result.Ok 150)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016/04/01")
@@ -220,31 +221,31 @@ testNeg0330NewFoundland _ =
 
           ----- -}
         , test "getTimezoneOffset just before daylight saving" <|
-            assertEqual (Result.Ok 210)
+            \() -> Expect.equal (Result.Ok 210)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016/03/13 1:59:59.999")
               )
 
         , test "getTimezoneOffset just into daylight saving (Not Real Time)" <|
-            assertEqual (Result.Ok 150)
+            \() -> Expect.equal (Result.Ok 150)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016/03/13 02:00:00.000")
               )
 
         , test "getTimezoneOffset just into daylight saving" <|
-            assertEqual (Result.Ok 150)
+            \() -> Expect.equal (Result.Ok 150)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2016-03-13T03:00:00.000-0330")
               )
 
         , test "getTimezoneOffset just before daylight saving from time" <|
-            assertEqual 210 (Create.getTimezoneOffset (Date.fromTime 1457846999999.0))
+            \() -> Expect.equal 210 (Create.getTimezoneOffset (Date.fromTime 1457846999999.0))
 
         , test "getTimezoneOffset just into daylight saving from time" <|
-            assertEqual 150 (Create.getTimezoneOffset (Date.fromTime 1457847000000.0))
+            \() -> Expect.equal 150 (Create.getTimezoneOffset (Date.fromTime 1457847000000.0))
 
         {- -----
 
@@ -261,27 +262,27 @@ testNeg0330NewFoundland _ =
 
         ----- -}
         , test "getTimezoneOffset just before standard" <|
-            assertEqual (Result.Ok 150)
+            \() -> Expect.equal (Result.Ok 150)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015/11/01 01:59:59.999")
               )
 
         , test "getTimezoneOffset just into standard" <|
-            assertEqual (Result.Ok 210)
+            \() -> Expect.equal (Result.Ok 210)
               ( Result.map
                   Create.getTimezoneOffset
                   (Date.fromString "2015/11/01 02:00:00.000")
               )
 
         , test "getTimezoneOffset just before standard from time" <|
-            assertEqual 150 (Create.getTimezoneOffset (Date.fromTime 1446352199999.0))
+            \() -> Expect.equal 150 (Create.getTimezoneOffset (Date.fromTime 1446352199999.0))
 
         , test "getTimezoneOffset just after standard1 from time" <|
-            assertEqual 210 (Create.getTimezoneOffset (Date.fromTime 1446355800000.0))
+            \() -> Expect.equal 210 (Create.getTimezoneOffset (Date.fromTime 1446355800000.0))
 
         , test "getTimezoneOffset just after standard2 from time" <|
-            assertEqual 210 (Create.getTimezoneOffset (Date.fromTime 1446352200000.0))
+            \() -> Expect.equal 210 (Create.getTimezoneOffset (Date.fromTime 1446352200000.0))
 
 
         {-
@@ -298,7 +299,7 @@ testNeg0330NewFoundland _ =
 
         -}
         , test "getTimezoneOffset on edge of standard to daylight transition 1" <|
-            assertEqual 210 (Create.getTimezoneOffset (Date.fromTime 1446355799999.0))
+            \() -> Expect.equal 210 (Create.getTimezoneOffset (Date.fromTime 1446355799999.0))
 
         ]
 
@@ -306,33 +307,33 @@ testNeg0330NewFoundland _ =
 -- `dateFromFields` Return a date in local time zone with field values.
 -- Comparison does not include offset as that is local time zone dependent.
 fromFieldsTests _ =
-  suite "dateFromFields timeFromFields tests"
+  describe "dateFromFields timeFromFields tests"
     [ test "test dateFromFields for Date time" <|
-        assertEqual
+        \() -> Expect.equal
           "2016-01-29T11:07:47.111"
           (testDateFromFields 2016 Date.Jan 29 11 07 47 111)
     , test "test dateFromFields for Date time around epoch" <|
-        assertEqual
+        \() -> Expect.equal
           "1970-01-01T05:09:13.111"
           (testDateFromFields 1970 Date.Jan 1 5 9 13 111)
     , test "test timeFromFields" <|
-        assertEqual
+        \() -> Expect.equal
           "1970-01-01T07:09:13.111"
           (testTimeFromFields 7 9 13 111)
     , test "test dateFromFields (Issue #17)" <|
-        assertEqual
+        \() -> Expect.equal
           "2016-07-08T00:00:00.000"
           (testDateFromFields 2016 Date.Jul 8 0 0 0 0)
     , test "test dateFromFields not in just before dst (Issue #17)" <|
-        assertEqual
+        \() -> Expect.equal
           "2016-03-13T00:00:00.000"
           (testDateFromFields 2016 Date.Mar 13 0 0 0 0)
     , test "test dateFromFields just in dst (Issue #17)" <|
-        assertEqual
+        \() -> Expect.equal
           "2016-03-14T00:00:00.000"
           (testDateFromFields 2016 Date.Mar 14 0 0 0 0)
     , test "test dateFromFields not in dst (Issue #17)" <|
-        assertEqual
+        \() -> Expect.equal
           "2016-01-08T00:00:00.000"
           (testDateFromFields 2016 Date.Jan 8 0 0 0 0)
     ]

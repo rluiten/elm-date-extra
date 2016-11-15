@@ -6,7 +6,8 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 -- import Date.Config as Config
@@ -23,12 +24,12 @@ en_us_config = Config_en_us.config
 
 tests : Test
 tests =
-  suite "Date.Format tests"
-    [ suite "format tests" <|
+  describe "Date.Format tests"
+    [ describe "format tests" <|
         List.map runFormatTest formatTestCases
-    , suite "formatUtc tests" <|
+    , describe "formatUtc tests" <|
         List.map runFormatUtcTest formatUtcTestCases
-    , suite "formatOffset tests" <|
+    , describe "formatOffset tests" <|
         List.map runformatOffsetTest formatOffsetTestCases
     ]
 
@@ -77,9 +78,10 @@ runFormatTest (name, expected, formatStr, time) =
     --   )
   in
     test name <|
-      assertEqual
-        expected
-        (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+    \() ->
+        Expect.equal
+          expected
+          (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -124,9 +126,10 @@ formatTestCases =
 
 runFormatUtcTest (name, expected, formatStr, time) =
   test name <|
-    assertEqual
-      expected
-      (Format.formatUtc Config_en_us.config formatStr (Core.fromTime time))
+    \() ->
+      Expect.equal
+        expected
+        (Format.formatUtc Config_en_us.config formatStr (Core.fromTime time))
 
 
 formatUtcTestCases =
@@ -138,9 +141,10 @@ formatUtcTestCases =
 
 runformatOffsetTest (name, expected, formatStr, time, offset) =
   test name <|
-    assertEqual
-      expected
-      (Format.formatOffset Config_en_us.config offset formatStr (Core.fromTime time))
+    \() ->
+      Expect.equal
+        expected
+        (Format.formatOffset Config_en_us.config offset formatStr (Core.fromTime time))
 
 
 formatOffsetTestCases =

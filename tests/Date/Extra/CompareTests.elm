@@ -6,7 +6,8 @@ Copyright (c) 2016 Robin Luiten
 -}
 
 import Date exposing (Date)
-import ElmTest exposing (..)
+import Test exposing (..)
+import Expect
 import Time exposing (Time)
 
 import Date.Extra.Compare as Compare exposing (Compare2 (..), Compare3 (..))
@@ -15,10 +16,10 @@ import Date.Extra.Core as Core
 
 tests : Test
 tests =
-  suite "Date.Compare tests"
-    [ suite "is tests" <|
+  describe "Date.Compare tests"
+    [ describe "is tests" <|
         List.map runIsCase isCases
-    , suite "is3 tests" <|
+    , describe "is3 tests" <|
         List.map runIs3Case is3TestCases
     ]
 
@@ -45,9 +46,10 @@ aTestTime4 = floor 1407833631114.0
 
 runIsCase (name, comp, date1, date2, expected) =
   test name <|
-    assertEqual
-      expected
-      (Compare.is comp date1 date2)
+    \() ->
+      Expect.equal
+        expected
+        (Compare.is comp date1 date2)
 
 
 isCases =
@@ -99,9 +101,10 @@ isCases =
 
 runIs3Case (name, comp, date1, date2, date3, expected) =
   test name <|
-    assertEqual
-      expected
-      (Compare.is3 comp date1 date2 date3)
+    \() ->
+      Expect.equal
+        expected
+        (Compare.is3 comp date1 date2 date3)
 
 
 is3TestCases =
