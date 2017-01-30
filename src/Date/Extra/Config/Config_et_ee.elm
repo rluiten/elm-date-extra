@@ -28,7 +28,7 @@ config =
             "%-d. %b %Y. a"
             -- d. M YYYY. a
         , longDate =
-            "%A, %-d %B %Y"
+            "%A, %-d. %B %Y"
             -- dddd, dd. MMMM yyyy
         , time =
             "%-H:%M"
