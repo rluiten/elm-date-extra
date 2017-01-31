@@ -1,16 +1,20 @@
-# Date Extra Function
+# Date Extra Package
 
 ### Introduction
-A collection of modules for working with dates and times.
+An Elm language package for working with dates and times.
 
-Only major changes are listed here.
-* 2016/04/3 4.0.0
- * Changed the name space from `Date.` to `Date.Extra.` for all modules.
-* 2016/05/13 5.0.1
- * Update to Elm 0.17.
-* 2016/05/23 6.0.0
- * Changing name of floor and ceil to startOfTime an endOfTime respectively and
- moved them into TimeUnit module.
+---
+### WARNING v8.2.0 2017/01/31
+* ### Changes the value of `Format.isoMsecOffsetFormat`
+ * It now usses the %:z format token for zone offset which means they
+now include ":" this now appears to be a better choice as it is
+moregenerally parsed by browsers see issue.  https://github.com/rluiten/elm-date-extra/issues/29.
+* ### Changes result of `Format.isoString`
+ * which uses `Format.isoMsecOffsetFormat`.
+---
+
+### History
+Only major (and recent) changes are listed here.
 * 2016/07/25 8.0.0
  * Add new format codes to format output day of month with a language idiom suffix.
    * In English eg for 2015/04/02 '%-@d' outputs '2nd', '%@e' outputs ' 2nd'

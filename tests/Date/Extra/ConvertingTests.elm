@@ -35,7 +35,7 @@ convertingDates =
     [ test
         "output is exactly the same as iso input v1"
         (\() -> Expect.equal
-          (Ok "2016-03-22T17:30:00.000+0000")
+          (Ok "2016-03-22T17:30:00.000+00:00")
           (Date.fromString "2016-03-22T17:30:00.000Z" |> Result.andThen (Ok << dateToISO))
         )
     , test

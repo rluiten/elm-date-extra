@@ -73,7 +73,7 @@ isoOffsetFormat = "%Y-%m-%dT%H:%M:%S%z"
 
 {-| ISO Date time with milliseconds and timezone, 24hr. -}
 isoMsecOffsetFormat : String
-isoMsecOffsetFormat = "%Y-%m-%dT%H:%M:%S.%L%z"
+isoMsecOffsetFormat = "%Y-%m-%dT%H:%M:%S.%L%:z"
 
 
 {-| ISO Date. -}

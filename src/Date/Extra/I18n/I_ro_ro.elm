@@ -81,4 +81,4 @@ monthName month =
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
   case day of
-    _ -> (toString day)
+    _ -> toString day

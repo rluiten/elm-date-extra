@@ -98,6 +98,6 @@ dayOfMonthWithSuffix pad day =
         _ -> (toString day)
   in
     if pad then
-      padLeft 4 ' ' value
+      padLeft 3 ' ' value
     else
       value

@@ -13,13 +13,29 @@ import Time exposing (Time)
 -- import Date.Config as Config
 import Date.Extra.Core as Core
 import Date.Extra.Format as Format
-import Date.Extra.Config.Config_en_us as Config_en_us
 import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_en_gb as Config_en_gb
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_fi_fi as Config_fi_fi
+import Date.Extra.Config.Config_pl_pl as Config_pl_pl
+import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_nl_nl as Config_nl_nl
+import Date.Extra.Config.Config_pt_br as Config_pt_br
+import Date.Extra.Config.Config_et_ee as Config_et_ee
 import Date.Extra.Period as DPeriod exposing (Period (Hour))
 
 
-en_au_config = Config_en_au.config
-en_us_config = Config_en_us.config
+config_en_au = Config_en_au.config
+config_en_us = Config_en_us.config
+config_en_gb = Config_en_gb.config
+config_fr_fr = Config_fr_fr.config
+config_fi_fi = Config_fi_fi.config
+config_pl_pl = Config_pl_pl.config
+config_ro_ro = Config_ro_ro.config
+config_nl_nl = Config_nl_nl.config
+config_pt_br = Config_pt_br.config
+config_et_ee = Config_et_ee.config
 
 
 tests : Test
@@ -31,6 +47,8 @@ tests =
         List.map runFormatUtcTest formatUtcTestCases
     , describe "formatOffset tests" <|
         List.map runformatOffsetTest formatOffsetTestCases
+    , describe "configLanguage tests" <|
+        List.map runConfigLanguageTest formatConfigTestCases
     ]
 
 
@@ -78,10 +96,10 @@ runFormatTest (name, expected, formatStr, time) =
     --   )
   in
     test name <|
-    \() ->
-        Expect.equal
-          expected
-          (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+      \() ->
+          Expect.equal
+            expected
+            (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -96,21 +114,21 @@ formatTestCases =
   , ("with milliseconds 2", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime)
   , ("small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3)
 
-  , ("Config_en_us date", "8/5/2014", en_us_config.format.date, aTestTime5)
-  , ("Config_en_us longDate", "Tuesday, August 05, 2014", en_us_config.format.longDate, aTestTime5)
-  , ("Config_en_us time", "5:53 AM", en_us_config.format.time, aTestTime5)
-  , ("Config_en_us longTime", "5:53:51 AM", en_us_config.format.longTime, aTestTime5)
-  , ("Config_en_us dateTime", "8/5/2014 5:53 AM", en_us_config.format.dateTime, aTestTime5)
-  , ("Config_en_us dateTime test PM", "8/4/2014 12:00 PM", en_us_config.format.dateTime, aTestTime6)
-  , ("Config_en_us dateTime test AM", "8/4/2014 12:00 AM", en_us_config.format.dateTime, aTestTime7)
+  , ("Config_en_us date", "8/5/2014", config_en_us.format.date, aTestTime5)
+  , ("Config_en_us longDate", "Tuesday, August 05, 2014", config_en_us.format.longDate, aTestTime5)
+  , ("Config_en_us time", "5:53 AM", config_en_us.format.time, aTestTime5)
+  , ("Config_en_us longTime", "5:53:51 AM", config_en_us.format.longTime, aTestTime5)
+  , ("Config_en_us dateTime", "8/5/2014 5:53 AM", config_en_us.format.dateTime, aTestTime5)
+  , ("Config_en_us dateTime test PM", "8/4/2014 12:00 PM", config_en_us.format.dateTime, aTestTime6)
+  , ("Config_en_us dateTime test AM", "8/4/2014 12:00 AM", config_en_us.format.dateTime, aTestTime7)
 
-  , ("Config_en_au date", "5/08/2014", en_au_config.format.date, aTestTime5)
-  , ("Config_en_au longDate", "Tuesday, 5 August 2014", en_au_config.format.longDate, aTestTime5)
-  , ("Config_en_au time", "5:53 AM", en_au_config.format.time, aTestTime5)
-  , ("Config_en_au longTime", "5:53:51 AM", en_au_config.format.longTime, aTestTime5)
-  , ("Config_en_au dateTime", "5/08/2014 5:53 AM", en_au_config.format.dateTime, aTestTime5)
+  , ("Config_en_au date", "5/08/2014", config_en_au.format.date, aTestTime5)
+  , ("Config_en_au longDate", "Tuesday, 5 August 2014", config_en_au.format.longDate, aTestTime5)
+  , ("Config_en_au time", "5:53 AM", config_en_au.format.time, aTestTime5)
+  , ("Config_en_au longTime", "5:53:51 AM", config_en_au.format.longTime, aTestTime5)
+  , ("Config_en_au dateTime", "5/08/2014 5:53 AM", config_en_au.format.dateTime, aTestTime5)
 
-  , ("Config_en_us date", "8/12/2014", en_us_config.format.date, aTestTime)
+  , ("Config_en_us date", "8/12/2014", config_en_us.format.date, aTestTime)
 
   -- year rendered negative ? boggle :) disabled for not supporting at moment
   --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
@@ -121,6 +139,46 @@ formatTestCases =
   , ("Check day 2 ordinal date format with padding", "[ 2][ 2nd]", "[%e][%@e]", aTestTime8)
   , ("Check short year field ", "0213", "%Y", aTestTime9)
   , ("Check 2 digit year field ", "13", "%y", aTestTime9)
+  ]
+
+
+runConfigLanguageTest (name, expected, config, formatStr, time) =
+  let
+    asDate = Core.fromTime time
+  in
+    test name <|
+      \() ->
+          Expect.equal
+            expected
+            (Format.formatOffset config -600 formatStr asDate)
+
+
+{-
+  These tests are testing a few language field values and the day idiom function.
+  I currently believe several of the locales that dont pad the day idiom may be incorrect.
+-}
+dayDayIdiomMonth = "%A (%@e) %d %B %Y"
+formatConfigTestCases =
+  [ ("Config_en_au format", "5/08/2014", config_en_au, config_en_au.format.date, aTestTime5)
+  , ("Config_en_au format idiom", "Tuesday ( 5th) 05 August 2014", config_en_au, dayDayIdiomMonth, aTestTime5)
+  , ("Config_en_us day idiom", "8/5/2014", config_en_us, config_en_us.format.date, aTestTime5)
+  , ("Config_en_us format idiom", "Tuesday ( 5th) 05 August 2014", config_en_us, dayDayIdiomMonth, aTestTime5)
+  , ("Config_en_gb day idiom", "5/08/2014", config_en_gb, config_en_gb.format.date, aTestTime5)
+  , ("Config_en_gb format idiom", "Tuesday ( 5th) 05 August 2014", config_en_gb, dayDayIdiomMonth, aTestTime5)
+  , ("Config_fr_fr day idiom", "5/08/2014", config_fr_fr, config_fr_fr.format.date, aTestTime5)
+  , ("Config_fr_fr format idiom", "Mardi (  5) 05 Août 2014", config_fr_fr, dayDayIdiomMonth, aTestTime5)
+  , ("Config_fi_fi day idiom", "5.8.2014", config_fi_fi, config_fi_fi.format.date, aTestTime5)
+  , ("Config_fi_fi format idiom", "tiistai (5) 05 elokuuta 2014", config_fi_fi, dayDayIdiomMonth, aTestTime5)
+  , ("Config_pl_pl day idiom", "05.08.2014", config_pl_pl, config_pl_pl.format.date, aTestTime5)
+  , ("Config_pl_pl format idiom", "wtorek (5) 05 sierpień 2014", config_pl_pl, dayDayIdiomMonth, aTestTime5)
+  , ("Config_ro_ro day idiom", "05.08.2014", config_ro_ro, config_ro_ro.format.date, aTestTime5)
+  , ("Config_ro_ro format idiom", "Marți (5) 05 August 2014", config_ro_ro, dayDayIdiomMonth, aTestTime5)
+  , ("Config_nl_nl day idiom", "8/5/2014", config_nl_nl, config_nl_nl.format.date, aTestTime5)
+  , ("Config_nl_nl format idiom", "dinsdag (5) 05 augustus 2014", config_nl_nl, dayDayIdiomMonth, aTestTime5)
+  , ("Config_pt_br day idiom", "05/08/2014", config_pt_br, config_pt_br.format.date, aTestTime5)
+  , ("Config_pt_br format idiom", "Terça-feira ( 5) 05 Agosto 2014", config_pt_br, dayDayIdiomMonth, aTestTime5)
+  , ("Config_et_ee day idiom", "5. aug 2014. a", config_et_ee, config_et_ee.format.date, aTestTime5)
+  , ("Config_et_ee format idiom", "teisipäev (5.) 05 august 2014", config_et_ee, dayDayIdiomMonth, aTestTime5)
   ]
 
 

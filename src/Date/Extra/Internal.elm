@@ -15,19 +15,19 @@ import Date.Extra.Period as Period
 hackDateAsUtc : Date -> Date
 hackDateAsUtc date =
   let
-    _ = Debug.log "(local  date) fields"
-        ( Date.year date
-        , Date.month date
-        , Date.day date
-        , Date.hour date
-        , Date.minute date
-        , Date.second date
-        , Date.millisecond date
-        )
+    -- _ = Debug.log "(local  date) fields"
+    --     ( Date.year date
+    --     , Date.month date
+    --     , Date.day date
+    --     , Date.hour date
+    --     , Date.minute date
+    --     , Date.second date
+    --     , Date.millisecond date
+    --     )
     offset = getTimezoneOffset date
     oHours = offset // Core.ticksAnHour
     oMinutes = (offset - (oHours * Core.ticksAnHour)) // Core.ticksAMinute
-    _ = Debug.log "hackDateAsUtc" (offset, oHours, oMinutes)
+    -- _ = Debug.log "hackDateAsUtc" (offset, oHours, oMinutes)
   in
     hackDateAsOffset offset date
 
