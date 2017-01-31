@@ -23,6 +23,7 @@ import Date.Extra.Config.Config_fr_fr as Config_fr_fr
 import Date.Extra.Config.Config_pl_pl as Config_pl_pl
 import Date.Extra.Config.Config_fi_fi as Config_fi_fi
 import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_et_ee as Config_et_ee
 
 
 {-| Built in configurations. -}
@@ -36,6 +37,7 @@ configs =
     , ("pl_pl", Config_pl_pl.config)
     , ("fi_fi", Config_fi_fi.config)
     , ("ro_ro", Config_ro_ro.config)
+    , ("et_ee", Config_et_ee.config)
     ]
 
 
