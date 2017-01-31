@@ -1,5 +1,16 @@
 module Date.Extra.I18n.I_nl_nl exposing (..)
 
+{-| Dutch values for day and month names.
+
+@docs dayShort
+@docs dayName
+@docs monthShort
+@docs monthName
+@docs dayOfMonthWithSuffix
+
+-}
+
+
 import Date exposing (Day(..), Month(..))
 
 
@@ -140,7 +151,7 @@ monthName month =
         Dec ->
             "december"
 
-
+{-| There is no idiom of day suffixes in Dutch. -}
 dayOfMonthWithSuffix : Bool -> Int -> String
-dayOfMonthWithSuffix _ day =
-    toString day
+dayOfMonthWithSuffix _ =
+    toString

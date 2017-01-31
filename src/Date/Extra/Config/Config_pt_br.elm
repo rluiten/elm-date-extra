@@ -8,7 +8,7 @@ module Date.Extra.Config.Config_pt_br exposing (..)
 
 import Date
 import Date.Extra.Config as Config
-import Format.Date.I18n.I_pt_br as Portuguese
+import Date.Extra.I18n.I_pt_br as Portuguese
 
 
 {-| Config for pt-br.

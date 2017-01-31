@@ -8,8 +8,11 @@ import Date.Extra.Config.Config_en_au as Config_en_au
 import Date.Extra.Config.Config_en_us as Config_en_us
 import Date.Extra.Config.Config_fr_fr as Config_en_gb
 import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_fi_fi as Config_fi_fi
 import Date.Extra.Config.Config_pl_pl as Config_pl_pl
 import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_nl_nl as Config_nl_nl
+import Date.Extra.Config.Config_pt_br as Config_pt_br
 import Date.Extra.Config.Config_et_ee as Config_et_ee
 import Date.Extra.Config.Configs as Configs
 
@@ -18,8 +21,11 @@ config_en_au = Config_en_au.config
 config_en_us = Config_en_us.config
 config_en_gb = Config_en_gb.config
 config_fr_fr = Config_fr_fr.config
+config_fi_fi = Config_fi_fi.config
 config_pl_pl = Config_pl_pl.config
 config_ro_ro = Config_ro_ro.config
+config_nl_nl = Config_nl_nl.config
+config_pt_br = Config_pt_br.config
 config_et_ee = Config_et_ee.config
 
 
@@ -56,16 +62,31 @@ tests =
           Expect.equal
             config_fr_fr.format
             (Configs.getConfig "fr_fr").format
-    , test "getConfig ro_ro" <|
+    , test "getConfig fi_fi" <|
+        \() ->
+          Expect.equal
+            config_fi_fi.format
+            (Configs.getConfig "fi_fi").format
+    , test "getConfig pl_pl" <|
         \() ->
           Expect.equal
             config_pl_pl.format
             (Configs.getConfig "pl_pl").format
-    , test "getConfig pl_pl" <|
+    , test "getConfig ro_ro" <|
         \() ->
           Expect.equal
             config_ro_ro.format
             (Configs.getConfig "ro_ro").format
+    , test "getConfig nl_nl" <|
+        \() ->
+          Expect.equal
+            config_nl_nl.format
+            (Configs.getConfig "nl_nl").format
+    , test "getConfig pt_br" <|
+        \() ->
+          Expect.equal
+            config_pt_br.format
+            (Configs.getConfig "pt_br").format
     , test "getConfig et_ee" <|
         \() ->
           Expect.equal

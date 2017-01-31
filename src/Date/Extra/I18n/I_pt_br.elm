@@ -83,6 +83,10 @@ monthName month =
 {-| Returns a common Brazilian Portuguse idiom for days of month. Pad indicates
 space pad the day of month value so single digit outputs have space padding to
 make them same length as double digit days of month.
+
+Because only one day has a suffix I am not sure what to do with padding.
+Here 4 left seemed wrong as its a lot of white space for most numbers
+so have reduced it to 2.
 -}
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
@@ -93,6 +97,6 @@ dayOfMonthWithSuffix pad day =
         _ -> toString day
   in
     if pad then
-      padLeft 4 ' ' value
+      padLeft 2 ' ' value
     else
       value
