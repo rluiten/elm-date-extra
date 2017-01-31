@@ -382,7 +382,11 @@ lastOfMonthTicks date =
     dateTicks + (addDays * ticksADay)
 
 
-{-| Days back to start of week day. -}
+{-| Return number of days back to start of week day.
+
+First parameter Date.day - is current day of week.
+Second parameter Date.day - is start day of week.
+-}
 daysBackToStartOfWeek : Date.Day -> Date.Day -> Int
 daysBackToStartOfWeek dateDay startOfWeekDay =
   let
