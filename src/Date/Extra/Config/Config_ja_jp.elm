@@ -24,7 +24,7 @@ config =
       }
   , format =
       { date = "%Y/%m/%d" -- yyyy/MM/dd
-      , longDate = "%Y年%m月%d(%a)" -- yyyy年MM月dd日(aaa)
+      , longDate = "%Y年%m月%d日(%a)" -- yyyy年MM月dd日(aaa)
       , time = "%H:%M" -- hh:mm
       , longTime = "%H時%M分%S秒" -- hh:mm:ss
       , dateTime = "%Y/%m/%d %H:%M"  -- date + time
