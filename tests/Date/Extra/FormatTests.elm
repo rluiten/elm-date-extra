@@ -181,7 +181,7 @@ formatConfigTestCases =
   , ("Config_pt_br format idiom", "Terça-feira ( 5) 05 Agosto 2014", config_pt_br, dayDayIdiomMonth, aTestTime5)
   , ("Config_et_ee day idiom", "5. aug 2014. a", config_et_ee, config_et_ee.format.date, aTestTime5)
   , ("Config_et_ee format idiom", "teisipäev (5.) 05 august 2014", config_et_ee, dayDayIdiomMonth, aTestTime5)
-  , ("Config_ja_jp day idiom", "2014/08/05", config_ja_jp, config_ja_jp.format.date, aTestTime5)
+  , ("Config_ja_jp day idiom", "2014/8/5", config_ja_jp, config_ja_jp.format.date, aTestTime5)
   , ("Config_ja_jp format idiom", "火曜日 (5) 05 8月 2014", config_ja_jp, dayDayIdiomMonth, aTestTime5)
   ]
 
