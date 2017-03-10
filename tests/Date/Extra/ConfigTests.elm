@@ -14,6 +14,7 @@ import Date.Extra.Config.Config_ro_ro as Config_ro_ro
 import Date.Extra.Config.Config_nl_nl as Config_nl_nl
 import Date.Extra.Config.Config_pt_br as Config_pt_br
 import Date.Extra.Config.Config_et_ee as Config_et_ee
+import Date.Extra.Config.Config_ja_jp as Config_ja_jp
 import Date.Extra.Config.Configs as Configs
 
 
@@ -27,6 +28,7 @@ config_ro_ro = Config_ro_ro.config
 config_nl_nl = Config_nl_nl.config
 config_pt_br = Config_pt_br.config
 config_et_ee = Config_et_ee.config
+config_ja_jp = Config_ja_jp.config
 
 
 tests : Test
@@ -92,4 +94,9 @@ tests =
           Expect.equal
             config_et_ee.format
             (Configs.getConfig "et_ee").format
+    , test "getConfig ja_jp" <|
+        \() ->
+          Expect.equal
+            config_ja_jp.format
+            (Configs.getConfig "ja_jp").format
     ]
