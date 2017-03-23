@@ -6,7 +6,7 @@ import Expect
 
 import Date.Extra.Config.Config_en_au as Config_en_au
 import Date.Extra.Config.Config_en_us as Config_en_us
-import Date.Extra.Config.Config_fr_fr as Config_en_gb
+import Date.Extra.Config.Config_en_gb as Config_en_gb
 import Date.Extra.Config.Config_fr_fr as Config_fr_fr
 import Date.Extra.Config.Config_fi_fi as Config_fi_fi
 import Date.Extra.Config.Config_pl_pl as Config_pl_pl
