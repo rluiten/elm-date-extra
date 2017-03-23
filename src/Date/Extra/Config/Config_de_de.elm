@@ -25,7 +25,7 @@ config =
         }
     , format =
         { date =
-            "%-d. %b %Y. a"
+            "%-d. %B %Y"
             -- d. M YYYY. a
         , longDate =
             "%A, %-d. %B %Y"
