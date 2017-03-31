@@ -25,6 +25,7 @@ import Date.Extra.Config.Config_pt_br as Config_pt_br
 import Date.Extra.Config.Config_et_ee as Config_et_ee
 import Date.Extra.Config.Config_ja_jp as Config_ja_jp
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
+import Date.Extra.Config.Config_de_de as Config_de_de
 import Date.Extra.Period as DPeriod exposing (Period (Hour))
 
 
@@ -40,6 +41,7 @@ config_pt_br = Config_pt_br.config
 config_et_ee = Config_et_ee.config
 config_ja_jp = Config_ja_jp.config
 config_ru_ru = Config_ru_ru.config
+config_de_de = Config_de_de.config
 
 
 tests : Test
@@ -190,6 +192,8 @@ formatConfigTestCases =
   , ("Config_ru_ru day idiom", "05/08/2014", config_ru_ru, config_ru_ru.format.date, aTestTime5)
   , ("Config_ru_ru format idiom", "Вторник (5) 05 Август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5)
   , ("Config_ru_ru time idiom", "05:53", config_ru_ru, config_ru_ru.format.time, aTestTime5)
+  , ("Config_de_de date idiom", "5. August 2014", config_de_de, config_de_de.format.date, aTestTime5)
+  , ("Config_de_de longDate idiom", "Dienstag, 5. August 2014", config_de_de, config_de_de.format.longDate, aTestTime5)
   ]
 
 
