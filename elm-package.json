@@ -1,5 +1,5 @@
 {
-    "version": "8.3.0",
+    "version": "8.4.0",
     "summary": "Date Extra library add/subtract/diff/format etc dates.",
     "repository": "https://github.com/rluiten/elm-date-extra.git",
     "license": "BSD3",
@@ -25,6 +25,7 @@
         "Date.Extra.I18n.I_pt_br",
         "Date.Extra.I18n.I_et_ee",
         "Date.Extra.I18n.I_ja_jp",
+        "Date.Extra.I18n.I_de_de",
         "Date.Extra.I18n.I_ru_ru",
         "Date.Extra.Config.Configs",
         "Date.Extra.Config.Config_en_au",
@@ -38,6 +39,7 @@
         "Date.Extra.Config.Config_pt_br",
         "Date.Extra.Config.Config_et_ee",
         "Date.Extra.Config.Config_ja_jp",
+        "Date.Extra.Config.Config_de_de",
         "Date.Extra.Config.Config_ru_ru",
         "Date.Extra.Field"
     ],
