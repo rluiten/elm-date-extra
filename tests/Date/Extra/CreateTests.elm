@@ -50,14 +50,16 @@ tests =
 testPos10Sydney _ =
   let
     currentOffsets = TestUtils.getZoneOffsets 2015
-    -- _ = Debug.log "testPos10Sydney currentOffset" currentOffsets
+    _ = Debug.log "testPos10Sydney currentOffset" currentOffsets
+    failMsg =
+      """This test describe requires to be run in a specific time zone.
+         Sydney UTC+1000 with daylight saving variations.
+         Testing Create.getTimezoneOffset with offset (-660, -600)
+      """
   in
     if currentOffsets /= (-660, -600) then
-      test
-        """This test describe requires to be run in a specific time zone.
-           Sydney UTC+1000 with daylight saving variations.
-        """ <|
-        \() -> Expect.equal True False
+      test failMsg <|
+        \() -> Expect.fail failMsg
     else
       describe "Timezone +1000 Sydney (daylight saving)"
         [ test "Dummy passing test." (\() -> Expect.equal True True)

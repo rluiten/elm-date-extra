@@ -83,6 +83,9 @@ isoWeek date =
           else
             (inputYear, thisYearIsoWeek1)
     dateAsDay = TimeUnit.startOfTime TimeUnit.Day date
+    -- TODO fix bug
+    -- next line bug, eg UTC+2:00 helsinki.
+    -- 2016/Mar/28 is +3, 2016/Mar/27 is +2 - this produces wrong week.
     daysSinceWeek1 = (Core.toTime dateAsDay - (Core.toTime week1)) // Core.ticksADay
   in
     (year, (daysSinceWeek1 // 7) + 1, Core.isoDayOfWeek (Date.dayOfWeek date))
