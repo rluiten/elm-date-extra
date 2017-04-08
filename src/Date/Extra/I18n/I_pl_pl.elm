@@ -8,77 +8,155 @@ module Date.Extra.I18n.I_pl_pl exposing (..)
 @docs monthName
 @docs dayOfMonthWithSuffix
 
-Copyright (c) 2016 Bartosz Sokół
+Copyright (c) 2016-2017 Bartosz Sokół
+
 -}
 
+import Date exposing (Day(..), Month(..))
 
-import Date exposing (Day (..), Month (..))
 
-
-{-| Day short name. -}
+{-| Day short name.
+-}
 dayShort : Day -> String
 dayShort day =
-  case day of
-    Mon -> "pon"
-    Tue -> "wto"
-    Wed -> "śro"
-    Thu -> "czw"
-    Fri -> "pią"
-    Sat -> "sob"
-    Sun -> "nie"
+    case day of
+        Mon ->
+            "pon"
+
+        Tue ->
+            "wto"
+
+        Wed ->
+            "śro"
+
+        Thu ->
+            "czw"
+
+        Fri ->
+            "pią"
+
+        Sat ->
+            "sob"
+
+        Sun ->
+            "nie"
 
 
-{-| Day full name. -}
+{-| Day full name.
+-}
 dayName : Day -> String
 dayName day =
-  case day of
-    Mon -> "poniedziałek"
-    Tue -> "wtorek"
-    Wed -> "środa"
-    Thu -> "czwartek"
-    Fri -> "piątek"
-    Sat -> "sobota"
-    Sun -> "niedziela"
+    case day of
+        Mon ->
+            "poniedziałek"
+
+        Tue ->
+            "wtorek"
+
+        Wed ->
+            "środa"
+
+        Thu ->
+            "czwartek"
+
+        Fri ->
+            "piątek"
+
+        Sat ->
+            "sobota"
+
+        Sun ->
+            "niedziela"
 
 
-{-| Month short name. -}
+{-| Month short name.
+-}
 monthShort : Month -> String
 monthShort month =
-  case month of
-    Jan -> "sty"
-    Feb -> "lut"
-    Mar -> "mar"
-    Apr -> "kwi"
-    May -> "maj"
-    Jun -> "cze"
-    Jul -> "lip"
-    Aug -> "sie"
-    Sep -> "wrz"
-    Oct -> "paź"
-    Nov -> "lis"
-    Dec -> "gru"
+    case month of
+        Jan ->
+            "sty"
+
+        Feb ->
+            "lut"
+
+        Mar ->
+            "mar"
+
+        Apr ->
+            "kwi"
+
+        May ->
+            "maj"
+
+        Jun ->
+            "cze"
+
+        Jul ->
+            "lip"
+
+        Aug ->
+            "sie"
+
+        Sep ->
+            "wrz"
+
+        Oct ->
+            "paź"
+
+        Nov ->
+            "lis"
+
+        Dec ->
+            "gru"
 
 
-{-| Month full name. -}
+{-| Month full name.
+-}
 monthName : Month -> String
 monthName month =
-  case month of
-    Jan -> "styczeń"
-    Feb -> "luty"
-    Mar -> "marzec"
-    Apr -> "kwiecień"
-    May -> "maj"
-    Jun -> "czerwiec"
-    Jul -> "lipiec"
-    Aug -> "sierpień"
-    Sep -> "wrzesień"
-    Oct -> "październik"
-    Nov -> "listopad"
-    Dec -> "grudzień"
+    case month of
+        Jan ->
+            "styczeń"
+
+        Feb ->
+            "luty"
+
+        Mar ->
+            "marzec"
+
+        Apr ->
+            "kwiecień"
+
+        May ->
+            "maj"
+
+        Jun ->
+            "czerwiec"
+
+        Jul ->
+            "lipiec"
+
+        Aug ->
+            "sierpień"
+
+        Sep ->
+            "wrzesień"
+
+        Oct ->
+            "październik"
+
+        Nov ->
+            "listopad"
+
+        Dec ->
+            "grudzień"
 
 
-{-| This may not do anything in French -}
+{-| This may not do anything in French
+-}
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
-  case day of
-    _ -> (toString day)
+    case day of
+        _ ->
+            (toString day)

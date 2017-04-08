@@ -4,7 +4,8 @@ module Date.Extra.Config.Config_et_ee exposing (..)
 
 @docs config
 
-Copyright (c) 2016 Robin Luiten
+Copyright (c) 2016-2017 Robin Luiten
+
 -}
 
 import Date
@@ -26,19 +27,24 @@ config =
     , format =
         { date =
             "%-d. %b %Y. a"
-            -- d. M YYYY. a
+
+        -- d. M YYYY. a
         , longDate =
             "%A, %-d. %B %Y"
-            -- dddd, dd. MMMM yyyy
+
+        -- dddd, dd. MMMM yyyy
         , time =
             "%-H:%M"
-            -- h:mm
+
+        -- h:mm
         , longTime =
             "%-H:%M:%S"
-            -- h:mm:ss
+
+        -- h:mm:ss
         , dateTime =
             "%a, %-d. %b %Y. %-H:%M:%S"
-            -- date + time
+
+        -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }

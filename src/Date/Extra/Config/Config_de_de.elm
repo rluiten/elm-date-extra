@@ -5,6 +5,7 @@ module Date.Extra.Config.Config_de_de exposing (..)
 @docs config
 
 Copyright (c) 2017 Frank Schmitt
+
 -}
 
 import Date
@@ -26,19 +27,24 @@ config =
     , format =
         { date =
             "%-d. %B %Y"
-            -- d. M YYYY. a
+
+        -- d. M YYYY. a
         , longDate =
             "%A, %-d. %B %Y"
-            -- dddd, dd. MMMM yyyy
+
+        -- dddd, dd. MMMM yyyy
         , time =
             "%-H:%M"
-            -- h:mm
+
+        -- h:mm
         , longTime =
             "%-H:%M:%S"
-            -- h:mm:ss
+
+        -- h:mm:ss
         , dateTime =
             "%a, %-d. %b %Y. %-H:%M:%S"
-            -- date + time
+
+        -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }

@@ -4,7 +4,8 @@ module Date.Extra.Config.Config_nl_nl exposing (..)
 
 @docs config
 
-Copyright (c) 2016 Mats Stijlaart
+Copyright (c) 2016-2017 Mats Stijlaart
+
 -}
 
 import Date
@@ -26,19 +27,24 @@ config =
     , format =
         { date =
             "%d-%m-%Y"
-            -- dd-mm-yyy
+
+        -- dd-mm-yyy
         , longDate =
             "%A, %B %d, %Y"
-            -- dddd, MMMM dd, yyyy
+
+        -- dddd, MMMM dd, yyyy
         , time =
             "%H:%M"
-            -- hh:mm
+
+        -- hh:mm
         , longTime =
             "%-H:%M:%S %p"
-            -- h:mm:ss tt
+
+        -- h:mm:ss tt
         , dateTime =
             "%d-%m-%Y %H:%M"
-            -- date time
+
+        -- date time
         , firstDayOfWeek = Date.Mon
         }
     }

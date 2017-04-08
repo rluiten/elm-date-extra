@@ -1,28 +1,16 @@
 # Date Extra Package
 
 ### Introduction
+
 An Elm language package for working with dates and times.
 
----
-### WARNING v8.2.0 2017/01/31
-* ### Changes the value of `Format.isoMsecOffsetFormat`
- * It now usses the %:z format token for zone offset which means they
-now include ":" this now appears to be a better choice as it is
-moregenerally parsed by browsers see issue.  https://github.com/rluiten/elm-date-extra/issues/29.
-* ### Changes result of `Format.isoString`
- * which uses `Format.isoMsecOffsetFormat`.
----
+See bottom of this document for important history notes.
 
-### History
-Only major (and recent) changes are listed here.
-* 2016/07/25 8.0.0
- * Add new format codes to format output day of month with a language idiom suffix.
-   * In English eg for 2015/04/02 '%-@d' outputs '2nd', '%@e' outputs ' 2nd'
- * Only English has an implementation in place, I have no idea if this idiom
- exists in other languages so French, Finish and Polish currently only
- output day of month as decimal integer.
+### Code format
 
-Includes
+This project uses elm-format for formatting.
+
+### Includes
 * flexible formatting of dates into strings
  * It has support for outputting dates with other offsets than local by deriving a timezone offset for a dates.
  * simple i18n support for long and short Day and Month names.
@@ -48,17 +36,17 @@ import Date.Extra.Format as Format exposing (format, formatUtc, isoMsecOffsetFor
 
 
 displayString1 =
-  Result.withDefault "Failed to get a date." <|
-    Result.map
-      (format config config.format.dateTime)
-      (Date.fromString "2015-06-01 12:45:14.211Z")
+    Result.withDefault "Failed to get a date." <|
+        Result.map
+            (format config config.format.dateTime)
+            (Date.fromString "2015-06-01 12:45:14.211Z")
 
 
 displayString2 =
-  Result.withDefault "Failed to get a date." <|
-    Result.map
-      (formatUtc config isoMsecOffsetFormat)
-      (Date.fromString "2015-06-01 12:45:14.211Z")
+    Result.withDefault "Failed to get a date." <|
+        Result.map
+            (formatUtc config isoMsecOffsetFormat)
+            (Date.fromString "2015-06-01 12:45:14.211Z")
 ```
 
 It is a start but it is by no means complete and there maybe many good things we can do to make it harder to do wrong things by leveraging Elm's types.
@@ -67,8 +55,7 @@ There is some fudging done to get timezone offset available in Elm without needi
 
 ### Where did this come from.
 
-This was created based upon code extracted from one of Robin's projects and also from
-and from Luke's https://github.com/lukewestby/elm-date-extra/ and put into  https://github.com/rluiten/elm-date-extra.
+This was created based upon code extracted from one of Robin's projects and also from Luke's https://github.com/lukewestby/elm-date-extra/ and put into  https://github.com/rluiten/elm-date-extra.
 
 The date time format code originally came from
 https://github.com/mgold/elm-date-format/ however I have modified it and hence any problems you discover with it in this package should be initially raised with me.
@@ -101,10 +88,6 @@ It is hoped that with feedback from users and reviewers with deep Type-zen it wi
  * That demonstrate issues.
  * That fill a short fall in existing tests..
 
-## Change Warning.
-
-This library is new and knowing what can or should be done with Elm types is very much a learning process for me and I suspect many people. It is quite likely the API may change quite a bit, so version numbers may climb rapidly.
-
 ## Future
 
 I think there may be value in creating Types for each type of date. Types as covered in the Noda Time documentation such as `Instant`, `LocalTime` , `LocalDate`, `LocalDateTime`, `DateTimeZone`, `ZonedDateTime`, `Period` and `Duration`.
@@ -134,4 +117,34 @@ Many ideas and concepts shamelessly borrowed from the following.
 * http://nodatime.org/1.3.x/userguide/
 * https://www.npmjs.com/package/timezonecomplete
 
-Copyright (c) 2016 Robin Luiten
+## Testing
+
+This uses elm-test for testing so install it if you dont have it.
+
+* npm install -g elm-test
+
+To run Tests
+
+* elm-test
+
+### History
+
+Only major (and recent) changes are listed here.
+
+* 2017/01/31 v8.2.0
+ #### WARNING
+ * ##### Changes the value of `Format.isoMsecOffsetFormat`
+  * It now usses the %:z format token for zone offset which means  they
+ now include ":" this now appears to be a better choice as it is
+ moregenerally parsed by browsers see issue.   https://github.com/rluiten/elm-date-extra/issues/29.
+ * ##### Changes result of `Format.isoString`
+  * which uses `Format.isoMsecOffsetFormat`.
+
+* 2016/07/25 8.0.0
+ * Add new format codes to format output day of month with a language idiom suffix.
+   * In English eg for 2015/04/02 '%-@d' outputs '2nd', '%@e' outputs ' 2nd'
+ * Only English has an implementation in place, I have no idea if this idiom
+ exists in other languages so French, Finish and Polish currently only
+ output day of month as decimal integer.
+
+Copyright (c) 2016-2017 Robin Luiten

@@ -48,4 +48,4 @@ The input `String` may contain any of the following substrings, which will be ex
 * `%%` - produces a `%`
 
 
-These tokens are a subset of those from [Ruby](http://apidock.com/ruby/DateTime/strftime).
+These tokens are a subset of those from [Ruby](http://apidock.com/ruby/DateTime/strftime) with some extensions.
