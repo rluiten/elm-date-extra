@@ -12,6 +12,12 @@ import Date.Extra.CompareTests as CompareTests
 import Date.Extra.FieldTests as FieldTests
 import Date.Extra.ConfigTests as ConfigTests
 import Date.Extra.ConvertingTests as ConvertingTests
+import TestUtils exposing (getZoneOffsets)
+
+
+_ =
+    Debug.log "Tests Current Zone Offsets"
+        (getZoneOffsets 2016)
 
 
 all : Test

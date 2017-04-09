@@ -37,7 +37,6 @@ import Date.Extra.Core as Core
 import Date.Extra.Create as Create
 import Date.Extra.Duration as Duration
 import Date.Extra.Format as Format
-import Date.Extra.Period as Period
 import Date.Extra.TimeUnit as TimeUnit
 
 
@@ -56,8 +55,7 @@ dayList_ dayLength date list =
     else
         dayList_
             (dayLength - 1)
-            -- (addDays 1 date)
-            (Period.add Period.Day 1 date)
+            (Duration.add Duration.Day 1 date)
             (date :: list)
 
 
