@@ -241,3 +241,20 @@ fudgeDate str =
 
         [] ->
             DateUtils.unsafeFromString str
+
+
+{-| Given a year and list of offset and test data only run tests that matche the
+minimum and maximum time zone offset of for that test.
+-}
+describeOffsetTests : String -> Int -> List ( ( Int, Int ), () -> Test ) -> Test
+describeOffsetTests description year candidateTests =
+    let
+        -- currentOffsetFilter : ( ( Int, Int ), () -> Test ) -> Maybe Test
+        currentOffsetFilter ( offsets, test ) =
+            if (getZoneOffsets year) == offsets then
+                Just (test ())
+            else
+                Nothing
+    in
+        describe description <|
+            List.filterMap currentOffsetFilter candidateTests

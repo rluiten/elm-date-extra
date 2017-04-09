@@ -18,151 +18,81 @@ config_en_au =
 
 tests : Test
 tests =
-    let
-        currentOffsets =
-            TestUtils.getZoneOffsets 2015
+    describe "Date.Utils tests"
+        [ let
+            resultList =
+                DateUtils.dayList 35 (Create.dateFromFields 2015 Date.Dec 28 0 0 0 0)
 
-        _ =
-            Debug.log "UtilsTests currentOffsets" currentOffsets
+            -- _ = Debug.log("dayListTest resultList") List.map Format.isoString resultList
+            resultListDays =
+                List.map Date.day resultList
+          in
+            test "Test 2016 Jan calendar grid date list." <|
+                \() -> Expect.equal ((List.range 28 31) ++ (List.range 1 31)) resultListDays
+        , TestUtils.describeOffsetTests "Utils.isoWeek - test in matching time zones only."
+            2016
+            [ ( ( -180, -120 )
+                -- UTC +02:00 Helsinki timezone (in windows its called that)
+                -- its +03:00 with daylight saving
+              , testNeg180HelsinkiIsoWeek
+              )
+            ]
+        , describe "isoWeekOne tests" <|
+            List.map runIsoWeekOneTest
+                [ ( 2005, "2005-01-03T00:00:00.000" )
+                , ( 2006, "2006-01-02T00:00:00.000" )
+                , ( 2007, "2007-01-01T00:00:00.000" )
+                , ( 2008, "2007-12-31T00:00:00.000" )
+                , ( 2009, "2008-12-29T00:00:00.000" )
+                , ( 2010, "2010-01-04T00:00:00.000" )
+                ]
+        , isoWeekTests
+        ]
 
-        currentOffsetTest ( offsets, test ) =
-            if currentOffsets == offsets then
-                Just (test ())
-            else
-                Nothing
-    in
-        describe "Date.Utils tests"
-            [ test "Dummy passing test." (\() -> Expect.equal True True)
-            , test "TODO fix bug in isoWeek around daylight saving" <|
-                \() -> Expect.fail "not fixed yet"
-            , let
-                resultList =
-                    DateUtils.dayList 35 (Create.dateFromFields 2015 Date.Dec 28 0 0 0 0)
 
-                -- _ = Debug.log("dayListTest resultList") List.map Format.isoString resultList
-                resultListDays =
-                    List.map Date.day resultList
-              in
-                test "Test 2016 Jan calendar grid date list." <|
-                    \() -> Expect.equal ((List.range 28 31) ++ (List.range 1 31)) resultListDays
-            , describe "Utils.isoWeek - test in matching time zones only." <|
-                List.filterMap currentOffsetTest
-                    [ ( ( -180, -120 )
-                        -- UTC +2:00 Helsinki timezone (in windows its called that)
-                        -- its +3:00 with daylight saving
-                      , testNeg180HelsinkiIsoWeek
-                      )
-                    ]
-            , describe "isoWeekOne tests" <|
-                List.map runIsoWeekOneTest
-                    [ ( 2005, "2005-01-03T00:00:00.000" )
-                    , ( 2006, "2006-01-02T00:00:00.000" )
-                    , ( 2007, "2007-01-01T00:00:00.000" )
-                    , ( 2008, "2007-12-31T00:00:00.000" )
-                    , ( 2009, "2008-12-29T00:00:00.000" )
-                    , ( 2010, "2010-01-04T00:00:00.000" )
-                    ]
-            , describe "isoWeek tests" <|
-                List.map runIsoWeekTest
-                    [ ( "2005/Jan/01", 2004, 53, 6 )
-                    , ( "2005/Jan/02", 2004, 53, 7 )
-                    , ( "2005/Jan/03", 2005, 1, 1 )
-                    , ( "2007/Jan/01", 2007, 1, 1 )
-                    , ( "2007/Dec/30", 2007, 52, 7 )
-                    , ( "2010/Jan/03", 2009, 53, 7 )
-                    , ( "2016/Mar/28", 2016, 13, 1 )
-                    ]
+isoWeekTests =
+    describe "isoWeek tests" <|
+        List.map runIsoWeekTest
+            [ ( "2005/Jan/01", 2004, 53, 6 )
+            , ( "2005/Jan/02", 2004, 53, 7 )
+            , ( "2005/Jan/03", 2005, 1, 1 )
+            , ( "2007/Jan/01", 2007, 1, 1 )
+            , ( "2007/Dec/30", 2007, 52, 7 )
+            , ( "2010/Jan/03", 2009, 53, 7 )
+            , ( "2016/Mar/28", 2016, 13, 1 )
+            , ( "2016/Mar/27", 2016, 12, 7 )
             ]
 
 
+{-| Example data
 
-{-
-   Year   DST Start (Clock Forward)   DST End (Clock Backward)
-   2015   Sunday, March 29, 3:00 am   Sunday, October 25, 4:00 am
-   2016   Sunday, March 27, 3:00 am   Sunday, October 30, 4:00 am
-   2017   Sunday, March 26, 3:00 am   Sunday, October 29, 4:00 am
+Year: DST Start (Clock Forward): DST End (Clock Backward)
+2015: Sunday, March 29, 3:00 am: Sunday, October 25, 4:00 am
+2016: Sunday, March 27, 3:00 am: Sunday, October 30, 4:00 am
+2017: Sunday, March 26, 3:00 am: Sunday, October 29, 4:00 am
+
+Move this test to its own file - to test daylight saving case problem.
+
 -}
-
-
 testNeg180HelsinkiIsoWeek _ =
     let
         currentOffsets =
             TestUtils.getZoneOffsets 2015
-
-        _ =
-            Debug.log "testNeg180HelsinkiIsoWeek currentOffset" currentOffsets
-
-        failMsg =
-            """
-            This test describe requires to be run in a specific time zone.
-            Helsinki UTC+02:00 with daylight saving variations.
-            Testing Utils.isoWeek Offsets (-180, -120)
-            """
     in
-        if currentOffsets /= ( -180, -1201 ) then
-            test failMsg <|
-                \() -> Expect.fail "mooo"
-            -- failMsg
+        if currentOffsets /= ( -180, -120 ) then
+            test
+                """
+                This test describe requires to be run in a specific time zone.
+                Helsinki UTC+02:00 with daylight saving variations.
+                Testing Utils.isoWeek Offsets (-180, -120)
+                """
+            <|
+                \() -> Expect.fail "currentOffsets incorrect for this test"
         else
-            let
-                sep28 =
-                    DateUtils.unsafeFromString "2016-3-28"
-
-                sep28Offset =
-                    Debug.log "sep28Offset" <| Create.getTimezoneOffset sep28
-
-                sep28isoWeek =
-                    DateUtils.isoWeek sep28
-
-                sep27 =
-                    DateUtils.unsafeFromString "2016-3-27"
-
-                sep27Offset =
-                    Debug.log "sep27Offset" <| Create.getTimezoneOffset sep27
-
-                sep27isoWeek =
-                    DateUtils.isoWeek sep27
-
-                sep23 =
-                    DateUtils.unsafeFromString "2016-3-23"
-
-                sep23Offset =
-                    Debug.log "sep23Offset" <| Create.getTimezoneOffset sep23
-
-                sep23isoWeek =
-                    DateUtils.isoWeek sep23
-
-                sep21 =
-                    DateUtils.unsafeFromString "2016-3-21"
-
-                sep21Offset =
-                    Debug.log "sep21Offset" <| Create.getTimezoneOffset sep21
-
-                sep21isoWeek =
-                    DateUtils.isoWeek sep21
-            in
-                -- Reference: https://www.epochconverter.com/weeks/2016
-                describe "Timezone +1000 Sydney (daylight saving)"
-                    [ test "Dummy passing test." (\() -> Expect.pass) -- "dummy pass")
-                    , test "Check getTimeZoneOffset sep21 is as expected" <|
-                        \() -> Expect.equal sep21Offset -120
-                    , test "Check getTimeZoneOffset sep23 is as expected" <|
-                        \() -> Expect.equal sep23Offset -120
-                    , test "Check getTimeZoneOffset sep27 is as expected" <|
-                        \() -> Expect.equal sep27Offset -120
-                    , test "Check getTimeZoneOffset sep28 is as expected" <|
-                        \() -> Expect.equal sep28Offset -180
-                    , test "Check isoWeek sep21 is as expected" <|
-                        \() -> Expect.equal sep21isoWeek ( 2016, 12, 1 )
-                    , test "Check isoWeek sep23 is as expected" <|
-                        \() -> Expect.equal sep23isoWeek ( 2016, 12, 3 )
-                    , test "Check isoWeek sep27 is as expected" <|
-                        \() -> Expect.equal sep27isoWeek ( 2016, 12, 7 )
-                    , test "Check isoWeek sep28 is as expected" <|
-                        \() -> Expect.equal sep28isoWeek ( 2016, 13, 1 )
-
-                    -- BUG daylight saving change
-                    ]
+            -- Reference: https://www.epochconverter.com/weeks/2016
+            describe "Timezone +02:00 Helisnki (daylight saving +03:00)"
+                [ isoWeekTests
+                ]
 
 
 runIsoWeekOneTest ( year, expectedDateStr ) =

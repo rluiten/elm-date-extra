@@ -12,45 +12,105 @@ import TestUtils
 
 tests : Test
 tests =
-    let
-        currentOffsets =
-            TestUtils.getZoneOffsets 2015
-
-        _ =
-            Debug.log "DurationTests currentOffsets" currentOffsets
-
-        currentOffsetTest ( offsets, test ) =
-            if currentOffsets == offsets then
-                Just (test ())
-            else
-                Nothing
-    in
-        describe "Date.Duration tests" <|
-            [ describe "Duration.add" <|
-                List.filterMap currentOffsetTest
-                    [ ( ( -600, -600 )
-                      , (\_ ->
-                            describe "At moment biased to offset UTC+1000 no daylight saving)"
-                                (List.map runAddCase addCases)
-                        )
-                      )
-                    , ( ( 150, 210 )
-                      , (\_ ->
-                            describe "Date.Duration tests for offsets at Newfoundland -0330"
-                                (List.map runAddCase addCasesTZNeg0330)
-                        )
-                      )
-                    ]
-            , describe "Duration.diff" <|
-                List.filterMap currentOffsetTest
-                    [ ( ( -600, -600 )
-                      , (\_ ->
-                            describe "At moment biased to offset UTC+1000 no daylight saving)"
-                                (List.map runDiffCase diffCases)
-                        )
-                      )
-                    ]
+    describe "Date.Duration tests" <|
+        [ TestUtils.describeOffsetTests "Duration.add"
+            2015
+            [ ( ( -600, -600 )
+              , (\_ ->
+                    describe "At moment biased to offset UTC+1000 no daylight saving)"
+                        (List.map runAddCase addCases)
+                )
+              )
+            , ( ( 150, 210 )
+              , (\_ ->
+                    describe "Date.Duration tests for offsets at Newfoundland -0330"
+                        (List.map runAddCase addCasesTZNeg0330)
+                )
+              )
             ]
+        , TestUtils.describeOffsetTests "Duration.diff"
+            2015
+            [ ( ( -600, -600 )
+              , (\_ ->
+                    describe "At moment biased to offset UTC+1000 no daylight saving)"
+                        (List.map runDiffCase diffCases)
+                )
+              )
+            ]
+        , TestUtils.describeOffsetTests "Duration.diffDays"
+            2016
+            [ ( ( -180, -120 )
+                -- Helsinki +02:00
+              , (\_ ->
+                    describe "Timezone +02:00 Helisnki test diffDays"
+                        (List.map runDiffDaysCase diffDaysCases)
+                )
+              )
+            , ( ( -600, -600 )
+                -- brisbane +10:00 no day light saving
+              , (\_ ->
+                    describe "Timezone +02:00 Helisnki test diffDays"
+                        (List.map runDiffDaysCase diffDaysCases)
+                )
+              )
+            ]
+        ]
+
+
+runDiffDaysCase : ( String, String, Int ) -> Test
+runDiffDaysCase ( date1Str, date2Str, expectedDiff ) =
+    test
+        ("date1 "
+            ++ date1Str
+            ++ " date2 "
+            ++ date2Str
+            ++ " expects \n    daysDiffInt : "
+            ++ (toString expectedDiff)
+        )
+    <|
+        \() ->
+            Expect.equal expectedDiff
+                (Duration.diffDays
+                    (TestUtils.fudgeDate date1Str)
+                    (TestUtils.fudgeDate date2Str)
+                )
+
+
+diffDaysCases : List ( String, String, Int )
+diffDaysCases =
+    [ ( "2016/06/10 1:43:55.213"
+      , "2016/06/10 21:43:55.212"
+      , 0
+      )
+    , ( "2016/06/10 23:43:55.213"
+      , "2016/05/10 01:43:55.212"
+      , 31
+      )
+    , ( "2016/06/10 01:43:55.213"
+      , "2016/05/10 23:43:55.212"
+      , 31
+      )
+    , ( "2016/06/10 00:00:00.000"
+      , "2016/04/10 00:00:00.000"
+      , 61
+      )
+    , ( "2016/06/10 00:00:00.000"
+      , "2016/03/10 00:00:00.000"
+      , 92
+      )
+    , ( "2016/06/10 00:00:00.000"
+      , "2016/02/10 00:00:00.000"
+      , 121
+      )
+    , ( "2016/02/10 00:00:00.000"
+      , "2016/06/10 00:00:00.000"
+      , -121
+      )
+    , ( "2016/03/28 00:00:00.000"
+      , "2016/01/04 00:00:00.000"
+      , 84
+      )
+    ]
 
 
 runDiffCase : ( String, String, Duration.DeltaRecord ) -> Test
@@ -63,20 +123,13 @@ runDiffCase ( date1Str, date2Str, expectedDiff ) =
             ++ " expects \n DeltaRecord : "
             ++ (toString expectedDiff)
             ++ "\n"
-         -- ++ " expects " ++ delta ++ "\n"
         )
     <|
         let
-            d1 =
-                TestUtils.fudgeDate date1Str
-
-            d2 =
-                TestUtils.fudgeDate date2Str
-
             diff =
-                Duration.diff d1 d2
-
-            -- a = Debug.log "diff" (toString diff)
+                Duration.diff
+                    (TestUtils.fudgeDate date1Str)
+                    (TestUtils.fudgeDate date2Str)
         in
             \() -> Expect.equal expectedDiff diff
 

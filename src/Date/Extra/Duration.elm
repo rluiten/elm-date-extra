@@ -5,9 +5,10 @@ module Date.Extra.Duration
         , DeltaRecord
         , zeroDelta
         , diff
+        , diffDays
         )
 
-{-| A Duration is a length of time that may vary with with calendar date
+{-| A Duration is a length of time that may vary with calendar date
 and time. It can be used to modify a date.
 
 When modify dates using Durations (Day | Month | Week | Year) this module
@@ -17,7 +18,7 @@ It can't completely avoid the hour changing as some hours are not a real
 world date and hence will modify the hour more than the Duration modified.
 
 This behaviour is modelled on momentjs so any observed behaviour that is
-not the same as momentjs should be raised as in issue.
+not the same as momentjs should be raised as an issue.
 
 Note adding or subtracting 24 * Hour units from a date may produce a
 different answer to adding or subtracting a Day if day light saving
@@ -35,6 +36,7 @@ your needs.
 @docs DeltaRecord
 @docs zeroDelta
 @docs diff
+@docs diffDays
 
 Copyright (c) 2016-2017 Robin Luiten
 
@@ -360,15 +362,17 @@ diff date1 date2 =
         positiveDiff date2 date1 -1
 
 
-{-| Return diff between dates. date1 - date.
+{-| Return diff between dates.
+
+It returns date1 - date2 in a DeltaRecord.
 
 Precondition for this function is date1 must be after date2.
-Input mult is used to multiply output fields as needed for caller,
+Input multiplier is used to multiply output fields as needed for caller,
 this is used to conditionally negate them in initial use case.
 
 -}
 positiveDiff : Date -> Date -> Int -> DeltaRecord
-positiveDiff date1 date2 mult =
+positiveDiff date1 date2 multiplier =
     let
         year1 =
             Date.year date1
@@ -451,11 +455,45 @@ positiveDiff date1 date2 mult =
         ( secondDiff, msecDiff ) =
             accDiff secondDiffA msec1 msec2 1000
     in
-        { year = yearDiff * mult
-        , month = monthDiff * mult
-        , day = dayDiff * mult
-        , hour = hourDiff * mult
-        , minute = minuteDiff * mult
-        , second = secondDiff * mult
-        , millisecond = msecDiff * mult
+        { year = yearDiff * multiplier
+        , month = monthDiff * multiplier
+        , day = dayDiff * multiplier
+        , hour = hourDiff * multiplier
+        , minute = minuteDiff * multiplier
+        , second = secondDiff * multiplier
+        , millisecond = msecDiff * multiplier
         }
+
+
+{-| Returns date1 - date2 as number of days to add to date1 to get to day date2 is on.
+`date1 - date2 in days`.
+
+Only calculates days difference and ignores any field smaller than day in calculation.
+
+-}
+diffDays : Date -> Date -> Int
+diffDays date1 date2 =
+    if Compare.is Compare.After date1 date2 then
+        positiveDiffDays date1 date2 1
+    else
+        positiveDiffDays date2 date1 -1
+
+
+{-| Return number of days added to date1 to produce date2
+-}
+positiveDiffDays : Date -> Date -> Int -> Int
+positiveDiffDays date1 date2 multiplier =
+    let
+        date1DaysFromCivil =
+            Internal.daysFromCivil
+                (Date.year date1)
+                (Core.monthToInt (Date.month date1))
+                (Date.day date1)
+
+        date2DaysFromCivil =
+            Internal.daysFromCivil
+                (Date.year date2)
+                (Core.monthToInt (Date.month date2))
+                (Date.day date2)
+    in
+        (date1DaysFromCivil - date2DaysFromCivil) * multiplier

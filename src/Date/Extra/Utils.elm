@@ -32,12 +32,13 @@ import Date exposing (Day(..), Date, Month(..))
 import Regex
 import String
 import Time
+import Date.Extra.Compare as Compare exposing (is, Compare2(..))
 import Date.Extra.Core as Core
 import Date.Extra.Create as Create
+import Date.Extra.Duration as Duration
+import Date.Extra.Format as Format
 import Date.Extra.Period as Period
 import Date.Extra.TimeUnit as TimeUnit
-import Date.Extra.Format as Format
-import Date.Extra.Compare as Compare exposing (is, Compare2(..))
 
 
 {-| Return a list of days dayLength long for successive days
@@ -66,52 +67,48 @@ Input date is expected to be in local time zone of vm.
 isoWeek : Date -> ( Int, Int, Int )
 isoWeek date =
     let
+        ( year, isoWeek1Date ) =
+            getYearIsoWeekDate date
+
+        daysSinceIsoWeek1 =
+            Duration.diffDays date isoWeek1Date
+    in
+        ( year
+        , (daysSinceIsoWeek1 // 7) + 1
+        , Core.isoDayOfWeek (Date.dayOfWeek date)
+        )
+
+
+getYearIsoWeekDate date =
+    let
         inputYear =
             Date.year date
 
-        endOfYearMaxIsoWeekDate =
+        maxIsoWeekDateInYear =
             Create.dateFromFields inputYear Date.Dec 29 0 0 0 0
-
-        ( year, week1 ) =
-            if is SameOrAfter date endOfYearMaxIsoWeekDate then
-                let
-                    nextYearIsoWeek1 =
-                        isoWeekOne (inputYear + 1)
-
-                    -- _ = Debug.log("isoWeek") ("nextYearIsoWeek1", inputYear + 1, Format.isoString nextYearIsoWeek1)
-                in
-                    if is Before date nextYearIsoWeek1 then
-                        ( inputYear, isoWeekOne inputYear )
-                    else
-                        ( inputYear + 1, nextYearIsoWeek1 )
-            else
-                let
-                    thisYearIsoWeek1 =
-                        isoWeekOne inputYear
-
-                    -- _ = Debug.log("isoWeek") ("thisYearIsoWeek1", inputYear, Format.utcFormat.isoString thisYearIsoWeek1)
-                in
-                    if is Before date thisYearIsoWeek1 then
-                        ( inputYear - 1, isoWeekOne (inputYear - 1) )
-                    else
-                        ( inputYear, thisYearIsoWeek1 )
-
-        dateAsDay =
-            TimeUnit.startOfTime TimeUnit.Day date
-
-        -- TODO fix bug
-        -- next line bug, eg UTC+2:00 helsinki.
-        -- 2016/Mar/28 is +3, 2016/Mar/27 is +2 - this produces wrong week.
-        daysSinceWeek1 =
-            (Core.toTime dateAsDay - (Core.toTime week1)) // Core.ticksADay
     in
-        ( year, (daysSinceWeek1 // 7) + 1, Core.isoDayOfWeek (Date.dayOfWeek date) )
+        if is SameOrAfter date maxIsoWeekDateInYear then
+            let
+                nextYearIsoWeek1Date =
+                    isoWeekOne (inputYear + 1)
+            in
+                if is Before date nextYearIsoWeek1Date then
+                    ( inputYear, isoWeekOne inputYear )
+                else
+                    ( inputYear + 1, nextYearIsoWeek1Date )
+        else
+            let
+                thisYearIsoWeek1Date =
+                    isoWeekOne inputYear
+            in
+                if is Before date thisYearIsoWeek1Date then
+                    ( inputYear - 1, isoWeekOne (inputYear - 1) )
+                else
+                    ( inputYear, thisYearIsoWeek1Date )
 
 
-
-{- Reference point for isoWeekOne. -}
-
-
+{-| Reference point for isoWeekOne.
+-}
 isoDayofWeekMonday =
     Core.isoDayOfWeek Date.Mon
 
@@ -121,13 +118,13 @@ isoDayofWeekMonday =
 isoWeekOne : Int -> Date
 isoWeekOne year =
     let
-        date =
+        dateJan4 =
             Create.dateFromFields year Jan 4 0 0 0 0
-
-        isoDow =
-            Core.isoDayOfWeek (Date.dayOfWeek date)
     in
-        Period.add Period.Day (isoDayofWeekMonday - isoDow) date
+        Duration.add
+            Duration.Day
+            (isoDayofWeekMonday - (Core.isoDayOfWeek (Date.dayOfWeek dateJan4)))
+            dateJan4
 
 
 {-| Utility for known input string date creation cases.
