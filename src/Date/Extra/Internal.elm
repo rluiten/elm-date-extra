@@ -7,8 +7,8 @@ Copyright (c) 2016-2017 Robin Luiten
 -}
 
 import Date exposing (Date, Month(..))
-import Date.Extra.Core as Core
 import Date.Extra.Period as Period
+import Date.Extra.Internal2 as Internal2
 
 
 {-| Adjust date as if it was in utc zone.
@@ -16,25 +16,14 @@ import Date.Extra.Period as Period
 hackDateAsUtc : Date -> Date
 hackDateAsUtc date =
     let
-        -- _ = Debug.log "(local  date) fields"
-        --     ( Date.year date
-        --     , Date.month date
-        --     , Date.day date
-        --     , Date.hour date
-        --     , Date.minute date
-        --     , Date.second date
-        --     , Date.millisecond date
-        --     )
         offset =
             getTimezoneOffset date
 
         oHours =
-            offset // Core.ticksAnHour
+            offset // Internal2.ticksAnHour
 
         oMinutes =
-            (offset - (oHours * Core.ticksAnHour)) // Core.ticksAMinute
-
-        -- _ = Debug.log "hackDateAsUtc" (offset, oHours, oMinutes)
+            (offset - (oHours * Internal2.ticksAnHour)) // Internal2.ticksAMinute
     in
         hackDateAsOffset offset date
 
@@ -43,12 +32,9 @@ hackDateAsUtc date =
 -}
 hackDateAsOffset : Int -> Date -> Date
 hackDateAsOffset offsetMinutes date =
-    --  Core.fromTime <| Core.toTime date + (offsetMinutes * Core.ticksAMinute)
-    -- let _ = Debug.log("hackDateAsOffset") (offsetMinutes)
-    -- in
-    Core.toTime date
-        |> (+) (offsetMinutes * Core.ticksAMinute)
-        |> Core.fromTime
+    Internal2.toTime date
+        |> (+) (offsetMinutes * Internal2.ticksAMinute)
+        |> Internal2.fromTime
 
 
 {-| Returns number of days since civil 1970-01-01. Negative values indicate
@@ -114,11 +100,8 @@ getTimezoneOffset date =
 
         v1Ticks =
             ticksFromDateFields date
-
-        -- _ = Debug.log "v1Ticks"
-        --   (dateTicks, v1Ticks, dateTicks - v1Ticks, (dateTicks - v1Ticks) // Core.ticksAMinute)
     in
-        (dateTicks - v1Ticks) // Core.ticksAMinute
+        (dateTicks - v1Ticks) // Internal2.ticksAMinute
 
 
 ticksFromDateFields : Date -> Int
@@ -136,20 +119,20 @@ ticksFromDateFields date =
 ticksFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Int
 ticksFromFields year month day hour minute second millisecond =
     let
-        c_year =
+        clampYear =
             if year < 0 then
                 0
             else
                 year
 
         monthInt =
-            Core.monthToInt month
+            Internal2.monthToInt month
 
-        c_day =
-            clamp 1 (Core.daysInMonth c_year month) day
+        clampDay =
+            clamp 1 (Internal2.daysInMonth clampYear month) day
 
         dayCount =
-            daysFromCivil c_year monthInt c_day
+            daysFromCivil clampYear monthInt clampDay
     in
         Period.toTicks <|
             Period.Delta

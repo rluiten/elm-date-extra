@@ -25,7 +25,7 @@ Copyright (c) 2016-2017 Robin Luiten
 -}
 
 import Date exposing (Date)
-import Date.Extra.Core as Core
+import Date.Extra.Internal2 as Internal2
 
 
 {-| A Period.
@@ -79,30 +79,30 @@ toTicks : Period -> Int
 toTicks period =
     case period of
         Millisecond ->
-            Core.ticksAMillisecond
+            Internal2.ticksAMillisecond
 
         Second ->
-            Core.ticksASecond
+            Internal2.ticksASecond
 
         Minute ->
-            Core.ticksAMinute
+            Internal2.ticksAMinute
 
         Hour ->
-            Core.ticksAnHour
+            Internal2.ticksAnHour
 
         Day ->
-            Core.ticksADay
+            Internal2.ticksADay
 
         Week ->
-            Core.ticksAWeek
+            Internal2.ticksAWeek
 
         Delta delta ->
-            (Core.ticksAMillisecond * delta.millisecond)
-                + (Core.ticksASecond * delta.second)
-                + (Core.ticksAMinute * delta.minute)
-                + (Core.ticksAnHour * delta.hour)
-                + (Core.ticksADay * delta.day)
-                + (Core.ticksAWeek * delta.week)
+            (Internal2.ticksAMillisecond * delta.millisecond)
+                + (Internal2.ticksASecond * delta.second)
+                + (Internal2.ticksAMinute * delta.minute)
+                + (Internal2.ticksAnHour * delta.hour)
+                + (Internal2.ticksADay * delta.day)
+                + (Internal2.ticksAWeek * delta.week)
 
 
 {-| Add Period count to date.
@@ -112,16 +112,14 @@ add period =
     addTimeUnit (toTicks period)
 
 
-
-{- Add time units. -}
-
-
+{-| Add time units.
+-}
 addTimeUnit : Int -> Int -> Date -> Date
 addTimeUnit unit addend date =
     date
-        |> Core.toTime
+        |> Internal2.toTime
         |> (+) (addend * unit)
-        |> Core.fromTime
+        |> Internal2.fromTime
 
 
 {-| Return a Period representing date difference. date1 - date2.
@@ -134,7 +132,7 @@ diff : Date -> Date -> DeltaRecord
 diff date1 date2 =
     let
         ticksDiff =
-            Core.toTime date1 - Core.toTime date2
+            Internal2.toTime date1 - Internal2.toTime date2
 
         hourDiff =
             Date.hour date1 - Date.hour date2
@@ -150,13 +148,13 @@ diff date1 date2 =
 
         ticksDayDiff =
             ticksDiff
-                - (hourDiff * Core.ticksAnHour)
-                - (minuteDiff * Core.ticksAMinute)
-                - (secondDiff * Core.ticksASecond)
-                - (millisecondDiff * Core.ticksAMillisecond)
+                - (hourDiff * Internal2.ticksAnHour)
+                - (minuteDiff * Internal2.ticksAMinute)
+                - (secondDiff * Internal2.ticksASecond)
+                - (millisecondDiff * Internal2.ticksAMillisecond)
 
         onlyDaysDiff =
-            ticksDayDiff // Core.ticksADay
+            ticksDayDiff // Internal2.ticksADay
 
         ( weekDiff, dayDiff ) =
             if onlyDaysDiff < 0 then
