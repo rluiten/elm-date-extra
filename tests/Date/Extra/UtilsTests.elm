@@ -23,7 +23,7 @@ tests =
             resultList =
                 DateUtils.dayList 35 (Create.dateFromFields 2015 Date.Dec 28 0 0 0 0)
           in
-            test "Test 2016 Jan calendar grid date list." <|
+            test "Test dayList 2016 Jan calendar grid date list." <|
                 \() ->
                     Expect.equal
                         ((List.range 28 31) ++ (List.range 1 31))
@@ -32,7 +32,7 @@ tests =
             resultList =
                 DateUtils.dayList 2 (Create.dateFromFields 2017 Date.Oct 29 0 0 0 0)
           in
-            test "UTC +01:00 Amsterdam, Berlin cross daylight saving end" <|
+            test "Test dayList UTC +01:00 Amsterdam, Berlin cross daylight saving end" <|
                 \() ->
                     Expect.equal
                         ((List.range 29 30))
@@ -41,10 +41,19 @@ tests =
             resultList =
                 DateUtils.dayList 2 (Create.dateFromFields 2017 Date.Mar 26 0 0 0 0)
           in
-            test "UTC +01:00 Amsterdam, Berlin cross daylight saving start" <|
+            test "Test dayList UTC +01:00 Amsterdam, Berlin cross daylight saving start" <|
                 \() ->
                     Expect.equal
                         (List.range 26 27)
+                        (List.map Date.day resultList)
+        , let
+            resultList =
+                DateUtils.dayList -2 (Create.dateFromFields 2017 Date.Mar 26 0 0 0 0)
+          in
+            test "Test dayList negative count eg -2 counts down dates not up" <|
+                \() ->
+                    Expect.equal
+                        (List.reverse (List.range 25 26))
                         (List.map Date.day resultList)
         , TestUtils.describeOffsetTests "Utils.isoWeek - test in matching time zones only."
             2016

@@ -42,20 +42,29 @@ import Date.Extra.TimeUnit as TimeUnit
 
 {-| Return a list of days dayLength long for successive days
 starting from startDate.
+
+Now adds 1 day if dayCount is +ve to create day list.
+Now subtracts 1 day if dayCount is -ve to create day list.
+
 -}
 dayList : Int -> Date -> List Date
-dayList dayLength startDate =
-    List.reverse (dayList_ dayLength startDate [])
+dayList dayCount startDate =
+    List.reverse (dayList_ dayCount startDate [])
 
 
 dayList_ : Int -> Date -> List Date -> List Date
-dayList_ dayLength date list =
-    if dayLength == 0 then
+dayList_ dayCount date list =
+    if dayCount == 0 then
         list
+    else if dayCount > 0 then
+        dayList_
+            (dayCount - 1)
+            (Duration.add Duration.Day 1 date)
+            (date :: list)
     else
         dayList_
-            (dayLength - 1)
-            (Duration.add Duration.Day 1 date)
+            (dayCount + 1)
+            (Duration.add Duration.Day -1 date)
             (date :: list)
 
 
