@@ -46,6 +46,9 @@ starting from startDate.
 Now adds 1 day if dayCount is +ve to create day list.
 Now subtracts 1 day if dayCount is -ve to create day list.
 
+This could be made much faster by using `daysFromCivil`
+and not using underlying date system at all I believe.
+
 -}
 dayList : Int -> Date -> List Date
 dayList dayCount startDate =

@@ -27,6 +27,7 @@
         "Date.Extra.I18n.I_ja_jp",
         "Date.Extra.I18n.I_de_de",
         "Date.Extra.I18n.I_ru_ru",
+        "Date.Extra.I18n.I_tr_tr",
         "Date.Extra.Config.Configs",
         "Date.Extra.Config.Config_en_au",
         "Date.Extra.Config.Config_en_us",
@@ -41,6 +42,7 @@
         "Date.Extra.Config.Config_ja_jp",
         "Date.Extra.Config.Config_de_de",
         "Date.Extra.Config.Config_ru_ru",
+        "Date.Extra.Config.Config_tr_tr",
         "Date.Extra.Field"
     ],
     "dependencies": {
