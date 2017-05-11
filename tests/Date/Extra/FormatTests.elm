@@ -22,6 +22,7 @@ import Date.Extra.Config.Config_ja_jp as Config_ja_jp
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_de_de as Config_de_de
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
+import Date.Extra.Config.Config_lt_lt as Config_lt_lt
 import Date.Extra.Period as DPeriod exposing (Period(Hour))
 
 
@@ -79,6 +80,10 @@ config_de_de =
 
 config_tr_tr =
     Config_tr_tr.config
+
+
+config_lt_lt =
+    Config_lt_lt.config
 
 
 tests : Test
@@ -266,6 +271,8 @@ formatConfigTestCases =
     , ( "Config_pt_br format idiom", "Terça-feira ( 5) 05 Agosto 2014", config_pt_br, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_et_ee day idiom", "5. aug 2014. a", config_et_ee, config_et_ee.format.date, aTestTime5 )
     , ( "Config_et_ee format idiom", "teisipäev (5.) 05 august 2014", config_et_ee, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_lt_lt day idiom", "2014-08-05", config_lt_lt, config_lt_lt.format.date, aTestTime5 )
+    , ( "Config_lt_lt format idiom", "Antradienis (5.) 05 Rugpjūčio 2014", config_lt_lt, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ja_jp day idiom", "2014/8/5", config_ja_jp, config_ja_jp.format.date, aTestTime5 )
     , ( "Config_ja_jp format idiom", "火曜日 (5) 05 8月 2014", config_ja_jp, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru day idiom", "05/08/2014", config_ru_ru, config_ru_ru.format.date, aTestTime5 )
