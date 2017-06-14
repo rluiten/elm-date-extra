@@ -11,7 +11,6 @@ Copyright (c) 2016-2017 Slava Turchaninov
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_ru_ru as Russian
-import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for ru-ru.
@@ -24,7 +23,7 @@ config =
         , monthShort = Russian.monthShort
         , monthName = Russian.monthName
         , dayOfMonthWithSuffix = Russian.dayOfMonthWithSuffix
-        , twelveHourPeriod = Default.twelveHourPeriod
+        , twelveHourPeriod = Russian.twelveHourPeriod
         }
     , format =
         { date =

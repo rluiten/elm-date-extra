@@ -13,7 +13,7 @@ Copyright (c) 2017 Slava Turchaninov
 -}
 
 import Date exposing (Day(..), Month(..))
-import String exposing (padLeft)
+import Date.Extra.TwelveHourClock exposing (TwelveHourPeriod(..))
 
 
 {-| Day short name.
@@ -152,6 +152,16 @@ monthName month =
 
         Dec ->
             "Декабрь"
+
+
+twelveHourPeriod : TwelveHourPeriod -> String
+twelveHourPeriod period =
+    case period of
+        AM ->
+            "дп"
+
+        PM ->
+            "пп"
 
 
 {-| Just convert to string
