@@ -4,8 +4,6 @@ module Date.Extra.Config.Config_el_gr exposing (..)
 
 @docs config
 
-Copyright (c) 2017 Eleni Lixourioti
-
 -}
 
 import Date
@@ -13,7 +11,7 @@ import Date.Extra.Config as Config
 import Date.Extra.I18n.I_el_gr as Greek
 
 
-{-| Config for en-gb.
+{-| Config for el-gr.
 -}
 config : Config.Config
 config =
@@ -29,7 +27,7 @@ config =
         -- TODO: Verify those types:
         { date =
             "%-d/%-m/%y"
-            -- d/M/yyyy
+            -- d/M/yy
         , longDate =
             "%A, %-d %B %Y"
             -- EEEE, d MMMM yyyy

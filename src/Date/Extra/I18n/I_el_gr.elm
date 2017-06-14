@@ -7,8 +7,7 @@ module Date.Extra.I18n.I_el_gr exposing (..)
 @docs monthShort
 @docs monthName
 @docs dayOfMonthWithSuffix
-
-Copyright (c) 2017 Eleni Lixourioti
+@docs twelveHourPeriod
 
 -}
 
@@ -154,6 +153,8 @@ monthName month =
             "Δεκεμβρίου"
 
 
+{-| 12-hour clock period (AM/PM) translation and formatting.
+-}
 twelveHourPeriod : TwelveHourPeriod -> String
 twelveHourPeriod period =
     case period of
