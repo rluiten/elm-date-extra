@@ -11,6 +11,7 @@ Copyright (c) 2016-2017 Mats Stijlaart
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_nl_nl as Dutch
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for nl-nl.
@@ -23,28 +24,24 @@ config =
         , monthShort = Dutch.monthShort
         , monthName = Dutch.monthName
         , dayOfMonthWithSuffix = Dutch.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date =
             "%d-%m-%Y"
-
-        -- dd-mm-yyy
+            -- dd-mm-yyy
         , longDate =
             "%A, %B %d, %Y"
-
-        -- dddd, MMMM dd, yyyy
+            -- dddd, MMMM dd, yyyy
         , time =
             "%H:%M"
-
-        -- hh:mm
+            -- hh:mm
         , longTime =
             "%-H:%M:%S %p"
-
-        -- h:mm:ss tt
+            -- h:mm:ss tt
         , dateTime =
             "%d-%m-%Y %H:%M"
-
-        -- date time
+            -- date time
         , firstDayOfWeek = Date.Mon
         }
     }

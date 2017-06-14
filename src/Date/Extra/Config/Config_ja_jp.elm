@@ -11,6 +11,7 @@ Copyright (c) 2017 Yosuke Torii
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_ja_jp as Japanese
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for ja_jp.
@@ -23,6 +24,7 @@ config =
         , monthShort = Japanese.monthShort
         , monthName = Japanese.monthName
         , dayOfMonthWithSuffix = Japanese.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date = "%Y/%-m/%-d"

@@ -11,6 +11,7 @@ Copyright (c) 2016-2017 Slava Turchaninov
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_ru_ru as Russian
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for ru-ru.
@@ -23,13 +24,24 @@ config =
         , monthShort = Russian.monthShort
         , monthName = Russian.monthName
         , dayOfMonthWithSuffix = Russian.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
-        { date = "%d/%m/%Y" -- d/M/YYY
-        , longDate = "%A, %B %d, %Y" -- dddd, MMMM dd, yyyy
-        , time = "%H:%M" -- H:mm tt
-        , longTime = "%H:%M:%S" -- H:mm:ss
-        , dateTime = "%d/%m/%Y %H:%M" -- date + time
+        { date =
+            "%d/%m/%Y"
+            -- d/M/YYY
+        , longDate =
+            "%A, %B %d, %Y"
+            -- dddd, MMMM dd, yyyy
+        , time =
+            "%H:%M"
+            -- H:mm tt
+        , longTime =
+            "%H:%M:%S"
+            -- H:mm:ss
+        , dateTime =
+            "%d/%m/%Y %H:%M"
+            -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }

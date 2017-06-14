@@ -11,6 +11,7 @@ Copyright (c) 2016-2017 Robin Luiten
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_lt_lt as Lithuanian
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for en-us.
@@ -23,6 +24,7 @@ config =
         , monthShort = Lithuanian.monthShort
         , monthName = Lithuanian.monthName
         , dayOfMonthWithSuffix = Lithuanian.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date =

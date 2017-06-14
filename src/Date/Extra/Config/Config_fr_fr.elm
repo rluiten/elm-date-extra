@@ -11,6 +11,7 @@ Copyright (c) 2016-2017 Bruno Girin
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_fr_fr as French
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for fr-fr.
@@ -23,13 +24,24 @@ config =
         , monthShort = French.monthShort
         , monthName = French.monthName
         , dayOfMonthWithSuffix = French.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
-        { date = "%-d/%m/%Y" -- d/MM/yyyy
-        , longDate = "%A, %-d %B %Y" -- dddd, d MMMM yyyy
-        , time = "%-I:%M %p" -- h:mm tt
-        , longTime = "%-I:%M:%S %p" -- h:mm:ss tt
-        , dateTime = "%-d/%m/%Y %-I:%M %p" -- date + time
+        { date =
+            "%-d/%m/%Y"
+            -- d/MM/yyyy
+        , longDate =
+            "%A, %-d %B %Y"
+            -- dddd, d MMMM yyyy
+        , time =
+            "%-I:%M %p"
+            -- h:mm tt
+        , longTime =
+            "%-I:%M:%S %p"
+            -- h:mm:ss tt
+        , dateTime =
+            "%-d/%m/%Y %-I:%M %p"
+            -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }

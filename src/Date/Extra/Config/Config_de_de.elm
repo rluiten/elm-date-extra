@@ -11,6 +11,7 @@ Copyright (c) 2017 Frank Schmitt
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_de_de as German
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for en-us.
@@ -23,28 +24,24 @@ config =
         , monthShort = German.monthShort
         , monthName = German.monthName
         , dayOfMonthWithSuffix = German.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date =
             "%-d. %B %Y"
-
-        -- d. M YYYY. a
+            -- d. M YYYY. a
         , longDate =
             "%A, %-d. %B %Y"
-
-        -- dddd, dd. MMMM yyyy
+            -- dddd, dd. MMMM yyyy
         , time =
             "%-H:%M"
-
-        -- h:mm
+            -- h:mm
         , longTime =
             "%-H:%M:%S"
-
-        -- h:mm:ss
+            -- h:mm:ss
         , dateTime =
             "%a, %-d. %b %Y. %-H:%M:%S"
-
-        -- date + time
+            -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }
