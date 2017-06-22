@@ -8,7 +8,6 @@ Copyright (c) 2016-2017 Robin Luiten
 
 import Date
 import Html exposing (Html, button, div, text)
-import Html.App as Html
 import Date.Extra.Compare as Compare exposing (is, Compare2(..))
 
 
