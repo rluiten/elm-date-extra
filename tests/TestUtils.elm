@@ -254,7 +254,13 @@ describeOffsetTests description year candidateTests =
             if (getZoneOffsets year) == offsets then
                 Just (test ())
             else
-                Nothing
+                Just dummyPassingTest
     in
         describe description <|
             List.filterMap currentOffsetFilter candidateTests
+
+
+dummyPassingTest : Test
+dummyPassingTest =
+    test "Dummy passing test" <|
+        \_ -> Expect.true "Dummy passing test" True
