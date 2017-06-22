@@ -305,7 +305,7 @@ addMonth monthCount date =
 
 
 
-{- Return a date with year count added to date. -}
+{- Return a date with year count added to date. -}
 
 
 addYear : Int -> Date -> Date

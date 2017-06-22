@@ -1,7 +1,6 @@
 module Date.Extra.FormatTests exposing (..)
 
-{- Test date format.
- -}
+{- Test date format. -}
 
 import Date exposing (Date)
 import Test exposing (..)
@@ -206,8 +205,9 @@ formatTestCases =
     , ( "with %% ", "% 12/08/2014", "%% %d/%m/%Y", aTestTime )
     , ( "with %% no space", " %12/08/2014", " %%%d/%m/%Y", aTestTime )
     , ( "with milliseconds", "2014-08-12 (.116)", "%Y-%m-%d (.%L)", aTestTime )
-      -- in EDT GMT-04:00
-      -- Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)
+
+    -- in EDT GMT-04:00
+    -- Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)
     , ( "with milliseconds 2", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime )
     , ( "small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3 )
     , ( "Config_en_us date aTestTime5", "8/5/2014", config_en_us.format.date, aTestTime5 )
@@ -223,8 +223,9 @@ formatTestCases =
     , ( "Config_en_au longTime", "5:53:51 AM", config_en_au.format.longTime, aTestTime5 )
     , ( "Config_en_au dateTime", "5/08/2014 5:53 AM", config_en_au.format.dateTime, aTestTime5 )
     , ( "Config_en_us date aTestTime", "8/12/2014", config_en_us.format.date, aTestTime )
-      -- year rendered negative ? boggle :) disabled for not supporting at moment
-      --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
+
+    -- year rendered negative ? boggle :) disabled for not supporting at moment
+    --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
     , ( "Check day 12 ordinal date format with out padding", "[12][12th]", "[%-d][%-@d]", aTestTime )
     , ( "Check day 12 ordinal date format with padding", "[12][12th]", "[%e][%@e]", aTestTime )
     , ( "Check day 2 ordinal date format with out padding", "[2][2nd]", "[%-d][%-@d]", aTestTime8 )

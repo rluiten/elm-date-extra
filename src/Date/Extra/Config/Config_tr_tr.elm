@@ -27,16 +27,11 @@ config =
         , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
-        { date =
-            "%d.%m.%Y"
-        , longDate =
-            "%d %B %Y %A"
-        , time =
-            "%H:%M"
-        , longTime =
-            "%H:%M:%S"
-        , dateTime =
-            "%d %B %Y %-H:%M:%S"
+        { date = "%d.%m.%Y"
+        , longDate = "%d %B %Y %A"
+        , time = "%H:%M"
+        , longTime = "%H:%M:%S"
+        , dateTime = "%d %B %Y %-H:%M:%S"
         , firstDayOfWeek = Date.Mon
         }
     }

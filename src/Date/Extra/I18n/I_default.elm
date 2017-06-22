@@ -10,7 +10,7 @@ import Date.Extra.TwelveHourClock exposing (TwelveHourPeriod(..))
 
 
 {-| 12-hour clock period (AM/PM) translation and formatting.
-    This should be valid for most latin-based languages.
+This should be valid for most latin-based languages.
 -}
 twelveHourPeriod : TwelveHourPeriod -> String
 twelveHourPeriod period =

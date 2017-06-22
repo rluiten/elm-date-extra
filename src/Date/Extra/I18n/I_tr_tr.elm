@@ -14,6 +14,7 @@ Copyright (c) 2017 Mehmet Köse
 
 import Date exposing (Day(..), Month(..))
 
+
 {-| Day short name.
 -}
 dayShort : Day -> String
@@ -154,8 +155,6 @@ monthName month =
 
 {-| Nothing to do here for Turkish
 -}
-
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
     (toString day) ++ "."
-
