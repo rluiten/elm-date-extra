@@ -23,6 +23,7 @@ import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_de_de as Config_de_de
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_el_gr as Config_el_gr
 import Date.Extra.Period as DPeriod exposing (Period(Hour))
 
 
@@ -84,6 +85,10 @@ config_tr_tr =
 
 config_lt_lt =
     Config_lt_lt.config
+
+
+config_el_gr =
+    Config_el_gr.config
 
 
 tests : Test
@@ -200,9 +205,8 @@ formatTestCases =
     , ( "with %% ", "% 12/08/2014", "%% %d/%m/%Y", aTestTime )
     , ( "with %% no space", " %12/08/2014", " %%%d/%m/%Y", aTestTime )
     , ( "with milliseconds", "2014-08-12 (.116)", "%Y-%m-%d (.%L)", aTestTime )
-
-    -- in EDT GMT-04:00
-    -- Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)
+      -- in EDT GMT-04:00
+      -- Tue Aug 12 2014 04:53:51 GMT-0400 (Eastern Daylight Time)
     , ( "with milliseconds 2", "2014-08-12T18:53:51.116", "%Y-%m-%dT%H:%M:%S.%L", aTestTime )
     , ( "small year", "0448-09-09T22:39:28.884", "%Y-%m-%dT%H:%M:%S.%L", aTestTime3 )
     , ( "Config_en_us date", "8/5/2014", config_en_us.format.date, aTestTime5 )
@@ -218,9 +222,8 @@ formatTestCases =
     , ( "Config_en_au longTime", "5:53:51 AM", config_en_au.format.longTime, aTestTime5 )
     , ( "Config_en_au dateTime", "5/08/2014 5:53 AM", config_en_au.format.dateTime, aTestTime5 )
     , ( "Config_en_us date", "8/12/2014", config_en_us.format.date, aTestTime )
-
-    -- year rendered negative ? boggle :) disabled for not supporting at moment
-    --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
+      -- year rendered negative ? boggle :) disabled for not supporting at moment
+      --, ("small year", "0448-09-09T22:39:28.885", "%Y-%m-%dT%H:%M:%S.%L", aTestTime4)
     , ( "Check day 12 ordinal date format with out padding", "[12][12th]", "[%-d][%-@d]", aTestTime )
     , ( "Check day 12 ordinal date format with padding", "[12][12th]", "[%e][%@e]", aTestTime )
     , ( "Check day 2 ordinal date format with out padding", "[2][2nd]", "[%-d][%-@d]", aTestTime8 )
@@ -278,10 +281,14 @@ formatConfigTestCases =
     , ( "Config_ru_ru day idiom", "05/08/2014", config_ru_ru, config_ru_ru.format.date, aTestTime5 )
     , ( "Config_ru_ru format idiom", "Вторник (5) 05 Август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru time idiom", "05:53", config_ru_ru, config_ru_ru.format.time, aTestTime5 )
+    , ( "Config_ru_ru time with am/pm", "5:53 ДП", config_ru_ru, "%-I:%M %p", aTestTime5 )
     , ( "Config_de_de date idiom", "5. August 2014", config_de_de, config_de_de.format.date, aTestTime5 )
     , ( "Config_de_de longDate idiom", "Dienstag, 5. August 2014", config_de_de, config_de_de.format.longDate, aTestTime5 )
     , ( "Config_tr_tr date idiom", "05.08.2014", config_tr_tr, config_tr_tr.format.date, aTestTime5 )
     , ( "Config_tr_tr longDate idiom", "05 Ağustos 2014 Salı", config_tr_tr, config_tr_tr.format.longDate, aTestTime5 )
+    , ( "Config_el_gr date idiom", "5/8/14", config_el_gr, config_el_gr.format.date, aTestTime5 )
+    , ( "Config_el_gr longDate idiom", "Τρίτη, 5 Αυγούστου 2014", config_el_gr, config_el_gr.format.longDate, aTestTime5 )
+    , ( "Config_el_gr time idiom", "5:53 π.μ.", config_el_gr, config_el_gr.format.time, aTestTime5 )
     ]
 
 

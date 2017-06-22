@@ -63,6 +63,7 @@ import Date.Extra.Core as Core
 import Date.Extra.Create as Create
 import Date.Extra.Config.Config_en_us as English
 import Date.Extra.Internal as Internal
+import Date.Extra.TwelveHourClock exposing (twelveHourPeriod)
 
 
 {-| ISO date time, 24hr.
@@ -323,16 +324,13 @@ formatToken config offset d m =
                 d |> Date.hour |> hourMod12 |> padWith ' '
 
             "p" ->
-                if Date.hour d < 12 then
-                    "AM"
-                else
-                    "PM"
+                d
+                    |> twelveHourPeriod
+                    |> config.i18n.twelveHourPeriod
+                    |> String.toUpper
 
             "P" ->
-                if Date.hour d < 12 then
-                    "am"
-                else
-                    "pm"
+                d |> twelveHourPeriod |> config.i18n.twelveHourPeriod
 
             "M" ->
                 d |> Date.minute |> padWith '0'

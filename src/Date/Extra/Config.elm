@@ -14,6 +14,7 @@ Copyright (c) 2016-2017 Robin Luiten
 -}
 
 import Date exposing (Day, Month)
+import Date.Extra.TwelveHourClock exposing (TwelveHourPeriod)
 
 
 {-| Configuration for formatting dates.
@@ -25,6 +26,7 @@ type alias Config =
         , monthShort : Month -> String
         , monthName : Month -> String
         , dayOfMonthWithSuffix : Bool -> Int -> String
+        , twelveHourPeriod : TwelveHourPeriod -> String
         }
     , format :
         { date : String

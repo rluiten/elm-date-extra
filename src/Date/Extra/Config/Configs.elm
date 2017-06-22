@@ -32,6 +32,7 @@ import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_de_de as Config_de_de
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_el_gr as Config_el_gr
 
 
 {-| Built in configurations.
@@ -54,6 +55,7 @@ configs =
         , ( "de_de", Config_de_de.config )
         , ( "tr_tr", Config_tr_tr.config )
         , ( "lt_lt", Config_lt_lt.config )
+        , ( "el_gr", Config_el_gr.config )
         ]
 
 

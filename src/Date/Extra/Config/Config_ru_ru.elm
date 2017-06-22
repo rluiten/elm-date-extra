@@ -23,13 +23,24 @@ config =
         , monthShort = Russian.monthShort
         , monthName = Russian.monthName
         , dayOfMonthWithSuffix = Russian.dayOfMonthWithSuffix
+        , twelveHourPeriod = Russian.twelveHourPeriod
         }
     , format =
-        { date = "%d/%m/%Y" -- d/M/YYY
-        , longDate = "%A, %B %d, %Y" -- dddd, MMMM dd, yyyy
-        , time = "%H:%M" -- H:mm tt
-        , longTime = "%H:%M:%S" -- H:mm:ss
-        , dateTime = "%d/%m/%Y %H:%M" -- date + time
+        { date =
+            "%d/%m/%Y"
+            -- d/M/YYY
+        , longDate =
+            "%A, %B %d, %Y"
+            -- dddd, MMMM dd, yyyy
+        , time =
+            "%H:%M"
+            -- H:mm tt
+        , longTime =
+            "%H:%M:%S"
+            -- H:mm:ss
+        , dateTime =
+            "%d/%m/%Y %H:%M"
+            -- date + time
         , firstDayOfWeek = Date.Mon
         }
     }

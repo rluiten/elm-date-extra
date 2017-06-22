@@ -11,6 +11,7 @@ Copyright (c) 2017 Mehmet Köse
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_tr_tr as Turkish
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for en-us.
@@ -23,23 +24,19 @@ config =
         , monthShort = Turkish.monthShort
         , monthName = Turkish.monthName
         , dayOfMonthWithSuffix = Turkish.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date =
             "%d.%m.%Y"
-
         , longDate =
             "%d %B %Y %A"
-
         , time =
             "%H:%M"
-
         , longTime =
             "%H:%M:%S"
-
         , dateTime =
             "%d %B %Y %-H:%M:%S"
-
         , firstDayOfWeek = Date.Mon
         }
     }

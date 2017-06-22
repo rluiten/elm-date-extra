@@ -9,6 +9,7 @@ module Date.Extra.Config.Config_pt_br exposing (..)
 import Date
 import Date.Extra.Config as Config
 import Date.Extra.I18n.I_pt_br as Portuguese
+import Date.Extra.I18n.I_default as Default
 
 
 {-| Config for pt-br.
@@ -21,6 +22,7 @@ config =
         , monthShort = Portuguese.monthShort
         , monthName = Portuguese.monthName
         , dayOfMonthWithSuffix = Portuguese.dayOfMonthWithSuffix
+        , twelveHourPeriod = Default.twelveHourPeriod
         }
     , format =
         { date = "%d/%m/%Y"

@@ -1,6 +1,6 @@
-module Date.Extra.I18n.I_ru_ru exposing (..)
+module Date.Extra.I18n.I_el_gr exposing (..)
 
-{-| Russian values for day and month names.
+{-| Greek values for day and month names.
 
 @docs dayShort
 @docs dayName
@@ -8,8 +8,6 @@ module Date.Extra.I18n.I_ru_ru exposing (..)
 @docs monthName
 @docs dayOfMonthWithSuffix
 @docs twelveHourPeriod
-
-Copyright (c) 2017 Slava Turchaninov
 
 -}
 
@@ -23,25 +21,25 @@ dayShort : Day -> String
 dayShort day =
     case day of
         Mon ->
-            "Пн"
+            "Δευ"
 
         Tue ->
-            "Вт"
+            "Τρι"
 
         Wed ->
-            "Ср"
+            "Τετ"
 
         Thu ->
-            "Чт"
+            "Πεμ"
 
         Fri ->
-            "Пт"
+            "Παρ"
 
         Sat ->
-            "Сб"
+            "Σαβ"
 
         Sun ->
-            "Вс"
+            "Κυρ"
 
 
 {-| Day full name.
@@ -50,25 +48,25 @@ dayName : Day -> String
 dayName day =
     case day of
         Mon ->
-            "Понедельник"
+            "Δευτέρα"
 
         Tue ->
-            "Вторник"
+            "Τρίτη"
 
         Wed ->
-            "Среда"
+            "Τετάρτη"
 
         Thu ->
-            "Четверг"
+            "Πέμπτη"
 
         Fri ->
-            "Пятница"
+            "Παρασκευή"
 
         Sat ->
-            "Суббота"
+            "Σάββατο"
 
         Sun ->
-            "Воскресенье"
+            "Κυριακή"
 
 
 {-| Month short name.
@@ -77,40 +75,40 @@ monthShort : Month -> String
 monthShort month =
     case month of
         Jan ->
-            "Янв"
+            "Ιαν"
 
         Feb ->
-            "Фев"
+            "Φεβ"
 
         Mar ->
-            "Мар"
+            "Μαρ"
 
         Apr ->
-            "Апр"
+            "Απρ"
 
         May ->
-            "Май"
+            "Μαϊ"
 
         Jun ->
-            "Июн"
+            "Ιουν"
 
         Jul ->
-            "Июл"
+            "Ιουλ"
 
         Aug ->
-            "Авг"
+            "Αυγ"
 
         Sep ->
-            "Сен"
+            "Σεπ"
 
         Oct ->
-            "Окт"
+            "Οκτ"
 
         Nov ->
-            "Ноя"
+            "Νοε"
 
         Dec ->
-            "Дек"
+            "Δεκ"
 
 
 {-| Month full name.
@@ -119,40 +117,40 @@ monthName : Month -> String
 monthName month =
     case month of
         Jan ->
-            "Январь"
+            "Ιανουαρίου"
 
         Feb ->
-            "Февраль"
+            "Φεβρουαρίου"
 
         Mar ->
-            "Март"
+            "Μαρτίου"
 
         Apr ->
-            "Апрель"
+            "Απριλίου"
 
         May ->
-            "Май"
+            "Μαΐου"
 
         Jun ->
-            "Июнь"
+            "Ιουνίου"
 
         Jul ->
-            "Июль"
+            "Ιουλίου"
 
         Aug ->
-            "Август"
+            "Αυγούστου"
 
         Sep ->
-            "Сентябрь"
+            "Σεπτεμβρίου"
 
         Oct ->
-            "Октябрь"
+            "Οκτωβρίου"
 
         Nov ->
-            "Ноябрь"
+            "Νοεμβρίου"
 
         Dec ->
-            "Декабрь"
+            "Δεκεμβρίου"
 
 
 {-| 12-hour clock period (AM/PM) translation and formatting.
@@ -161,13 +159,13 @@ twelveHourPeriod : TwelveHourPeriod -> String
 twelveHourPeriod period =
     case period of
         AM ->
-            "дп"
+            "π.μ."
 
         PM ->
-            "пп"
+            "μ.μ."
 
 
-{-| Just convert to string
+{-| No known special rules for Greek
 -}
 dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =

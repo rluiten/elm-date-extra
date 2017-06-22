@@ -18,6 +18,7 @@ import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_de_de as Config_de_de
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_el_gr as Config_el_gr
 import Date.Extra.Config.Configs as Configs
 
 
@@ -79,6 +80,10 @@ config_tr_tr =
 
 config_lt_lt =
     Config_lt_lt.config
+
+
+config_el_gr =
+    Config_el_gr.config
 
 
 tests : Test
@@ -169,4 +174,9 @@ tests =
                 Expect.equal
                     config_lt_lt.format
                     (Configs.getConfig "lt_lt").format
+        , test "getConfig el_gr" <|
+            \() ->
+                Expect.equal
+                    config_el_gr.format
+                    (Configs.getConfig "el_gr").format
         ]
