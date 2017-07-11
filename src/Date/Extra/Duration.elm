@@ -278,7 +278,7 @@ addMonth monthCount date =
             newMonthInt % 12
 
         yearOffset =
-            if newMonthInt < 0 then
+            if newMonthInt < 0 && targetMonthInt /= 0 then
                 (newMonthInt // 12) - 1
                 -- one extra year than the negative modulus
             else
