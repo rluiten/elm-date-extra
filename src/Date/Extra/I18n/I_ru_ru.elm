@@ -9,8 +9,6 @@ module Date.Extra.I18n.I_ru_ru exposing (..)
 @docs dayOfMonthWithSuffix
 @docs twelveHourPeriod
 
-Copyright (c) 2017 Slava Turchaninov
-
 -}
 
 import Date exposing (Day(..), Month(..))
@@ -23,25 +21,25 @@ dayShort : Day -> String
 dayShort day =
     case day of
         Mon ->
-            "Пн"
+            "пн."
 
         Tue ->
-            "Вт"
+            "вт."
 
         Wed ->
-            "Ср"
+            "ср."
 
         Thu ->
-            "Чт"
+            "чт."
 
         Fri ->
-            "Пт"
+            "пт."
 
         Sat ->
-            "Сб"
+            "сб."
 
         Sun ->
-            "Вс"
+            "вс."
 
 
 {-| Day full name.
@@ -50,67 +48,70 @@ dayName : Day -> String
 dayName day =
     case day of
         Mon ->
-            "Понедельник"
+            "понедельник"
 
         Tue ->
-            "Вторник"
+            "вторник"
 
         Wed ->
-            "Среда"
+            "среда"
 
         Thu ->
-            "Четверг"
+            "четверг"
 
         Fri ->
-            "Пятница"
+            "пятница"
 
         Sat ->
-            "Суббота"
+            "суббота"
 
         Sun ->
-            "Воскресенье"
+            "воскресенье"
 
 
 {-| Month short name.
+sources:
+<http://new.gramota.ru/spravka/buro/search-answer?s=242637>
+<http://www.unicode.org/cldr/charts/28/summary/ru.html#1753>
 -}
 monthShort : Month -> String
 monthShort month =
     case month of
         Jan ->
-            "Янв"
+            "янв."
 
         Feb ->
-            "Фев"
+            "февр."
 
         Mar ->
-            "Мар"
+            "март"
 
         Apr ->
-            "Апр"
+            "апр."
 
         May ->
-            "Май"
+            "май"
 
         Jun ->
-            "Июн"
+            "июнь."
 
         Jul ->
-            "Июл"
+            "июль."
 
         Aug ->
-            "Авг"
+            "авг."
 
         Sep ->
-            "Сен"
+            "сент."
 
         Oct ->
-            "Окт"
+            "окт."
 
         Nov ->
-            "Ноя"
+            "нояб."
 
         Dec ->
-            "Дек"
+            "дек."
 
 
 {-| Month full name.
@@ -119,40 +120,40 @@ monthName : Month -> String
 monthName month =
     case month of
         Jan ->
-            "Январь"
+            "январь"
 
         Feb ->
-            "Февраль"
+            "февраль"
 
         Mar ->
-            "Март"
+            "март"
 
         Apr ->
-            "Апрель"
+            "апрель"
 
         May ->
-            "Май"
+            "май"
 
         Jun ->
-            "Июнь"
+            "июнь"
 
         Jul ->
-            "Июль"
+            "июль"
 
         Aug ->
-            "Август"
+            "август"
 
         Sep ->
-            "Сентябрь"
+            "сентябрь"
 
         Oct ->
-            "Октябрь"
+            "октябрь"
 
         Nov ->
-            "Ноябрь"
+            "ноябрь"
 
         Dec ->
-            "Декабрь"
+            "декабрь"
 
 
 {-| 12-hour clock period (AM/PM) translation and formatting.
@@ -173,4 +174,4 @@ dayOfMonthWithSuffix : Bool -> Int -> String
 dayOfMonthWithSuffix pad day =
     case day of
         _ ->
-            (toString day)
+            toString day

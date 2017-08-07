@@ -281,7 +281,7 @@ formatConfigTestCases =
     , ( "Config_ja_jp day idiom", "2014/8/5", config_ja_jp, config_ja_jp.format.date, aTestTime5 )
     , ( "Config_ja_jp format idiom", "火曜日 (5) 05 8月 2014", config_ja_jp, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru day idiom", "05/08/2014", config_ru_ru, config_ru_ru.format.date, aTestTime5 )
-    , ( "Config_ru_ru format idiom", "Вторник (5) 05 Август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_ru_ru format idiom", "вторник (5) 05 август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru time idiom", "05:53", config_ru_ru, config_ru_ru.format.time, aTestTime5 )
     , ( "Config_ru_ru time with am/pm", "5:53 ДП", config_ru_ru, "%-I:%M %p", aTestTime5 )
     , ( "Config_de_de date idiom", "5. August 2014", config_de_de, config_de_de.format.date, aTestTime5 )
