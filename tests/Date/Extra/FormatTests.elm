@@ -18,6 +18,7 @@ import Date.Extra.Config.Config_pl_pl as Config_pl_pl
 import Date.Extra.Config.Config_pt_br as Config_pt_br
 import Date.Extra.Config.Config_ro_ro as Config_ro_ro
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
+import Date.Extra.Config.Config_sv_se as Config_sv_se
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Core as Core
 import Date.Extra.Format as Format
@@ -45,6 +46,10 @@ config_fr_fr =
 
 config_fi_fi =
     Config_fi_fi.config
+
+
+config_sv_se =
+    Config_sv_se.config
 
 
 config_pl_pl =
@@ -264,6 +269,21 @@ formatConfigTestCases =
     , ( "Config_fr_fr format idiom", "Mardi (  5) 05 Août 2014", config_fr_fr, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_fi_fi day idiom", "5.8.2014", config_fi_fi, config_fi_fi.format.date, aTestTime5 )
     , ( "Config_fi_fi format idiom", "tiistai (5) 05 elokuuta 2014", config_fi_fi, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_sv_se day idiom", "2014-08-05", config_sv_se, config_sv_se.format.date, aTestTime5 )
+    , ( "Config_sv_se long date idiom"
+      , "tisdag 5 augusti 2014"
+      , config_sv_se
+      , config_sv_se.format.longDate
+      , aTestTime5
+      )
+    , ( "Config_sv_se date time idiom"
+      , "2014-08-05 05:53"
+      , config_sv_se
+      , config_sv_se.format.dateTime
+      , aTestTime5
+      )
+    , ( "Config_sv_se format idiom", "tisdag (5) 05 augusti 2014", config_sv_se, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_sv_se time idiom", "17:00", config_sv_se, config_sv_se.format.time, aTestTime8 )
     , ( "Config_pl_pl day idiom", "05.08.2014", config_pl_pl, config_pl_pl.format.date, aTestTime5 )
     , ( "Config_pl_pl format idiom", "wtorek (5) 05 sierpień 2014", config_pl_pl, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ro_ro day idiom", "05.08.2014", config_ro_ro, config_ro_ro.format.date, aTestTime5 )

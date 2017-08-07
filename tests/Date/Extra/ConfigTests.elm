@@ -1,25 +1,26 @@
 module Date.Extra.ConfigTests exposing (..)
 
 import Date exposing (Date)
-import Test exposing (..)
-import Expect
-import Date.Extra.Config.Config_en_au as Config_en_au
-import Date.Extra.Config.Config_en_us as Config_en_us
-import Date.Extra.Config.Config_en_gb as Config_en_gb
-import Date.Extra.Config.Config_fr_fr as Config_fr_fr
-import Date.Extra.Config.Config_fi_fi as Config_fi_fi
-import Date.Extra.Config.Config_pl_pl as Config_pl_pl
-import Date.Extra.Config.Config_ro_ro as Config_ro_ro
-import Date.Extra.Config.Config_nl_nl as Config_nl_nl
-import Date.Extra.Config.Config_pt_br as Config_pt_br
-import Date.Extra.Config.Config_et_ee as Config_et_ee
-import Date.Extra.Config.Config_ja_jp as Config_ja_jp
-import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_de_de as Config_de_de
-import Date.Extra.Config.Config_tr_tr as Config_tr_tr
-import Date.Extra.Config.Config_lt_lt as Config_lt_lt
 import Date.Extra.Config.Config_el_gr as Config_el_gr
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_gb as Config_en_gb
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_et_ee as Config_et_ee
+import Date.Extra.Config.Config_fi_fi as Config_fi_fi
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_ja_jp as Config_ja_jp
+import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_nl_nl as Config_nl_nl
+import Date.Extra.Config.Config_pl_pl as Config_pl_pl
+import Date.Extra.Config.Config_pt_br as Config_pt_br
+import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_ru_ru as Config_ru_ru
+import Date.Extra.Config.Config_sv_se as Config_sv_se
+import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Config.Configs as Configs
+import Expect
+import Test exposing (..)
 
 
 config_en_au =
@@ -40,6 +41,10 @@ config_fr_fr =
 
 config_fi_fi =
     Config_fi_fi.config
+
+
+config_sv_se =
+    Config_sv_se.config
 
 
 config_pl_pl =
@@ -124,6 +129,11 @@ tests =
                 Expect.equal
                     config_fi_fi.format
                     (Configs.getConfig "fi_fi").format
+        , test "getConfig sv_se" <|
+            \() ->
+                Expect.equal
+                    config_sv_se.format
+                    (Configs.getConfig "sv_se").format
         , test "getConfig pl_pl" <|
             \() ->
                 Expect.equal
