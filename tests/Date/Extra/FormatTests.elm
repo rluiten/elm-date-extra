@@ -3,28 +3,28 @@ module Date.Extra.FormatTests exposing (..)
 {- Test date format. -}
 
 import Date exposing (Date)
-import Test exposing (..)
-import Expect
-import Time exposing (Time)
+import Date.Extra.Config.Config_de_de as Config_de_de
+import Date.Extra.Config.Config_el_gr as Config_el_gr
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_gb as Config_en_gb
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_et_ee as Config_et_ee
+import Date.Extra.Config.Config_fi_fi as Config_fi_fi
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_ja_jp as Config_ja_jp
+import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_nl_nl as Config_nl_nl
+import Date.Extra.Config.Config_pl_pl as Config_pl_pl
+import Date.Extra.Config.Config_pt_br as Config_pt_br
+import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_ru_ru as Config_ru_ru
+import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Core as Core
 import Date.Extra.Format as Format
-import Date.Extra.Config.Config_en_au as Config_en_au
-import Date.Extra.Config.Config_en_us as Config_en_us
-import Date.Extra.Config.Config_en_gb as Config_en_gb
-import Date.Extra.Config.Config_fr_fr as Config_fr_fr
-import Date.Extra.Config.Config_fi_fi as Config_fi_fi
-import Date.Extra.Config.Config_pl_pl as Config_pl_pl
-import Date.Extra.Config.Config_ro_ro as Config_ro_ro
-import Date.Extra.Config.Config_nl_nl as Config_nl_nl
-import Date.Extra.Config.Config_pt_br as Config_pt_br
-import Date.Extra.Config.Config_et_ee as Config_et_ee
-import Date.Extra.Config.Config_ja_jp as Config_ja_jp
-import Date.Extra.Config.Config_ru_ru as Config_ru_ru
-import Date.Extra.Config.Config_de_de as Config_de_de
-import Date.Extra.Config.Config_tr_tr as Config_tr_tr
-import Date.Extra.Config.Config_lt_lt as Config_lt_lt
-import Date.Extra.Config.Config_el_gr as Config_el_gr
 import Date.Extra.Period as DPeriod exposing (Period(Hour))
+import Expect
+import Test exposing (..)
+import Time exposing (Time)
 
 
 config_en_au =
@@ -192,11 +192,11 @@ runFormatTest ( name, expected, formatStr, time ) =
         --   , "format", (Format.formatOffset Config_en_us.config -600 formatStr asDate)
         --   )
     in
-        test name <|
-            \() ->
-                Expect.equal
-                    expected
-                    (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+    test name <|
+        \() ->
+            Expect.equal
+                expected
+                (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -240,11 +240,11 @@ runConfigLanguageTest ( name, expected, config, formatStr, time ) =
         asDate =
             Core.fromTime time
     in
-        test name <|
-            \() ->
-                Expect.equal
-                    expected
-                    (Format.formatOffset config -600 formatStr asDate)
+    test name <|
+        \() ->
+            Expect.equal
+                expected
+                (Format.formatOffset config -600 formatStr asDate)
 
 
 {-| These tests are testing a few language field values and the day idiom function.
