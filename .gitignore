@@ -1,4 +1,5 @@
 elm-stuff/
+.idea/
 elm.js
 index.html
 tests/program.js
