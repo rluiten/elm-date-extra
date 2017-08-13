@@ -3,28 +3,29 @@ module Date.Extra.FormatTests exposing (..)
 {- Test date format. -}
 
 import Date exposing (Date)
-import Test exposing (..)
-import Expect
-import Time exposing (Time)
+import Date.Extra.Config.Config_de_de as Config_de_de
+import Date.Extra.Config.Config_el_gr as Config_el_gr
+import Date.Extra.Config.Config_en_au as Config_en_au
+import Date.Extra.Config.Config_en_gb as Config_en_gb
+import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_et_ee as Config_et_ee
+import Date.Extra.Config.Config_fi_fi as Config_fi_fi
+import Date.Extra.Config.Config_fr_fr as Config_fr_fr
+import Date.Extra.Config.Config_ja_jp as Config_ja_jp
+import Date.Extra.Config.Config_lt_lt as Config_lt_lt
+import Date.Extra.Config.Config_nl_nl as Config_nl_nl
+import Date.Extra.Config.Config_pl_pl as Config_pl_pl
+import Date.Extra.Config.Config_pt_br as Config_pt_br
+import Date.Extra.Config.Config_ro_ro as Config_ro_ro
+import Date.Extra.Config.Config_ru_ru as Config_ru_ru
+import Date.Extra.Config.Config_sv_se as Config_sv_se
+import Date.Extra.Config.Config_tr_tr as Config_tr_tr
 import Date.Extra.Core as Core
 import Date.Extra.Format as Format
-import Date.Extra.Config.Config_en_au as Config_en_au
-import Date.Extra.Config.Config_en_us as Config_en_us
-import Date.Extra.Config.Config_en_gb as Config_en_gb
-import Date.Extra.Config.Config_fr_fr as Config_fr_fr
-import Date.Extra.Config.Config_fi_fi as Config_fi_fi
-import Date.Extra.Config.Config_pl_pl as Config_pl_pl
-import Date.Extra.Config.Config_ro_ro as Config_ro_ro
-import Date.Extra.Config.Config_nl_nl as Config_nl_nl
-import Date.Extra.Config.Config_pt_br as Config_pt_br
-import Date.Extra.Config.Config_et_ee as Config_et_ee
-import Date.Extra.Config.Config_ja_jp as Config_ja_jp
-import Date.Extra.Config.Config_ru_ru as Config_ru_ru
-import Date.Extra.Config.Config_de_de as Config_de_de
-import Date.Extra.Config.Config_tr_tr as Config_tr_tr
-import Date.Extra.Config.Config_lt_lt as Config_lt_lt
-import Date.Extra.Config.Config_el_gr as Config_el_gr
 import Date.Extra.Period as DPeriod exposing (Period(Hour))
+import Expect
+import Test exposing (..)
+import Time exposing (Time)
 
 
 config_en_au =
@@ -45,6 +46,10 @@ config_fr_fr =
 
 config_fi_fi =
     Config_fi_fi.config
+
+
+config_sv_se =
+    Config_sv_se.config
 
 
 config_pl_pl =
@@ -192,11 +197,11 @@ runFormatTest ( name, expected, formatStr, time ) =
         --   , "format", (Format.formatOffset Config_en_us.config -600 formatStr asDate)
         --   )
     in
-        test name <|
-            \() ->
-                Expect.equal
-                    expected
-                    (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+    test name <|
+        \() ->
+            Expect.equal
+                expected
+                (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -240,11 +245,11 @@ runConfigLanguageTest ( name, expected, config, formatStr, time ) =
         asDate =
             Core.fromTime time
     in
-        test name <|
-            \() ->
-                Expect.equal
-                    expected
-                    (Format.formatOffset config -600 formatStr asDate)
+    test name <|
+        \() ->
+            Expect.equal
+                expected
+                (Format.formatOffset config -600 formatStr asDate)
 
 
 {-| These tests are testing a few language field values and the day idiom function.
@@ -264,6 +269,21 @@ formatConfigTestCases =
     , ( "Config_fr_fr format idiom", "Mardi (  5) 05 Août 2014", config_fr_fr, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_fi_fi day idiom", "5.8.2014", config_fi_fi, config_fi_fi.format.date, aTestTime5 )
     , ( "Config_fi_fi format idiom", "tiistai (5) 05 elokuuta 2014", config_fi_fi, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_sv_se day idiom", "2014-08-05", config_sv_se, config_sv_se.format.date, aTestTime5 )
+    , ( "Config_sv_se long date idiom"
+      , "tisdag 5 augusti 2014"
+      , config_sv_se
+      , config_sv_se.format.longDate
+      , aTestTime5
+      )
+    , ( "Config_sv_se date time idiom"
+      , "2014-08-05 05:53"
+      , config_sv_se
+      , config_sv_se.format.dateTime
+      , aTestTime5
+      )
+    , ( "Config_sv_se format idiom", "tisdag (5) 05 augusti 2014", config_sv_se, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_sv_se time idiom", "17:00", config_sv_se, config_sv_se.format.time, aTestTime8 )
     , ( "Config_pl_pl day idiom", "05.08.2014", config_pl_pl, config_pl_pl.format.date, aTestTime5 )
     , ( "Config_pl_pl format idiom", "wtorek (5) 05 sierpień 2014", config_pl_pl, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ro_ro day idiom", "05.08.2014", config_ro_ro, config_ro_ro.format.date, aTestTime5 )
@@ -281,7 +301,7 @@ formatConfigTestCases =
     , ( "Config_ja_jp day idiom", "2014/8/5", config_ja_jp, config_ja_jp.format.date, aTestTime5 )
     , ( "Config_ja_jp format idiom", "火曜日 (5) 05 8月 2014", config_ja_jp, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru day idiom", "05/08/2014", config_ru_ru, config_ru_ru.format.date, aTestTime5 )
-    , ( "Config_ru_ru format idiom", "Вторник (5) 05 Август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_ru_ru format idiom", "вторник (5) 05 август 2014", config_ru_ru, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_ru_ru time idiom", "05:53", config_ru_ru, config_ru_ru.format.time, aTestTime5 )
     , ( "Config_ru_ru time with am/pm", "5:53 ДП", config_ru_ru, "%-I:%M %p", aTestTime5 )
     , ( "Config_de_de date idiom", "5. August 2014", config_de_de, config_de_de.format.date, aTestTime5 )
