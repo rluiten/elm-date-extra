@@ -14,6 +14,7 @@ The `Date` refers to Elm's standard [Date library](http://package.elm-lang.org/p
 The input `String` may contain any of the following substrings, which will be expanded to parts of the date resultant string format of date
 
 * `%Y` - 4 digit year, zero-padded
+* `%y` - 2 digit year, e.g. `"17"` for 2017
 * `%m` - Zero-padded month of year, e.g. `"07"` for July
 * `%_m` - Space-padded month of year, e.g. `" 7"` for July
 * `%-m` - Month of year, e.g. `"7"` for July
