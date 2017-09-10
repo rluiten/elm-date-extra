@@ -14,7 +14,7 @@ This project uses elm-format for formatting.
 * flexible formatting of dates into strings
  * It has support for outputting dates with other offsets than local by deriving a timezone offset for a dates.
  * simple i18n support for long and short Day and Month names.
- * see [DocFormat.md](DocFormat.md)
+ * see [DocFormat.md](https://github.com/rluiten/elm-date-extra/blob/master/DocFormat.md)
 * compare dates
 * add or subtract time periods on a date
  * When modifying dates using Duration Day, Week, Month, Year the

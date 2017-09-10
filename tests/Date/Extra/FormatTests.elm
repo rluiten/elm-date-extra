@@ -265,7 +265,7 @@ formatConfigTestCases =
     , ( "Config_en_us format idiom", "Tuesday ( 5th) 05 August 2014", config_en_us, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_en_gb day idiom", "5/08/2014", config_en_gb, config_en_gb.format.date, aTestTime5 )
     , ( "Config_en_gb format idiom", "Tuesday ( 5th) 05 August 2014", config_en_gb, dayDayIdiomMonth, aTestTime5 )
-    , ( "Config_fr_fr day idiom", "5/08/2014", config_fr_fr, config_fr_fr.format.date, aTestTime5 )
+    , ( "Config_fr_fr day idiom", "05/08/2014", config_fr_fr, config_fr_fr.format.date, aTestTime5 )
     , ( "Config_fr_fr format idiom", "Mardi (  5) 05 Août 2014", config_fr_fr, dayDayIdiomMonth, aTestTime5 )
     , ( "Config_fi_fi day idiom", "5.8.2014", config_fi_fi, config_fi_fi.format.date, aTestTime5 )
     , ( "Config_fi_fi format idiom", "tiistai (5) 05 elokuuta 2014", config_fi_fi, dayDayIdiomMonth, aTestTime5 )
@@ -311,6 +311,7 @@ formatConfigTestCases =
     , ( "Config_el_gr date idiom", "5/8/14", config_el_gr, config_el_gr.format.date, aTestTime5 )
     , ( "Config_el_gr longDate idiom", "Τρίτη, 5 Αυγούστου 2014", config_el_gr, config_el_gr.format.longDate, aTestTime5 )
     , ( "Config_el_gr time idiom", "5:53 π.μ.", config_el_gr, config_el_gr.format.time, aTestTime5 )
+    , ( "Config_fr_fr hours in 24", "05:52", config_fr_fr, config_fr_fr.format.time, aTestTime5 )
     ]
 
 
