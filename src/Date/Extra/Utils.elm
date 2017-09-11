@@ -1,9 +1,9 @@
 module Date.Extra.Utils
     exposing
-        ( unsafeFromString
-        , dayList
+        ( dayList
         , isoWeek
         , isoWeekOne
+        , unsafeFromString
         )
 
 {-| Date Utils.
@@ -28,16 +28,17 @@ Copyright (c) 2016-2017 Robin Luiten
 
 -}
 
-import Date exposing (Day(..), Date, Month(..))
-import Regex
-import String
-import Time
-import Date.Extra.Compare as Compare exposing (is, Compare2(..))
+-- import Date.Extra.Format as Format
+
+import Date exposing (Date, Day(..), Month(..))
+import Date.Extra.Compare as Compare exposing (Compare2(..), is)
 import Date.Extra.Core as Core
 import Date.Extra.Create as Create
 import Date.Extra.Duration as Duration
-import Date.Extra.Format as Format
 import Date.Extra.TimeUnit as TimeUnit
+import Regex
+import String
+import Time
 
 
 {-| Return a list of days dayLength long for successive days
@@ -83,10 +84,10 @@ isoWeek date =
         daysSinceIsoWeek1 =
             Duration.diffDays date isoWeek1Date
     in
-        ( year
-        , (daysSinceIsoWeek1 // 7) + 1
-        , Core.isoDayOfWeek (Date.dayOfWeek date)
-        )
+    ( year
+    , (daysSinceIsoWeek1 // 7) + 1
+    , Core.isoDayOfWeek (Date.dayOfWeek date)
+    )
 
 
 getYearIsoWeekDate date =
@@ -97,24 +98,24 @@ getYearIsoWeekDate date =
         maxIsoWeekDateInYear =
             Create.dateFromFields inputYear Date.Dec 29 0 0 0 0
     in
-        if is SameOrAfter date maxIsoWeekDateInYear then
-            let
-                nextYearIsoWeek1Date =
-                    isoWeekOne (inputYear + 1)
-            in
-                if is Before date nextYearIsoWeek1Date then
-                    ( inputYear, isoWeekOne inputYear )
-                else
-                    ( inputYear + 1, nextYearIsoWeek1Date )
+    if is SameOrAfter date maxIsoWeekDateInYear then
+        let
+            nextYearIsoWeek1Date =
+                isoWeekOne (inputYear + 1)
+        in
+        if is Before date nextYearIsoWeek1Date then
+            ( inputYear, isoWeekOne inputYear )
         else
-            let
-                thisYearIsoWeek1Date =
-                    isoWeekOne inputYear
-            in
-                if is Before date thisYearIsoWeek1Date then
-                    ( inputYear - 1, isoWeekOne (inputYear - 1) )
-                else
-                    ( inputYear, thisYearIsoWeek1Date )
+            ( inputYear + 1, nextYearIsoWeek1Date )
+    else
+        let
+            thisYearIsoWeek1Date =
+                isoWeekOne inputYear
+        in
+        if is Before date thisYearIsoWeek1Date then
+            ( inputYear - 1, isoWeekOne (inputYear - 1) )
+        else
+            ( inputYear, thisYearIsoWeek1Date )
 
 
 {-| Reference point for isoWeekOne.
@@ -131,10 +132,10 @@ isoWeekOne year =
         dateJan4 =
             Create.dateFromFields year Jan 4 0 0 0 0
     in
-        Duration.add
-            Duration.Day
-            (isoDayofWeekMonday - (Core.isoDayOfWeek (Date.dayOfWeek dateJan4)))
-            dateJan4
+    Duration.add
+        Duration.Day
+        (isoDayofWeekMonday - Core.isoDayOfWeek (Date.dayOfWeek dateJan4))
+        dateJan4
 
 
 {-| Utility for known input string date creation cases.
@@ -147,4 +148,4 @@ unsafeFromString dateStr =
             date
 
         Err msg ->
-            Debug.crash ("unsafeFromString")
+            Debug.crash "unsafeFromString"

@@ -1,19 +1,19 @@
 module Date.Extra.Format
     exposing
         ( format
-        , formatUtc
         , formatOffset
-        , isoString
-        , isoStringNoOffset
-        , utcIsoString
+        , formatUtc
+        , isoDateFormat
         , isoDateString
-        , utcIsoDateString
         , isoFormat
         , isoMsecFormat
-        , isoOffsetFormat
         , isoMsecOffsetFormat
-        , isoDateFormat
+        , isoOffsetFormat
+        , isoString
+        , isoStringNoOffset
         , isoTimeFormat
+        , utcIsoDateString
+        , utcIsoString
         )
 
 {-| Date Format, turning dates into strings.
@@ -56,14 +56,15 @@ Copyright (c) 2016-2017 Robin Luiten
 -}
 
 import Date exposing (Date, Month)
-import Regex
-import String exposing (padLeft, right)
 import Date.Extra.Config as Config
+import Date.Extra.Config.Config_en_us as English
 import Date.Extra.Core as Core
 import Date.Extra.Create as Create
-import Date.Extra.Config.Config_en_us as English
 import Date.Extra.Internal as Internal
 import Date.Extra.TwelveHourClock exposing (twelveHourPeriod)
+import Date.Extra.Utils as Utils
+import Regex
+import String exposing (padLeft, right)
 
 
 {-| ISO date time, 24hr.
@@ -148,7 +149,7 @@ isoStringNoOffset =
 -}
 utcIsoString : Date -> String
 utcIsoString date =
-    (formatUtc English.config isoMsecFormat date) ++ "Z"
+    formatUtc English.config isoMsecFormat date ++ "Z"
 
 
 {-| Utc variant of isoDateString.
@@ -159,7 +160,7 @@ recursive loops in Format.format.
 -}
 utcIsoDateString : Date -> String
 utcIsoDateString date =
-    (isoDateString (Internal.hackDateAsUtc date))
+    isoDateString (Internal.hackDateAsUtc date)
 
 
 {-| Return date as string.
@@ -182,11 +183,11 @@ isoDateString date =
 
         -- _ = Debug.log "isoDateString" (year, month, day, Date.hour date, Date.minute date)
     in
-        (String.padLeft 4 '0' (toString year))
-            ++ "-"
-            ++ (String.padLeft 2 '0' (toString (Core.monthToInt month)))
-            ++ "-"
-            ++ (String.padLeft 2 '0' (toString day))
+    String.padLeft 4 '0' (toString year)
+        ++ "-"
+        ++ String.padLeft 2 '0' (toString (Core.monthToInt month))
+        ++ "-"
+        ++ String.padLeft 2 '0' (toString day)
 
 
 {-| Date formatter.
@@ -197,7 +198,7 @@ Initially from <https://github.com/mgold/elm-date-format/blob/1.0.4/src/Date/For
 formatRegex : Regex.Regex
 formatRegex =
     Regex.regex
-        "%(y|Y|m|_m|-m|B|^B|b|^b|d|-d|-@d|e|@e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z)"
+        "%(y|Y|m|_m|-m|B|^B|b|^b|d|-d|-@d|e|@e|A|^A|a|^a|H|-H|k|I|-I|l|p|P|M|S|%|L|z|:z|G|V|-V|u)"
 
 
 {-| Use a format string to format a date.
@@ -223,7 +224,7 @@ formatOffset : Config.Config -> Int -> String -> Date.Date -> String
 formatOffset config targetOffset formatStr date =
     let
         dateOffset =
-            (Create.getTimezoneOffset date)
+            Create.getTimezoneOffset date
 
         hackOffset =
             dateOffset - targetOffset
@@ -233,13 +234,14 @@ formatOffset config targetOffset formatStr date =
         --   , ( "dateOffset", dateOffset , "targetOffset", targetOffset , "hackOffset", hackOffset )
         --   )
     in
-        (Regex.replace Regex.All formatRegex)
-            (formatToken
-                config
-                targetOffset
-                (Internal.hackDateAsOffset hackOffset date)
-            )
-            formatStr
+    Regex.replace Regex.All
+        formatRegex
+        (formatToken
+            config
+            targetOffset
+            (Internal.hackDateAsOffset hackOffset date)
+        )
+        formatStr
 
 
 formatToken : Config.Config -> Int -> Date.Date -> Regex.Match -> String
@@ -250,108 +252,128 @@ formatToken config offset d m =
 
         -- _ = Debug.log "formatToken" (symbol)
     in
-        case symbol of
-            "Y" ->
-                d |> Date.year |> padWithN 4 '0'
+    case symbol of
+        "Y" ->
+            d |> Date.year |> padWithN 4 '0'
 
-            "y" ->
-                d |> Date.year |> padWithN 2 '0' |> right 2
+        "y" ->
+            d |> Date.year |> padWithN 2 '0' |> right 2
 
-            "m" ->
-                d |> Date.month |> Core.monthToInt |> padWith '0'
+        "m" ->
+            d |> Date.month |> Core.monthToInt |> padWith '0'
 
-            "_m" ->
-                d |> Date.month |> Core.monthToInt |> padWith ' '
+        "_m" ->
+            d |> Date.month |> Core.monthToInt |> padWith ' '
 
-            "-m" ->
-                d |> Date.month |> Core.monthToInt |> toString
+        "-m" ->
+            d |> Date.month |> Core.monthToInt |> toString
 
-            "B" ->
-                d |> Date.month |> config.i18n.monthName
+        "B" ->
+            d |> Date.month |> config.i18n.monthName
 
-            "^B" ->
-                d |> Date.month |> config.i18n.monthName |> String.toUpper
+        "^B" ->
+            d |> Date.month |> config.i18n.monthName |> String.toUpper
 
-            "b" ->
-                d |> Date.month |> config.i18n.monthShort
+        "b" ->
+            d |> Date.month |> config.i18n.monthShort
 
-            "^b" ->
-                d |> Date.month |> config.i18n.monthShort |> String.toUpper
+        "^b" ->
+            d |> Date.month |> config.i18n.monthShort |> String.toUpper
 
-            "d" ->
-                d |> Date.day |> padWith '0'
+        "d" ->
+            d |> Date.day |> padWith '0'
 
-            "-d" ->
-                d |> Date.day |> toString
+        "-d" ->
+            d |> Date.day |> toString
 
-            "-@d" ->
-                d |> Date.day |> (config.i18n.dayOfMonthWithSuffix False)
+        "-@d" ->
+            d |> Date.day |> config.i18n.dayOfMonthWithSuffix False
 
-            "e" ->
-                d |> Date.day |> padWith ' '
+        "e" ->
+            d |> Date.day |> padWith ' '
 
-            "@e" ->
-                d |> Date.day |> (config.i18n.dayOfMonthWithSuffix True)
+        "@e" ->
+            d |> Date.day |> config.i18n.dayOfMonthWithSuffix True
 
-            "A" ->
-                d |> Date.dayOfWeek |> config.i18n.dayName
+        "A" ->
+            d |> Date.dayOfWeek |> config.i18n.dayName
 
-            "^A" ->
-                d |> Date.dayOfWeek |> config.i18n.dayName |> String.toUpper
+        "^A" ->
+            d |> Date.dayOfWeek |> config.i18n.dayName |> String.toUpper
 
-            "a" ->
-                d |> Date.dayOfWeek |> config.i18n.dayShort
+        "a" ->
+            d |> Date.dayOfWeek |> config.i18n.dayShort
 
-            "^a" ->
-                d |> Date.dayOfWeek |> config.i18n.dayShort |> String.toUpper
+        "^a" ->
+            d |> Date.dayOfWeek |> config.i18n.dayShort |> String.toUpper
 
-            "H" ->
-                d |> Date.hour |> padWith '0'
+        "H" ->
+            d |> Date.hour |> padWith '0'
 
-            "-H" ->
-                d |> Date.hour |> toString
+        "-H" ->
+            d |> Date.hour |> toString
 
-            "k" ->
-                d |> Date.hour |> padWith ' '
+        "k" ->
+            d |> Date.hour |> padWith ' '
 
-            "I" ->
-                d |> Date.hour |> hourMod12 |> padWith '0'
+        "I" ->
+            d |> Date.hour |> hourMod12 |> padWith '0'
 
-            "-I" ->
-                d |> Date.hour |> hourMod12 |> toString
+        "-I" ->
+            d |> Date.hour |> hourMod12 |> toString
 
-            "l" ->
-                d |> Date.hour |> hourMod12 |> padWith ' '
+        "l" ->
+            d |> Date.hour |> hourMod12 |> padWith ' '
 
-            "p" ->
-                d
-                    |> twelveHourPeriod
-                    |> config.i18n.twelveHourPeriod
-                    |> String.toUpper
+        "p" ->
+            d
+                |> twelveHourPeriod
+                |> config.i18n.twelveHourPeriod
+                |> String.toUpper
 
-            "P" ->
-                d |> twelveHourPeriod |> config.i18n.twelveHourPeriod
+        "P" ->
+            d |> twelveHourPeriod |> config.i18n.twelveHourPeriod
 
-            "M" ->
-                d |> Date.minute |> padWith '0'
+        "M" ->
+            d |> Date.minute |> padWith '0'
 
-            "S" ->
-                d |> Date.second |> padWith '0'
+        "S" ->
+            d |> Date.second |> padWith '0'
 
-            "L" ->
-                d |> Date.millisecond |> padWithN 3 '0'
+        "L" ->
+            d |> Date.millisecond |> padWithN 3 '0'
 
-            "%" ->
-                symbol
+        "%" ->
+            symbol
 
-            "z" ->
-                formatOffsetStr "" offset
+        "z" ->
+            formatOffsetStr "" offset
 
-            ":z" ->
-                formatOffsetStr ":" offset
+        ":z" ->
+            formatOffsetStr ":" offset
 
-            _ ->
-                ""
+        "G" ->
+            case Utils.isoWeek d of
+                ( isoYear, _, _ ) ->
+                    isoYear |> padWithN 3 '0'
+
+        "V" ->
+            case Utils.isoWeek d of
+                ( _, isoWeek, _ ) ->
+                    isoWeek |> padWith '0'
+
+        "-V" ->
+            case Utils.isoWeek d of
+                ( _, isoWeek, _ ) ->
+                    isoWeek |> toString
+
+        "u" ->
+            case Utils.isoWeek d of
+                ( _, _, isoDow ) ->
+                    isoDow |> toString
+
+        _ ->
+            ""
 
 
 collapse : Maybe (Maybe a) -> Maybe a
@@ -365,15 +387,15 @@ formatOffsetStr betweenHoursMinutes offset =
         ( hour, minute ) =
             toHourMin (abs offset)
     in
-        (if offset <= 0 then
-            "+"
-            -- "+" is displayed for negative offset.
-         else
-            "-"
-        )
-            ++ (padWith '0' hour)
-            ++ betweenHoursMinutes
-            ++ (padWith '0' minute)
+    (if offset <= 0 then
+        "+"
+        -- "+" is displayed for negative offset.
+     else
+        "-"
+    )
+        ++ padWith '0' hour
+        ++ betweenHoursMinutes
+        ++ padWith '0' minute
 
 
 hourMod12 h =

@@ -1,11 +1,11 @@
 module Date.Extra.Duration
     exposing
-        ( add
+        ( DeltaRecord
         , Duration(..)
-        , DeltaRecord
-        , zeroDelta
+        , add
         , diff
         , diffDays
+        , zeroDelta
         )
 
 {-| A Duration is a length of time that may vary with calendar date
@@ -42,15 +42,12 @@ Copyright (c) 2016-2017 Robin Luiten
 
 -}
 
-import Date exposing (Date, Month)
-
-
 -- import Date.Extra.Calendar as Calendar
 
+import Date exposing (Date, Month)
 import Date.Extra.Compare as Compare
 import Date.Extra.Core as Core
 import Date.Extra.Create as Create
-import Date.Extra.Format as Format
 import Date.Extra.Internal as Internal
 import Date.Extra.Period as Period
 
@@ -153,10 +150,10 @@ add duration addend date =
         outputDate =
             doAdd duration addend date
     in
-        if requireDaylightCompensateInAdd duration then
-            daylightOffsetCompensate date outputDate
-        else
-            outputDate
+    if requireDaylightCompensateInAdd duration then
+        daylightOffsetCompensate date outputDate
+    else
+        outputDate
 
 
 doAdd : Duration -> Int -> Date -> Date
@@ -210,38 +207,28 @@ daylightOffsetCompensate dateBefore dateAfter =
 
         offsetAfter =
             Create.getTimezoneOffset dateAfter
-
-        -- _ = Debug.log "daylightOffsetCompensate"
-        --   (offsetBefore, offsetAfter, (offsetAfter - offsetBefore)
-        --   , Format.isoString dateAfter
-        --   , Format.isoString
-        --     ( Period.add
-        --         Period.Millisecond
-        --         ((offsetAfter - offsetBefore) * Core.ticksAMinute) dateAfter
-        --     )
-        --   )
     in
-        -- this 'fix' can only happen if the date isnt allready shifted ?
-        if offsetBefore /= offsetAfter then
-            let
-                adjustedDate =
-                    Period.add
-                        Period.Millisecond
-                        ((offsetAfter - offsetBefore) * Core.ticksAMinute)
-                        dateAfter
-
-                adjustedOffset =
-                    Create.getTimezoneOffset adjustedDate
-            in
-                -- our timezone difference compensation caused us to leave the
-                -- the after time zone this indicates we are falling in a place
-                -- that is shifted by daylight saving so do not compensate
-                if adjustedOffset /= offsetAfter then
+    -- this 'fix' can only happen if the date isnt allready shifted ?
+    if offsetBefore /= offsetAfter then
+        let
+            adjustedDate =
+                Period.add
+                    Period.Millisecond
+                    ((offsetAfter - offsetBefore) * Core.ticksAMinute)
                     dateAfter
-                else
-                    adjustedDate
-        else
+
+            adjustedOffset =
+                Create.getTimezoneOffset adjustedDate
+        in
+        -- our timezone difference compensation caused us to leave the
+        -- the after time zone this indicates we are falling in a place
+        -- that is shifted by daylight saving so do not compensate
+        if adjustedOffset /= offsetAfter then
             dateAfter
+        else
+            adjustedDate
+    else
+        dateAfter
 
 
 
@@ -301,7 +288,7 @@ addMonth monthCount date =
 
         -- _ = Debug.log "addMonth b" (newCivil, inputCivil, newCivil - inputCivil)
     in
-        Period.add Period.Day daysDifferent date
+    Period.add Period.Day daysDifferent date
 
 
 
@@ -455,14 +442,14 @@ positiveDiff date1 date2 multiplier =
         ( secondDiff, msecDiff ) =
             accDiff secondDiffA msec1 msec2 1000
     in
-        { year = yearDiff * multiplier
-        , month = monthDiff * multiplier
-        , day = dayDiff * multiplier
-        , hour = hourDiff * multiplier
-        , minute = minuteDiff * multiplier
-        , second = secondDiff * multiplier
-        , millisecond = msecDiff * multiplier
-        }
+    { year = yearDiff * multiplier
+    , month = monthDiff * multiplier
+    , day = dayDiff * multiplier
+    , hour = hourDiff * multiplier
+    , minute = minuteDiff * multiplier
+    , second = secondDiff * multiplier
+    , millisecond = msecDiff * multiplier
+    }
 
 
 {-| Returns date1 - date2 as number of days to add to date1 to get to day date2 is on.
@@ -496,4 +483,4 @@ positiveDiffDays date1 date2 multiplier =
                 (Core.monthToInt (Date.month date2))
                 (Date.day date2)
     in
-        (date1DaysFromCivil - date2DaysFromCivil) * multiplier
+    (date1DaysFromCivil - date2DaysFromCivil) * multiplier

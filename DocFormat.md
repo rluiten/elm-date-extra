@@ -47,6 +47,10 @@ The input `String` may contain any of the following substrings, which will be ex
 * `%z` - time zone offset format "(+/-)HHMM"
 * `%:z` - time zone offset format "(+/-)HH:MM"
 * `%%` - produces a `%`
+* '%G' - week based year of isoWeek (as output from Utils.isoWeek) 4 digits
+* '%V' - isoWeek (as output from Utils.isoWeek) zero-padded
+* '%-V' - isoWeek (as output from Utils.isoWeek) no padding
+* '%u' - iso day of week (1..7) for (Mon..Sun)
 
 
 These tokens are a subset of those from [Ruby](http://apidock.com/ruby/DateTime/strftime) with some extensions.

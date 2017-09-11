@@ -182,6 +182,12 @@ aTestTime9 =
     floor -55427130000000.0
 
 
+{-| Sun Jan 05 2014 00:00:00 GMT+1000
+-}
+aTestTime10 =
+    floor 1388844000000.0
+
+
 {-| 0213-08-02T17:00:00.000+10:00
 forces to +10:00 time zone so will run on any time zone
 -}
@@ -311,7 +317,11 @@ formatConfigTestCases =
     , ( "Config_el_gr date idiom", "5/8/14", config_el_gr, config_el_gr.format.date, aTestTime5 )
     , ( "Config_el_gr longDate idiom", "Τρίτη, 5 Αυγούστου 2014", config_el_gr, config_el_gr.format.longDate, aTestTime5 )
     , ( "Config_el_gr time idiom", "5:53 π.μ.", config_el_gr, config_el_gr.format.time, aTestTime5 )
-    , ( "Config_fr_fr hours in 24", "05:52", config_fr_fr, config_fr_fr.format.time, aTestTime5 )
+    , ( "Config_fr_fr hours in 24", "05:53", config_fr_fr, config_fr_fr.format.time, aTestTime5 )
+    , ( "Config_en_au iso week padded", "32", config_en_au, "%V", aTestTime5 )
+    , ( "Config_en_au iso week", "1", config_en_au, "%-V", aTestTime10 )
+    , ( "Config_en_au iso week based year", "2014", config_en_au, "%G", aTestTime10 )
+    , ( "Config_en_au iso day of week", "7", config_en_au, "%u", aTestTime10 )
     ]
 
 
