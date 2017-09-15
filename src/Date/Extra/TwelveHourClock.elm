@@ -4,10 +4,12 @@ module Date.Extra.TwelveHourClock
         , twelveHourPeriod
         )
 
+{-| Definition of 12-Hour clock and AM/PMv alue for dates.
+@docs TwelveHourPeriod
+@docs twelveHourPeriod
+-}
+
 import Date
-
-
--- 12-Hour Clock --
 
 
 {-| 12-Hour clock abbreviations (AM/PM)
@@ -17,6 +19,8 @@ type TwelveHourPeriod
     | PM
 
 
+{-| Common Date to AM/PM value.
+-}
 twelveHourPeriod : Date.Date -> TwelveHourPeriod
 twelveHourPeriod d =
     if Date.hour d < 12 then
