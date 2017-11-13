@@ -283,7 +283,7 @@ lastOfPrevMonthDate date =
         (Internal2.lastOfPrevMonthDate date)
 
 
-{-| Return date of first of month.
+{-| Return date of first day of month.
 -}
 toFirstOfMonth : Date -> Date
 toFirstOfMonth date =
@@ -292,7 +292,7 @@ toFirstOfMonth date =
         (Internal2.fromTime (Internal2.firstOfMonthTicks date))
 
 
-{-| Resturn date of last day of month.
+{-| Return date of last day of month.
 -}
 lastOfMonthDate : Date -> Date
 lastOfMonthDate date =
