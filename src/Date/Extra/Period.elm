@@ -1,15 +1,17 @@
 module Date.Extra.Period
     exposing
-        ( add
-        , DeltaRecord
-        , diff
+        ( DeltaRecord
         , Period(..)
+        , add
+        , diff
         , toTicks
         , zeroDelta
         )
 
 {-| Period is a fixed length of time. It is an elapsed time concept, which
 does not include the concept of Years Months or Daylight saving variations.
+
+  - Represents a fixed (and calendar-independent) length of time.
 
 Name of type concept copied from NodaTime.
 
@@ -162,18 +164,18 @@ diff date1 date2 =
                     absDayDiff =
                         abs onlyDaysDiff
                 in
-                    ( negate (absDayDiff // 7)
-                    , negate (absDayDiff % 7)
-                    )
+                ( negate (absDayDiff // 7)
+                , negate (absDayDiff % 7)
+                )
             else
                 ( onlyDaysDiff // 7
                 , onlyDaysDiff % 7
                 )
     in
-        { week = weekDiff
-        , day = dayDiff
-        , hour = hourDiff
-        , minute = minuteDiff
-        , second = secondDiff
-        , millisecond = millisecondDiff
-        }
+    { week = weekDiff
+    , day = dayDiff
+    , hour = hourDiff
+    , minute = minuteDiff
+    , second = secondDiff
+    , millisecond = millisecondDiff
+    }

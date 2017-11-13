@@ -1,8 +1,16 @@
 # Date Extra Package
 
+
+# WARNING!
+
+I have discovered that I managed to copy concepts from NodaTimes Period concept to Duration and there Duration concept to Period I got it backwards. Which I am sure is not helping anyone with back ground in nodatime doing the right thing with elm-date-extra.
+
+* I am not sure if i should swap them in elm-date-extra so they match the NodaTime terms at the moment.
+
 ### Introduction
 
 An Elm language package for working with dates and times.
+
 
 See bottom of this document for important history notes.
 

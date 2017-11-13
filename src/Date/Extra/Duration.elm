@@ -11,6 +11,10 @@ module Date.Extra.Duration
 {-| A Duration is a length of time that may vary with calendar date
 and time. It can be used to modify a date.
 
+Represents a period of time expressed in human chronological terms
+in terms of a calendar which may have varying components based upon
+the dates involved in the math.
+
 When modify dates using Durations (Day | Month | Week | Year) this module
 compensates for day light saving hour variations to minimise the scenarios
 that cause the Hour field in the result to be different to the input date.
@@ -303,7 +307,10 @@ addYear yearCount date =
 {-| Return a Period representing date difference. date1 - date2.
 
 If you add the result of this function to date2 with addend of 1
-will return date1.
+will not always return date1, this is because this module supports
+human calendar concepts liek Day Light Saving, Months with varying
+number of days dependent on the month and leap years. So the difference
+between two dates is dependent on when those dates are.
 
 **Differences to Period.diff**
 
