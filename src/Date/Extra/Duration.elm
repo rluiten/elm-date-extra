@@ -308,7 +308,7 @@ addYear yearCount date =
 
 If you add the result of this function to date2 with addend of 1
 will not always return date1, this is because this module supports
-human calendar concepts liek Day Light Saving, Months with varying
+human calendar concepts like Day Light Saving, Months with varying
 number of days dependent on the month and leap years. So the difference
 between two dates is dependent on when those dates are.
 
