@@ -59,10 +59,10 @@ tests =
                 \_ ->
                     let
                         y2019m01d01 =
-                            Date.fromTime 1546300800000
+                            Date.fromTime 1546300800000.0
 
                         y2018m01d11h21 =
-                            Date.fromTime 1515704400000
+                            Date.fromTime 1515704400000.0
 
                         d =
                             Duration.diff y2019m01d01 y2018m01d11h21
@@ -72,10 +72,10 @@ tests =
                 \_ ->
                     let
                         y2019m01d11 =
-                            Date.fromTime 1547164800000
+                            Date.fromTime 1547164800000.0
 
                         y2018m01d11h21 =
-                            Date.fromTime 1515704400000
+                            Date.fromTime 1515704400000.0
 
                         d =
                             Duration.diff y2019m01d11 y2018m01d11h21

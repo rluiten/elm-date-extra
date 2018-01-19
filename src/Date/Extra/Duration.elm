@@ -154,10 +154,10 @@ add duration addend date =
         outputDate =
             doAdd duration addend date
     in
-    if requireDaylightCompensateInAdd duration then
-        daylightOffsetCompensate date outputDate
-    else
-        outputDate
+        if requireDaylightCompensateInAdd duration then
+            daylightOffsetCompensate date outputDate
+        else
+            outputDate
 
 
 doAdd : Duration -> Int -> Date -> Date
@@ -212,27 +212,27 @@ daylightOffsetCompensate dateBefore dateAfter =
         offsetAfter =
             Create.getTimezoneOffset dateAfter
     in
-    -- this 'fix' can only happen if the date isnt allready shifted ?
-    if offsetBefore /= offsetAfter then
-        let
-            adjustedDate =
-                Period.add
-                    Period.Millisecond
-                    ((offsetAfter - offsetBefore) * Core.ticksAMinute)
-                    dateAfter
+        -- this 'fix' can only happen if the date isnt allready shifted ?
+        if offsetBefore /= offsetAfter then
+            let
+                adjustedDate =
+                    Period.add
+                        Period.Millisecond
+                        ((offsetAfter - offsetBefore) * Core.ticksAMinute)
+                        dateAfter
 
-            adjustedOffset =
-                Create.getTimezoneOffset adjustedDate
-        in
-        -- our timezone difference compensation caused us to leave the
-        -- the after time zone this indicates we are falling in a place
-        -- that is shifted by daylight saving so do not compensate
-        if adjustedOffset /= offsetAfter then
-            dateAfter
+                adjustedOffset =
+                    Create.getTimezoneOffset adjustedDate
+            in
+                -- our timezone difference compensation caused us to leave the
+                -- the after time zone this indicates we are falling in a place
+                -- that is shifted by daylight saving so do not compensate
+                if adjustedOffset /= offsetAfter then
+                    dateAfter
+                else
+                    adjustedDate
         else
-            adjustedDate
-    else
-        dateAfter
+            dateAfter
 
 
 
@@ -292,7 +292,7 @@ addMonth monthCount date =
 
         -- _ = Debug.log "addMonth b" (newCivil, inputCivil, newCivil - inputCivil)
     in
-    Period.add Period.Day daysDifferent date
+        Period.add Period.Day daysDifferent date
 
 
 
@@ -416,47 +416,99 @@ positiveDiff date1 date2 multiplier =
         msec2 =
             Date.millisecond date2
 
-        -- _ = Debug.log "diff>>" ((year2, year1), (month1, month2), (day1, day2))
-        -- Accumlated diff
-        accDiff acc v1 v2 maxV2 =
+        -- _ =
+        --     Debug.log "diff>>" ( ( year1, year2 ), ( month1, month2 ), ( day1, day2 ) )
+        accumulatedDiff acc v1 v2 maxV2 =
             if v1 < v2 then
                 ( acc - 1, maxV2 + v1 - v2 )
             else
                 ( acc, v1 - v2 )
 
+        daysInDate1Month =
+            Core.daysInMonth year1 month1Mon
+
         daysInDate2Month =
             Core.daysInMonth year2 month2Mon
 
-        -- _ = Debug.log "daysInDate2Month" (year2, month2Mon, daysInDate2Month)
+        -- _ =
+        --     Debug.log "daysInDate2Month" ( year2, month2Mon, daysInDate2Month )
         ( yearDiff, monthDiffA ) =
-            accDiff (year1 - year2) month1 month2 12
+            accumulatedDiff (year1 - year2) month1 month2 12
 
-        -- _ = Debug.log "diff year:" ((year1 - year2), yearDiff)
+        -- _ =
+        --     Debug.log "diff year" ( (year1 - year2), ( yearDiff, monthDiffA ) )
         ( monthDiff, dayDiffA ) =
-            accDiff monthDiffA day1 day2 daysInDate2Month
+            accumulatedDiff monthDiffA day1 day2 daysInDate2Month
 
-        -- _ = Debug.log "diff month:" (monthDiffA, monthDiff, (daysInDate2Month))
+        -- _ =
+        --     Debug.log "diff month" ( monthDiffA, monthDiff, daysInDate2Month )
         ( dayDiff, hourDiffA ) =
-            accDiff dayDiffA hour1 hour2 24
+            accumulatedDiff dayDiffA hour1 hour2 24
 
-        -- _ = Debug.log "diff month:" (dayDiffA, dayDiff)
+        -- _ =
+        --     Debug.log "diff day" ( dayDiffA, dayDiff )
         ( hourDiff, minuteDiffA ) =
-            accDiff hourDiffA minute1 minute2 60
+            accumulatedDiff hourDiffA minute1 minute2 60
 
         ( minuteDiff, secondDiffA ) =
-            accDiff minuteDiffA second1 second2 60
+            accumulatedDiff minuteDiffA second1 second2 60
 
         ( secondDiff, msecDiff ) =
-            accDiff secondDiffA msec1 msec2 1000
+            accumulatedDiff secondDiffA msec1 msec2 1000
+
+        -- Need to carry negative differences to next higher unit
+        -- to make all differences output positive.
+        propogateCarry current carry maxVal =
+            let
+                adjusted =
+                    current + carry
+            in
+                if adjusted < 0 then
+                    ( maxVal + adjusted, -1 )
+                else
+                    ( adjusted, 0 )
+
+        ( msecX, secondCarry ) =
+            propogateCarry msecDiff 0 1000
+
+        ( secondX, minuteCarry ) =
+            propogateCarry secondDiff secondCarry 60
+
+        ( minuteX, hourCarry ) =
+            propogateCarry minuteDiff minuteCarry 60
+
+        ( hourX, dayCarry ) =
+            propogateCarry hourDiff hourCarry 60
+
+        -- if dayDiff + dayCarry is negative
+        --    then add days in date1 month to make dayDiff positive
+        --    and carry Month negatve
+        ( dayX, monthCarry ) =
+            propogateCarry dayDiff dayCarry daysInDate1Month
+
+        ( monthX, yearCarry ) =
+            propogateCarry monthDiff monthCarry 12
+
+        -- maxVal parameter no effect for year
+        ( yearX, _ ) =
+            propogateCarry yearDiff yearCarry 0
     in
-    { year = yearDiff * multiplier
-    , month = monthDiff * multiplier
-    , day = dayDiff * multiplier
-    , hour = hourDiff * multiplier
-    , minute = minuteDiff * multiplier
-    , second = secondDiff * multiplier
-    , millisecond = msecDiff * multiplier
-    }
+        { year = yearX * multiplier
+        , month = monthX * multiplier
+        , day = dayX * multiplier
+        , hour = hourX * multiplier
+        , minute = minuteX * multiplier
+        , second = secondX * multiplier
+        , millisecond = msecX * multiplier
+        }
+
+
+
+-- fixNegatives year month day hour minute second millisecond =
+--   let
+--     (millisecondX, acc) = if millisecond < 0 then
+--   in
+--     ( year, month, day, hour, minute, second, millisecond )
 
 
 {-| Returns date1 - date2 as number of days to add to date1 to get to day date2 is on.
@@ -490,4 +542,4 @@ positiveDiffDays date1 date2 multiplier =
                 (Core.monthToInt (Date.month date2))
                 (Date.day date2)
     in
-    (date1DaysFromCivil - date2DaysFromCivil) * multiplier
+        (date1DaysFromCivil - date2DaysFromCivil) * multiplier
