@@ -54,6 +54,34 @@ tests =
                 )
               )
             ]
+        , describe "Duration.diff on directly created dates"
+            [ test "2019-01-01 — 2018-01-11T21:00:00" <|
+                \_ ->
+                    let
+                        y2019m01d01 =
+                            Date.fromTime 1546300800000
+
+                        y2018m01d11h21 =
+                            Date.fromTime 1515704400000
+
+                        d =
+                            Duration.diff y2019m01d01 y2018m01d11h21
+                    in
+                        Expect.equal d (Duration.DeltaRecord 0 11 20 3 0 0 0)
+            , test "2019-01-11 — 2018-01-11T21:00:00" <|
+                \_ ->
+                    let
+                        y2019m01d11 =
+                            Date.fromTime 1547164800000
+
+                        y2018m01d11h21 =
+                            Date.fromTime 1515704400000
+
+                        d =
+                            Duration.diff y2019m01d11 y2018m01d11h21
+                    in
+                        Expect.equal d (Duration.DeltaRecord 0 11 30 3 0 0 0)
+            ]
         ]
 
 
