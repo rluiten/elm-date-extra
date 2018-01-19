@@ -503,14 +503,6 @@ positiveDiff date1 date2 multiplier =
         }
 
 
-
--- fixNegatives year month day hour minute second millisecond =
---   let
---     (millisecondX, acc) = if millisecond < 0 then
---   in
---     ( year, month, day, hour, minute, second, millisecond )
-
-
 {-| Returns date1 - date2 as number of days to add to date1 to get to day date2 is on.
 `date1 - date2 in days`.
 
