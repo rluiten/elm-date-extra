@@ -16,6 +16,7 @@ import Date.Extra.Create as Create
 import Date.Extra.Format as Format
 import Date.Extra.Utils as DateUtils
 import Date.Extra.Config.Config_en_au as Config
+import Tuple
 
 
 config =
@@ -254,13 +255,28 @@ describeOffsetTests description year candidateTests =
             if (getZoneOffsets year) == offsets then
                 Just (test ())
             else
-                Just dummyPassingTest
+                let
+                    firstInt tuple =
+                        " " ++ (toString <| Tuple.first tuple)
+
+                    secondInt tuple =
+                        " " ++ (toString <| Tuple.second tuple)
+
+                    uniqueDescripton =
+                        (description ++ (firstInt offsets) ++ (secondInt offsets))
+                in
+                    Just
+                        (dummyPassingTest uniqueDescripton)
     in
         describe description <|
-            List.filterMap currentOffsetFilter candidateTests
+            List.append
+                (List.filterMap currentOffsetFilter candidateTests)
+                [ test ("Passing test to make suite not fail if empty for " ++ description) <|
+                    (\_ -> Expect.pass)
+                ]
 
 
-dummyPassingTest : Test
-dummyPassingTest =
-    test "Dummy passing test" <|
+dummyPassingTest : String -> Test
+dummyPassingTest description =
+    test ("Dummy passing test" ++ description) <|
         \_ -> Expect.true "Dummy passing test" True

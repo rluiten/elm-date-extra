@@ -40,20 +40,23 @@ tests =
     in
         describe "Create module tests" <|
             [ describe "Create.getTimezoneOffset - each describe PASSES in matching time zone ONLY." <|
-                List.filterMap currentOffsetTest
-                    [ ( ( -600, -600 )
-                        -- Brisbane no day light saving
-                      , testPos10Brisbane
-                      )
-                    , ( ( -660, -600 )
-                        -- Sydney with day light saving
-                      , testPos10Sydney
-                      )
-                    , ( ( 150, 210 )
-                        -- Newfoundland with day light saving negative offset
-                      , testNeg0330NewFoundland
-                      )
-                    ]
+                List.append
+                    (List.filterMap currentOffsetTest
+                        [ ( ( -600, -600 )
+                            -- Brisbane no day light saving
+                          , testPos10Brisbane
+                          )
+                        , ( ( -660, -600 )
+                            -- Sydney with day light saving
+                          , testPos10Sydney
+                          )
+                        , ( ( 150, 210 )
+                            -- Newfoundland with day light saving negative offset
+                          , testNeg0330NewFoundland
+                          )
+                        ]
+                    )
+                    [ test "Passing test to make suite not fail if empty" <| (\_ -> Expect.pass) ]
             , describe "Create.dateFromFields Create.timeFromFields"
                 [ fromFieldsTests ()
                 ]
