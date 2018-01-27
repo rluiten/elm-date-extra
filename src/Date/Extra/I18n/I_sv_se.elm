@@ -1,6 +1,6 @@
 module Date.Extra.I18n.I_sv_se exposing (..)
 
-{-| Finnish values for day and month names.
+{-| Swedish values for day and month names.
 
 @docs dayShort
 @docs dayName
