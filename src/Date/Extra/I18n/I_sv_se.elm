@@ -66,7 +66,7 @@ dayName day =
             "lördag"
 
         Sun ->
-            "lördag"
+            "söndag"
 
 
 {-| Month short name.
