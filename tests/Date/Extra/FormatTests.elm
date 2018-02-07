@@ -8,6 +8,7 @@ import Date.Extra.Config.Config_el_gr as Config_el_gr
 import Date.Extra.Config.Config_en_au as Config_en_au
 import Date.Extra.Config.Config_en_gb as Config_en_gb
 import Date.Extra.Config.Config_en_us as Config_en_us
+import Date.Extra.Config.Config_es_es as Config_es_es
 import Date.Extra.Config.Config_et_ee as Config_et_ee
 import Date.Extra.Config.Config_fi_fi as Config_fi_fi
 import Date.Extra.Config.Config_fr_fr as Config_fr_fr
@@ -94,6 +95,10 @@ config_lt_lt =
 
 config_el_gr =
     Config_el_gr.config
+
+
+config_es_es =
+    Config_es_es.config
 
 
 tests : Test
@@ -322,6 +327,8 @@ formatConfigTestCases =
     , ( "Config_en_au iso week", "1", config_en_au, "%-V", aTestTime10 )
     , ( "Config_en_au iso week based year", "2014", config_en_au, "%G", aTestTime10 )
     , ( "Config_en_au iso day of week", "7", config_en_au, "%u", aTestTime10 )
+    , ( "Config_es_es day idiom", "05.08.2014", config_es_es, config_es_es.format.date, aTestTime5 )
+    , ( "Config_es_es format idiom", "Martes (5) 05 Agosto 2014", config_es_es, dayDayIdiomMonth, aTestTime5 )
     ]
 
 
