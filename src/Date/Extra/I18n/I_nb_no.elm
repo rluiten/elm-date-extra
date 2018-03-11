@@ -1,6 +1,6 @@
-module Date.Extra.I18n.I_sv_se exposing (..)
+module Date.Extra.I18n.I_nb_no exposing (..)
 
-{-| Swedish values for day and month names.
+{-| Norwegian values for day and month names.
 
 @docs dayShort
 @docs dayName
@@ -21,10 +21,10 @@ dayShort : Day -> String
 dayShort day =
     case day of
         Mon ->
-            "mån"
+            "man"
 
         Tue ->
-            "tis"
+            "tir"
 
         Wed ->
             "ons"
@@ -36,10 +36,10 @@ dayShort day =
             "fre"
 
         Sat ->
-            "lör"
+            "lør"
 
         Sun ->
-            "sön"
+            "søn"
 
 
 {-| Day full name.
@@ -48,7 +48,7 @@ dayName : Day -> String
 dayName day =
     case day of
         Mon ->
-            "måndag"
+            "mandag"
 
         Tue ->
             "tisdag"
@@ -63,10 +63,10 @@ dayName day =
             "fredag"
 
         Sat ->
-            "lördag"
+            "lørdag"
 
         Sun ->
-            "söndag"
+            "søndag"
 
 
 {-| Month short name.
@@ -87,7 +87,7 @@ monthShort month =
             "apr"
 
         May ->
-            "maj"
+            "mai"
 
         Jun ->
             "jun"
@@ -108,7 +108,7 @@ monthShort month =
             "nov"
 
         Dec ->
-            "dec"
+            "des"
 
 
 {-| Month full name.
@@ -117,10 +117,10 @@ monthName : Month -> String
 monthName month =
     case month of
         Jan ->
-            "januari"
+            "januar"
 
         Feb ->
-            "februari"
+            "februar"
 
         Mar ->
             "mars"
@@ -129,7 +129,7 @@ monthName month =
             "april"
 
         May ->
-            "maj"
+            "mai"
 
         Jun ->
             "juni"
@@ -138,7 +138,7 @@ monthName month =
             "juli"
 
         Aug ->
-            "augusti"
+            "august"
 
         Sep ->
             "september"
@@ -150,7 +150,7 @@ monthName month =
             "november"
 
         Dec ->
-            "december"
+            "desember"
 
 
 {-| Nothing done here for now, but it might be needed
