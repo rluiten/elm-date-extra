@@ -52,6 +52,7 @@
         "Date.Extra.Config.Config_lt_lt",
         "Date.Extra.Config.Config_el_gr",
         "Date.Extra.Config.Config_sv_se",
+        "Date.Extra.Config.Config_nb_no",
         "Date.Extra.Field"
     ],
     "dependencies": {

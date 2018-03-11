@@ -21,6 +21,7 @@ import Date.Extra.Config.Config_ro_ro as Config_ro_ro
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_sv_se as Config_sv_se
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
+import Date.Extra.Config.Config_nb_no as Config_nb_no
 import Date.Extra.Core as Core
 import Date.Extra.Format as Format
 import Date.Extra.Period as DPeriod exposing (Period(Hour))
@@ -99,6 +100,10 @@ config_el_gr =
 
 config_es_es =
     Config_es_es.config
+
+
+config_nb_no =
+    Config_nb_no.config
 
 
 tests : Test
@@ -208,11 +213,11 @@ runFormatTest ( name, expected, formatStr, time ) =
         --   , "format", (Format.formatOffset Config_en_us.config -600 formatStr asDate)
         --   )
     in
-    test name <|
-        \() ->
-            Expect.equal
-                expected
-                (Format.formatOffset Config_en_us.config -600 formatStr asDate)
+        test name <|
+            \() ->
+                Expect.equal
+                    expected
+                    (Format.formatOffset Config_en_us.config -600 formatStr asDate)
 
 
 formatTestCases =
@@ -256,11 +261,11 @@ runConfigLanguageTest ( name, expected, config, formatStr, time ) =
         asDate =
             Core.fromTime time
     in
-    test name <|
-        \() ->
-            Expect.equal
-                expected
-                (Format.formatOffset config -600 formatStr asDate)
+        test name <|
+            \() ->
+                Expect.equal
+                    expected
+                    (Format.formatOffset config -600 formatStr asDate)
 
 
 {-| These tests are testing a few language field values and the day idiom function.
@@ -329,6 +334,7 @@ formatConfigTestCases =
     , ( "Config_en_au iso day of week", "7", config_en_au, "%u", aTestTime10 )
     , ( "Config_es_es day idiom", "05.08.2014", config_es_es, config_es_es.format.date, aTestTime5 )
     , ( "Config_es_es format idiom", "Martes (5) 05 Agosto 2014", config_es_es, dayDayIdiomMonth, aTestTime5 )
+    , ( "Config_nb_no format date", "2014-08-05", config_nb_no, config_nb_no.format.date, aTestTime5 )
     ]
 
 

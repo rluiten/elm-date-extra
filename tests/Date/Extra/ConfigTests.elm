@@ -19,6 +19,7 @@ import Date.Extra.Config.Config_ro_ro as Config_ro_ro
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_sv_se as Config_sv_se
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
+import Date.Extra.Config.Config_nb_no as Config_nb_no
 import Date.Extra.Config.Configs as Configs
 import Expect
 import Test exposing (..)
@@ -94,6 +95,10 @@ config_el_gr =
 
 config_es_es =
     Config_es_es.config
+
+
+config_nb_no =
+    Config_nb_no.config
 
 
 tests : Test
@@ -199,4 +204,9 @@ tests =
                 Expect.equal
                     config_es_es.format
                     (Configs.getConfig "es_es").format
+        , test "getConfig nb_no" <|
+            \() ->
+                Expect.equal
+                    config_nb_no.format
+                    (Configs.getConfig "nb_no").format
         ]

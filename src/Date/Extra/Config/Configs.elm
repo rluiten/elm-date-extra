@@ -32,6 +32,7 @@ import Date.Extra.Config.Config_ro_ro as Config_ro_ro
 import Date.Extra.Config.Config_ru_ru as Config_ru_ru
 import Date.Extra.Config.Config_sv_se as Config_sv_se
 import Date.Extra.Config.Config_tr_tr as Config_tr_tr
+import Date.Extra.Config.Config_nb_no as Config_nb_no
 import Dict exposing (Dict)
 import Regex exposing (HowMany(All), regex, replace)
 import String
@@ -60,6 +61,7 @@ configs =
         , ( "el_gr", Config_el_gr.config )
         , ( "sv_se", Config_sv_se.config )
         , ( "es_es", Config_es_es.config )
+        , ( "nb_no", Config_nb_no.config )
         ]
 
 
@@ -80,5 +82,5 @@ getConfig id =
         fixedId =
             replace All (regex "-") (\_ -> "_") lowerId
     in
-    Maybe.withDefault Config_en_us.config
-        (Dict.get fixedId configs)
+        Maybe.withDefault Config_en_us.config
+            (Dict.get fixedId configs)
