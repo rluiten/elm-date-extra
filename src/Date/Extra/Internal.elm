@@ -2,7 +2,7 @@ module Date.Extra.Internal exposing (..)
 
 {-| This module is not exposed to clients.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

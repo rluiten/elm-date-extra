@@ -8,7 +8,7 @@ Created to alleviate circular dependency issues when fixing
 
 There is no compensation for day light saving in this modules functions.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

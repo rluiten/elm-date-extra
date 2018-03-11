@@ -57,7 +57,7 @@ Here is why.
             nearly always dictated include minimum excluded maximum.
       - Once you do this there is no possible gap and it becomes easier to think about.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

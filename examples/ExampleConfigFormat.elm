@@ -10,7 +10,7 @@ your own Config without using existing ones as well.
 You can also use existing translations in the Date.Config.I18n namespace if
 they match your language needs for your own config.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

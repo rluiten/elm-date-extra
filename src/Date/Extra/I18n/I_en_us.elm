@@ -8,7 +8,7 @@ module Date.Extra.I18n.I_en_us exposing (..)
 @docs monthName
 @docs dayOfMonthWithSuffix
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

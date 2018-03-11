@@ -13,7 +13,7 @@ module Date.Extra.Compare
 @docs Compare2
 @docs Compare3
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

@@ -1,16 +1,14 @@
 # Date Extra Package
 
-
 # WARNING!
 
 I have discovered that I managed to copy concepts from NodaTimes Period concept to Duration and there Duration concept to Period I got it backwards. Which I am sure is not helping anyone with back ground in nodatime doing the right thing with elm-date-extra.
 
-* I am not sure if i should swap them in elm-date-extra so they match the NodaTime terms at the moment.
+* I am not sure if I should swap them in elm-date-extra so they match the NodaTime terms at the moment.
 
 ### Introduction
 
 An Elm language package for working with dates and times.
-
 
 See bottom of this document for important history notes.
 
@@ -20,20 +18,22 @@ This project uses elm-format for formatting.
 
 ### Includes
 * flexible formatting of dates into strings
- * It has support for outputting dates with other offsets than local by deriving a timezone offset for a dates.
+ * It has support for outputting dates with other offsets than local by deriving
+   a timezone offset for a dates.
  * simple i18n support for long and short Day and Month names.
  * see [DocFormat.md](https://github.com/rluiten/elm-date-extra/blob/master/DocFormat.md)
 * compare dates
 * add or subtract time periods on a date
  * When modifying dates using Duration Day, Week, Month, Year the
- library compensates for daylight saving hour varations it should
+ library compensates for daylight saving hour varations. It should
  behave very much like momentjs in its add subtract date field functions.
-* date diff
- * this is simple at moment and limited to Period module and the date fields
+* Date diff
+ * For Period to Period.DeltaRecord date fields
   * `millisecond`, `second`, `minute`, `hour`, `day`, `week`
-* A function similar in concept to `floor` for Floats for dates called `floor`
-  for reducing date fields below a given date
-  field granularity to its minimum value.
+ * For Duration to Duration.DeltaRecord date fields
+   * `millisecond`, `second`, `minute`, `hour`, `day`, `month`, `year`
+* Easy ways to move a date to start 'startOfTime' or end 'endOfTime' to adjusted
+  a date down or up to then end of a given date unit boundary
 * Set date field module.
 
 
@@ -110,7 +110,7 @@ In the long run this may require writing a date parser and introducing Elm nativ
 * Currently Robin on a new far from finished project. Only put this here because this section would be empty with out it.
 * Feel free to contact me to let me know you are using this library.
 
-## Things to think abut for future development, not really a road map.
+## Things to think about for future development, not really a road map.
 
 * Consider a range checking year inputs, javascript getFullYear() only claims
 to work for years 1000 to 9999, this is probably a reasonable range for range
@@ -144,7 +144,7 @@ Only major (and recent) changes are listed here.
  * ##### Changes the value of `Format.isoMsecOffsetFormat`
   * It now usses the %:z format token for zone offset which means  they
  now include ":" this now appears to be a better choice as it is
- moregenerally parsed by browsers see issue.   https://github.com/rluiten/elm-date-extra/issues/29.
+ more generally parsed by browsers see issue. https://github.com/rluiten/elm-date-extra/issues/29.
  * ##### Changes result of `Format.isoString`
   * which uses `Format.isoMsecOffsetFormat`.
 
@@ -155,4 +155,4 @@ Only major (and recent) changes are listed here.
  exists in other languages so French, Finish and Polish currently only
  output day of month as decimal integer.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten

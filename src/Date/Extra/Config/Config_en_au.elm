@@ -4,7 +4,7 @@ module Date.Extra.Config.Config_en_au exposing (..)
 
 @docs config
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

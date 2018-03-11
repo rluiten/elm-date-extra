@@ -2,7 +2,7 @@ module Main exposing (..)
 
 {-| Comparing dates.
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

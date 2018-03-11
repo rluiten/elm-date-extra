@@ -22,7 +22,7 @@ Name of type concept copied from NodaTime.
 @docs zeroDelta
 @docs toTicks
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 
@@ -164,18 +164,18 @@ diff date1 date2 =
                     absDayDiff =
                         abs onlyDaysDiff
                 in
-                ( negate (absDayDiff // 7)
-                , negate (absDayDiff % 7)
-                )
+                    ( negate (absDayDiff // 7)
+                    , negate (absDayDiff % 7)
+                    )
             else
                 ( onlyDaysDiff // 7
                 , onlyDaysDiff % 7
                 )
     in
-    { week = weekDiff
-    , day = dayDiff
-    , hour = hourDiff
-    , minute = minuteDiff
-    , second = secondDiff
-    , millisecond = millisecondDiff
-    }
+        { week = weekDiff
+        , day = dayDiff
+        , hour = hourDiff
+        , minute = minuteDiff
+        , second = secondDiff
+        , millisecond = millisecondDiff
+        }

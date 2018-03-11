@@ -24,7 +24,7 @@ many timezones so it became the same as `Date.fromString`.
 @docs isoWeek
 @docs isoWeekOne
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 

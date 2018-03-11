@@ -42,7 +42,7 @@ your needs.
 @docs diff
 @docs diffDays
 
-Copyright (c) 2016-2017 Robin Luiten
+Copyright (c) 2016-2018 Robin Luiten
 
 -}
 
