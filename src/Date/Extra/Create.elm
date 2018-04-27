@@ -72,6 +72,11 @@ epochTimezoneOffset =
 
 
 {-| Create a date in current time zone from given fields.
+
+Call Signature
+
+    dateFromFields year month day hour minute second millisecond =
+
 All field values are clamped to there allowed range values.
 Hours are input in 24 hour time range 0 to 23 valid.
 Returns dates in current time zone.
@@ -80,6 +85,7 @@ Using algorithm from <http://howardhinnant.github.io/date_algorithms.html>
 Specifically days_from_civil function.
 
 The two `<*>Compensate` values adjust for the zone offset time
+
 introduced by `epochDate` as starting point.
 
 -}
@@ -119,6 +125,10 @@ adjustedTicksToDate ticks =
 
 {-| Create a time in current time zone from given fields, for
 when you dont care about the date part but need time part anyway.
+
+Call Signature
+
+    timeFromFields hour minute second millisecond =
 
 All field values are clamped to there allowed range values.
 This can only return dates in current time zone.
