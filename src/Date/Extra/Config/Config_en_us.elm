@@ -29,8 +29,8 @@ config =
     , format =
         { date = "%-m/%-d/%Y" -- M/d/YYY
         , longDate = "%A, %B %d, %Y" -- dddd, MMMM dd, yyyy
-        , time = "%-H:%M %p" -- h:mm tt
-        , longTime = "%-H:%M:%S %p" -- h:mm:ss tt
+        , time = "%-I:%M %p" -- h:mm tt
+        , longTime = "%-I:%M:%S %p" -- h:mm:ss tt
         , dateTime = "%-m/%-d/%Y %-I:%M %p" -- date + time
         , firstDayOfWeek = Date.Sun
         }
