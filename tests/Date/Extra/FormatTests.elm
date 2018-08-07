@@ -235,6 +235,8 @@ formatTestCases =
     , ( "Config_en_us longDate", "Tuesday, August 05, 2014", config_en_us.format.longDate, aTestTime5 )
     , ( "Config_en_us time", "5:53 AM", config_en_us.format.time, aTestTime5 )
     , ( "Config_en_us longTime", "5:53:51 AM", config_en_us.format.longTime, aTestTime5 )
+    , ( "Config_en_us time with PM hour", "6:53 PM", config_en_us.format.time, aTestTime )
+    , ( "Config_en_us longTime with PM hour", "6:53:51 PM", config_en_us.format.longTime, aTestTime )
     , ( "Config_en_us dateTime", "8/5/2014 5:53 AM", config_en_us.format.dateTime, aTestTime5 )
     , ( "Config_en_us dateTime test PM", "8/4/2014 12:00 PM", config_en_us.format.dateTime, aTestTime6 )
     , ( "Config_en_us dateTime test AM", "8/4/2014 12:00 AM", config_en_us.format.dateTime, aTestTime7 )
