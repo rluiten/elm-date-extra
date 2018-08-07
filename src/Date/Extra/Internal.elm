@@ -9,6 +9,7 @@ Copyright (c) 2016-2018 Robin Luiten
 import Date exposing (Date, Month(..))
 import Date.Extra.Period as Period
 import Date.Extra.Internal2 as Internal2
+import Date.Extra.TypeAlias exposing (DateFromFields)
 
 
 {-| Adjust date as if it was in utc zone.
@@ -114,6 +115,11 @@ ticksFromDateFields date =
         (Date.minute date)
         (Date.second date)
         (Date.millisecond date)
+
+
+ticksFromFieldsRecord : DateFromFields -> Int
+ticksFromFieldsRecord { year, month, day, hour, minute, second, millisecond } =
+    ticksFromFields year month day hour minute second millisecond
 
 
 ticksFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Int

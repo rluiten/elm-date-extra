@@ -2,14 +2,18 @@ module Date.Extra.Create
     exposing
         ( getTimezoneOffset
         , dateFromFields
+        , dateFromFieldsRecord
         , timeFromFields
+        , timeFromFieldsRecord
         )
 
 {-| Create dates and offsets.
 
 @docs getTimezoneOffset
 @docs dateFromFields
+@docs dateFromFieldsRecord
 @docs timeFromFields
+@docs timeFromFieldsRecord
 
 Copyright (c) 2016-2018 Robin Luiten
 
@@ -19,6 +23,10 @@ import Date exposing (Date, Month(..))
 import Date.Extra.Core as Core
 import Date.Extra.Internal as Internal
 import Date.Extra.Period as Period
+import Date.Extra.TypeAlias exposing (TimeFromFields, DateFromFields)
+
+
+-- import Date.Extra.TypeAlias exposing (TimeFromFields, DateFromFields, Year, Day, Hour, Minute, Second, Millisecond)
 
 
 {-| Return the time zone offset of current javascript environment underneath
@@ -73,6 +81,9 @@ epochTimezoneOffset =
 
 {-| Create a date in current time zone from given fields.
 
+See also [dateFromFieldsRecord](#dateFromFieldsRecord) for same function
+with parameter from a record.
+
 Call Signature
 
     dateFromFields year month day hour minute second millisecond =
@@ -85,23 +96,25 @@ Using algorithm from <http://howardhinnant.github.io/date_algorithms.html>
 Specifically days_from_civil function.
 
 The two `<*>Compensate` values adjust for the zone offset time
-
 introduced by `epochDate` as starting point.
 
 -}
 dateFromFields : Int -> Month -> Int -> Int -> Int -> Int -> Int -> Date
 dateFromFields year month day hour minute second millisecond =
-    adjustedTicksToDate
-        (Internal.ticksFromFields year month day hour minute second millisecond)
+    adjustedTicksToDate <|
+        Internal.ticksFromFields year month day hour minute second millisecond
 
 
-
-{-
-   This now compensates for current timezone offset compared to epoch offset.
-   In relation to #17.
+{-| Alternate record signature for [dateFromFields](#dateFromFields)
 -}
+dateFromFieldsRecord : DateFromFields -> Date
+dateFromFieldsRecord =
+    adjustedTicksToDate << Internal.ticksFromFieldsRecord
 
 
+{-| This now compensates for current timezone offset compared to epoch offset.
+In relation to #17.
+-}
 adjustedTicksToDate : Int -> Date
 adjustedTicksToDate ticks =
     let
@@ -126,9 +139,8 @@ adjustedTicksToDate ticks =
 {-| Create a time in current time zone from given fields, for
 when you dont care about the date part but need time part anyway.
 
-Call Signature
-
-    timeFromFields hour minute second millisecond =
+See also [timeFromFieldsRecord](#timeFromFieldsRecord) for same function
+with parameter from a record.
 
 All field values are clamped to there allowed range values.
 This can only return dates in current time zone.
@@ -141,6 +153,16 @@ This defaults to year 1970, month Jan, day of month 1 for date part.
 timeFromFields : Int -> Int -> Int -> Int -> Date
 timeFromFields =
     dateFromFields 1970 Jan 1
+
+
+{-| Alternate record signature for [timeFromFields](#timeFromFields)
+
+Try [TimeFromFieldsTESTING](#Date-Extra-TypeAlias)
+
+-}
+timeFromFieldsRecord : TimeFromFields -> Date
+timeFromFieldsRecord { hour, minute, second, millisecond } =
+    dateFromFields 1970 Jan 1 hour minute second millisecond
 
 
 

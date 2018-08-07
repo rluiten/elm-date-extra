@@ -15,6 +15,7 @@
         "Date.Extra.Format",
         "Date.Extra.Period",
         "Date.Extra.TimeUnit",
+        "Date.Extra.TypeAlias",
         "Date.Extra.TwelveHourClock",
         "Date.Extra.Utils",
         "Date.Extra.I18n.I_default",
